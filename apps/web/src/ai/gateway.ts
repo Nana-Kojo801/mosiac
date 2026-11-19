@@ -142,7 +142,7 @@ function classifyPrivateError(e: unknown): [Outcome, string] {
 function classifyCloudError(e: unknown): [Outcome, string] {
   const msg = String((e as Error)?.message ?? e);
   if ((e as { name?: string })?.name === 'AbortError') return ['cancelled', 'Cancelled'];
-  if (/App Check/i.test(msg) || /\b401\b/.test(msg)) return ['app-check', 'App Check rejected the request'];
+  if (/App Check/i.test(msg) || /\b401\b/.test(msg)) return ['app-check', 'Blocked by App Check, Firebase’s protection against misuse. If this keeps happening, this site’s App Check registration (Firebase console → App Check) may be missing.'];
   if (/\b429\b|quota|RESOURCE_EXHAUSTED/i.test(msg)) return ['quota', 'Cloud quota reached. Try again later.'];
   if (/Failed to fetch|NetworkError|offline/i.test(msg)) return ['offline', 'No connection'];
   if (/timeout/i.test(msg)) return ['timeout', 'The request timed out'];

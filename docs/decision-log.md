@@ -2,6 +2,27 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Stress-test error diagnosed; local OCR (F04)
+
+**Stress-test error (live):** reproduced on https://mosaic-4a9d2.web.app. reCAPTCHA v3 issued a token, but App Check's exchange returned `400 FAILED_PRECONDITION: App not registered: 1:545691456045:web:a1daa61bdc607d158adea4`, and Gemini then returned `401 Firebase App Check token is invalid`. **Owner action:** Firebase console → Security → App Check → Apps → web app → reCAPTCHA (v3) → enter the reCAPTCHA secret key. The app's message for this case now names App Check registration as the likely cause.
+
+**OCR**
+- Engine: tesseract.js 7.0.0 (Apache-2.0), LSTM cores, with English `tessdata_best_int` data (2.9 MB, via @tesseract.js-data/eng 1.0.0, MIT).
+- Everything is served from our own origin under `/ocr/` (copied at build by `scripts/copy-ocr-assets.mjs`). The worker is loaded by URL, not as a blob, and the core and language paths are overridden, so nothing comes from the library's CDN defaults.
+- Excluded from the PWA precache. Cached on first use (CacheFirst, `mosaic-ocr-assets`); these are static public assets, not private data.
+- CSP gains `'wasm-unsafe-eval'` in `script-src`, which WebAssembly compilation requires. Nothing else was loosened.
+- Flow: images (PNG, JPEG, WebP) and PDFs without a text layer go to OCR. PDF pages are rendered at about 300 dpi, up to 50 pages. Recognition runs in a worker with real per-page progress and Cancel.
+- Correction view: the page image (zoomable) beside editable text, a mean confidence score, and words below 70% confidence listed so you can click one and jump to it. Nothing is added until "Accept text".
+- Accepted text becomes a version with `sourceKind: 'ocr'` and `ocr` metadata: pages, mean confidence, and the uncertain words still present after editing. The review engine adds an "OCR with low confidence" note to any finding whose evidence contains such a word.
+- The Vite preview server now sends the same security headers as Firebase Hosting, so local and CI end-to-end runs enforce the production CSP.
+
+**Verified (2026-11-19, under the production CSP):**
+- A fictional image and an image-only PDF were both recognised exactly ("I was the only night porter at Fernhill depot. Contact: r.lind@example.net").
+- Page images and confidence are shown; there are 0 external requests during OCR; the accepted text is reviewed, and the rules found the email.
+- A separate sample gave mean confidence 95%.
+- End-to-end 33/33 on three runs, motion check 17/17, unit tests 72/72 (including the new OCR helper tests).
+- Accuracy on real scans (handwriting, skew, low resolution) has not been measured.
+
 ## 2026-11-19 · Desktop navigation speed (owner: "really slow")
 
 **Measured** on the production build (headless Chromium, no GPU) as time from click until the arriving page's content is readable: about **300 ms** at normal CPU and about **405 ms** at 4× CPU slowdown. The DOM side was fast (about 25 ms from click to the new page existing). The time went into animation choices:

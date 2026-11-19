@@ -3,8 +3,13 @@ import react from '@vitejs/plugin-react';
 import tailwind from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
 
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
+// The preview server sends the same security headers as Firebase Hosting, so local and CI tests enforce the real CSP.
+const hostingHeaders: Record<string, string> = Object.fromEntries(
+  (JSON.parse(readFileSync(new URL('../../firebase.json', import.meta.url), 'utf8')).hosting.headers.find((h: { source: string }) => h.source === '**').headers as { key: string; value: string }[]).map((h) => [h.key, h.value]),
+);
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, repoRoot, '');
@@ -20,16 +25,19 @@ export default defineConfig(({ command, mode }) => {
         icons: [{ src: 'icon-192.png', sizes: '192x192', type: 'image/png' }, { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }, { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml' }],
       },
       workbox: {
-        // App shell only. No runtime caching: private data lives in IndexedDB, and
-        // model or App Check requests are never cached or queued (spec 5.3, 11.2).
+        // App shell, plus the static OCR assets on first use. No other runtime caching: private data
+        // lives in IndexedDB, and model or App Check requests are never cached or queued (spec 5.3, 11.2).
         globPatterns: ['**/*.{js,mjs,css,html,svg,png,woff2}'],
+        // The OCR engine and language data (~15 MB) are fetched only when someone uses OCR, then cached.
+        globIgnores: ['ocr/**'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallback: '/index.html',
-        runtimeCaching: [],
+        runtimeCaching: [{ urlPattern: ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/ocr/'), handler: 'CacheFirst', options: { cacheName: 'mosaic-ocr-assets', expiration: { maxEntries: 10 } } }],
         cleanupOutdatedCaches: true,
       },
     })],
     server: { port: 5173, host: '127.0.0.1', fs: { allow: [repoRoot] } },
+    preview: { headers: hostingHeaders },
     // Fonts always ship as files: the CSP allows fonts from 'self' only, not data: URIs.
     build: { sourcemap: false, target: 'es2022', assetsInlineLimit: (file: string) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined) },
     define: {

@@ -6,7 +6,7 @@
 export const MAX_BYTES = 20 * 1024 * 1024;
 export const MAX_PAGES = 100;
 
-export type Parsed = { ok: true; text: string; kind: 'txt' | 'markdown' | 'pdf' | 'docx'; pages?: number; note?: string } | { ok: false; error: string };
+export type Parsed = { ok: true; text: string; kind: 'txt' | 'markdown' | 'pdf' | 'docx'; pages?: number; note?: string } | { ok: false; error: string } | { ok: 'needs-ocr'; kind: 'pdf' | 'image'; reason: string };
 
 export async function parseFile(f: File, onProgress?: (msg: string) => void, signal?: AbortSignal): Promise<Parsed> {
   const name = f.name.toLowerCase();
@@ -19,8 +19,9 @@ export async function parseFile(f: File, onProgress?: (msg: string) => void, sig
     }
     if (name.endsWith('.pdf') || f.type === 'application/pdf') return await parsePdf(await f.arrayBuffer(), onProgress, signal);
     if (name.endsWith('.docx')) return await parseDocx(await f.arrayBuffer());
+    if (/\.(png|jpe?g|webp|bmp|gif)$/.test(name) || /^image\/(png|jpeg|webp|bmp|gif)$/.test(f.type)) return { ok: 'needs-ocr', kind: 'image', reason: 'Image' };
     if (name.endsWith('.doc') || name.endsWith('.docm')) return { ok: false, error: 'Old or macro-enabled Word files aren’t supported. Save as .docx (without macros) and try again.' };
-    return { ok: false, error: 'Not supported. Use TXT, Markdown, text-based PDF or DOCX, or paste the text.' };
+    return { ok: false, error: 'Not supported. Use TXT, Markdown, PDF, DOCX or an image (PNG, JPEG), or paste the text.' };
   } catch (e) {
     if ((e as Error)?.name === 'AbortError') return { ok: false, error: 'Cancelled' };
     return { ok: false, error: 'The file couldn’t be read. It may be damaged or password-protected.' };
@@ -57,7 +58,7 @@ async function parsePdf(buf: ArrayBuffer, onProgress?: (msg: string) => void, si
       out.push(pageText);
     }
     const text = out.filter(Boolean).join('\n\n');
-    if (!text.trim()) return { ok: false, error: 'No text layer found. This looks like a scanned PDF; OCR isn’t available in this build, so paste the text instead.' };
+    if (!text.trim()) return { ok: 'needs-ocr', kind: 'pdf', reason: 'No text layer: this looks like a scanned PDF' };
     const notes = [doc.numPages > MAX_PAGES ? `Only the first ${MAX_PAGES} of ${doc.numPages} pages were read.` : '', empty ? `${empty} page${empty > 1 ? 's' : ''} had no text layer and ${empty > 1 ? 'were' : 'was'} skipped.` : ''].filter(Boolean).join(' ');
     return { ok: true, text, kind: 'pdf', pages: doc.numPages, note: notes || undefined };
   } finally { await task.destroy(); }

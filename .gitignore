@@ -6,3 +6,4 @@ node_modules/
 demo/footage/
 demo/out/
 apps/web/src/ui/tokens.css
+apps/web/public/ocr/

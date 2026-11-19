@@ -129,3 +129,12 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 .seg-thumb { position: absolute; inset: 0; border-radius: 8px; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 0.5px var(--hairline); z-index: -1; }
 .doc-tab { position: relative; border-bottom-color: transparent !important; }
 .doc-tab-line { position: absolute; left: 8px; right: 8px; bottom: -1px; height: 2px; border-radius: 2px; background: var(--accent); }
+
+/* OCR review */
+.ocr-review { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 16px; }
+.ocr-zoom { display: block; width: 100%; cursor: zoom-in; border-radius: 10px; }
+.ocr-page img { display: block; width: 100%; max-height: 480px; object-fit: contain; border-radius: 10px; background: #fff; box-shadow: 0 0 0 1px var(--hairline-strong); }
+.ocr-review.zoomed { grid-template-columns: 1fr; }
+.ocr-review.zoomed .ocr-zoom { cursor: zoom-out; }
+.ocr-review.zoomed .ocr-page img { max-height: none; }
+@media (max-width: 760px) { .ocr-review { grid-template-columns: 1fr; } }

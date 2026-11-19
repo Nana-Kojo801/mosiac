@@ -22,7 +22,7 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); c
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = []; page.on('pageerror', (e) => errors.push(e.message)); page.on('console', (m) => { if (m.type() === 'error' && !/favicon|recaptcha|Failed to load resource/i.test(m.text())) errors.push(m.text()); });
-const requests = []; page.on('request', (r) => { const u = new URL(r.url()); if (u.hostname !== '127.0.0.1') requests.push({ host: u.hostname, url: r.url(), body: r.postData() || '' }); });
+const requests = []; page.on('request', (r) => { const u = new URL(r.url()); if (u.protocol !== 'blob:' && u.protocol !== 'data:' && u.hostname !== '127.0.0.1') requests.push({ host: u.hostname, url: r.url(), body: r.postData() || '' }); });
 const settle = async (pg = page) => { await pg.waitForFunction(() => document.querySelectorAll('.page-slot').length === 1, null, { timeout: 5000 }).catch(() => {}); };
 const shot = async (n) => { if (shots) await page.screenshot({ path: `${shots}/${n}.png` }); };
 
@@ -86,7 +86,7 @@ try {
   // Stress tests: the approval dialog shows the exact enum-only body. Nothing is sent here.
   await page.getByRole('link', { name: /^Stress tests/ }).click();
   await page.getByRole('heading', { name: 'Stress tests' }).waitFor();
-  check('bundled packs are listed', await page.getByText('Core disclosure checks').count() > 0);
+  check('bundled packs are listed', await page.getByText('Core disclosure checks').first().waitFor({ timeout: 5000 }).then(() => true, () => false));
   await page.getByRole('button', { name: /Review and send/ }).click();
   const body = await page.locator('.modal .payload').innerText();
   const parsed = JSON.parse(body);
@@ -134,6 +134,36 @@ try {
   await page.getByText(/words ·/).nth(1).waitFor({ timeout: 15000 });
   check('PDF and DOCX import extracts text locally', (await page.locator('table.tbl').innerText()).match(/words ·/g)?.length === 2);
   await page.getByRole('button', { name: 'Cancel' }).click();
+
+  // OCR: an image and a scanned (image-only) PDF are read locally with Tesseract, reviewed, accepted and reviewed for risks.
+  {
+    const sheet = await browser.newPage({ viewport: { width: 1200, height: 500 } });
+    await sheet.setContent('<body style="margin:0;background:#fff"><div style="padding:48px 56px;font:34px/1.5 Georgia,serif;color:#111;width:1050px">Fictional scan for testing.<br>I was the only night porter at Fernhill depot.<br>Contact: r.lind@example.net</div></body>');
+    const png = await sheet.screenshot({ type: 'png' }); await sheet.close();
+    const ocrDir = mkdtempSync(join(tmpdir(), 'mosaic-ocr-'));
+    writeFileSync(join(ocrDir, 'fictional-scan.png'), png);
+    const scan = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1200, 500] }); scan.addImage('data:image/png;base64,' + png.toString('base64'), 'PNG', 0, 0, 1200, 500);
+    writeFileSync(join(ocrDir, 'fictional-scanned.pdf'), Buffer.from(scan.output('arraybuffer')));
+    await page.goto(base + '/workspaces');
+    await page.getByRole('button', { name: 'New workspace' }).click();
+    await page.waitForURL(/\/import/); await settle();
+    const before = requests.length;
+    await page.locator('input[type=file]').setInputFiles([join(ocrDir, 'fictional-scan.png'), join(ocrDir, 'fictional-scanned.pdf')]);
+    await page.getByText(/Check the OCR text/).nth(1).waitFor({ timeout: 90000 });
+    const texts = await page.locator('.ocr-review textarea').evaluateAll((els) => els.map((e) => e.value));
+    check('OCR reads an image and a scanned PDF on this device', texts.length === 2 && texts.every((t) => /night porter/i.test(t) && /Fernhill/i.test(t)), texts.map((t) => t.replace(/\s+/g, ' ').slice(0, 140)).join(' | '));
+    check('OCR shows the page image and a confidence score', (await page.locator('.ocr-page img').count()) === 2 && (await page.getByText(/Mean confidence \d+%/).count()) === 2);
+    await shot('ocr-review');
+    check('OCR makes no requests outside this site', requests.slice(before).length === 0, requests.slice(before).map((r) => r.url.slice(0, 90)).join(' , '));
+    for (let n = 0; n < 2; n++) await page.getByRole('button', { name: 'Accept text' }).first().click();
+    await page.getByRole('button', { name: /Add 2 to workspace/ }).click();
+    await page.waitForURL(/\/w\/[^/]+$/); await settle();
+    await page.getByRole('button', { name: 'Run review' }).click();
+    await page.locator('.count-d').first().waitFor({ timeout: 30000 });
+    await page.getByRole('link', { name: /^Findings/ }).first().click(); await settle();
+    const found = await page.getByText('An email address').first().waitFor({ timeout: 5000 }).then(() => true, () => false);
+    check('reviews run on OCR text (email found by rules)', found, found ? '' : (await page.locator('table.tbl').innerText().catch(() => 'no table')).replace(/\s+/g, ' ').slice(0, 200));
+  }
 
   // Offline: the app keeps working for local tasks
   const swReady = await page.evaluate(async () => { const r = await Promise.race([navigator.serviceWorker.ready.then(() => true), new Promise((res) => setTimeout(() => res(false), 8000))]); return r && !!navigator.serviceWorker.controller; });

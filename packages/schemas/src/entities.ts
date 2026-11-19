@@ -9,7 +9,10 @@ export type DocumentRole = 'draft' | 'release';
 export type DocumentRecord = { id: string; workspaceId: string; title: string; role: DocumentRole; classification: Classification; currentVersionId: string; createdAt: string; approvedAt?: string };
 
 /** normalizedText offsets are UTF-16 code units of the NFC-normalized, LF-only text. */
-export type DocumentVersion = { id: string; documentId: string; workspaceId: string; label: string; normalizedText: string; paragraphs: { start: number; end: number }[]; digest: string; createdAt: string; parentVersionId?: string; sourceKind: 'paste' | 'txt' | 'markdown' | 'pdf' | 'docx' | 'fixture' | 'rewrite' };
+export type DocumentVersion = { id: string; documentId: string; workspaceId: string; label: string; normalizedText: string; paragraphs: { start: number; end: number }[]; digest: string; createdAt: string; parentVersionId?: string; sourceKind: 'paste' | 'txt' | 'markdown' | 'pdf' | 'docx' | 'fixture' | 'rewrite' | 'ocr'; ocr?: OcrMeta };
+
+/** OCR provenance: words still uncertain after the reviewer's corrections. */
+export type OcrMeta = { engine: 'tesseract'; pages: number; meanConfidence: number; uncertain: { word: string; confidence: number }[] };
 
 export type Anchor = { versionId: string; paragraph: number; start: number; end: number; quote: string; validation: 'EXACT' | 'RELOCATED' };
 

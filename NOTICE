@@ -14,6 +14,8 @@ It includes third-party software under their own licences, including:
 - Mammoth (BSD-2-Clause)
 - jsPDF (MIT)
 - docx (MIT)
+- Tesseract.js and tesseract.js-core (Apache-2.0), with Tesseract OCR (Apache-2.0)
+- English OCR language data from @tesseract.js-data/eng (MIT; tessdata_best_int, Apache-2.0)
 - Inter and JetBrains Mono fonts via Fontsource (SIL Open Font License 1.1)
 - Tailwind CSS (MIT), Vite (MIT), vite-plugin-pwa (MIT), Workbox (MIT)
 

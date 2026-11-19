@@ -1,4 +1,4 @@
-import type { DocumentRecord, DocumentRole, DocumentVersion, Workspace } from '@mosaic/schemas';
+import type { DocumentRecord, DocumentRole, DocumentVersion, OcrMeta, Workspace } from '@mosaic/schemas';
 import { normalizeText, paragraphSpans, sha256Hex } from '@mosaic/privacy-core';
 import { BUNDLED_PACKS, SAMPLE_DOCS, SAMPLE_WORKSPACE } from '@mosaic/fixtures';
 import { db } from './db';
@@ -25,17 +25,17 @@ export const workspaces = {
   },
 };
 
-export async function makeVersion(documentId: string, workspaceId: string, raw: string, label: string, sourceKind: DocumentVersion['sourceKind'], parentVersionId?: string): Promise<DocumentVersion> {
+export async function makeVersion(documentId: string, workspaceId: string, raw: string, label: string, sourceKind: DocumentVersion['sourceKind'], parentVersionId?: string, ocr?: OcrMeta): Promise<DocumentVersion> {
   const { text } = normalizeText(raw);
-  return { id: newId('ver'), documentId, workspaceId, label, normalizedText: text, paragraphs: paragraphSpans(text), digest: await sha256Hex(text), createdAt: nowIso(), parentVersionId, sourceKind };
+  return { id: newId('ver'), documentId, workspaceId, label, normalizedText: text, paragraphs: paragraphSpans(text), digest: await sha256Hex(text), createdAt: nowIso(), parentVersionId, sourceKind, ...(ocr ? { ocr } : {}) };
 }
 
 export const documents = {
   list: (workspaceId: string) => db().documents.where('workspaceId').equals(workspaceId).toArray(),
   get: (id: string) => db().documents.get(id),
-  async add(workspaceId: string, input: { title: string; role: DocumentRole; text: string; sourceKind: DocumentVersion['sourceKind']; approvedAt?: string; versionLabel?: string }) {
+  async add(workspaceId: string, input: { title: string; role: DocumentRole; text: string; sourceKind: DocumentVersion['sourceKind']; approvedAt?: string; versionLabel?: string; ocr?: OcrMeta }) {
     const docId = newId('doc');
-    const v = await makeVersion(docId, workspaceId, input.text, input.versionLabel ?? 'v1', input.sourceKind);
+    const v = await makeVersion(docId, workspaceId, input.text, input.versionLabel ?? 'v1', input.sourceKind, undefined, input.ocr);
     const doc: DocumentRecord = { id: docId, workspaceId, title: input.title.trim() || 'Untitled document', role: input.role, classification: 'PRIVATE', currentVersionId: v.id, createdAt: nowIso(), approvedAt: input.approvedAt };
     const d = db();
     await d.transaction('rw', d.documents, d.versions, d.workspaces, async () => { await d.versions.add(v); await d.documents.add(doc); await d.workspaces.update(workspaceId, { updatedAt: nowIso() }); });

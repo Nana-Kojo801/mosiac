@@ -132,6 +132,13 @@ export async function runReview(workspaceId: string, input: ReviewInput): Promis
     deduped.push({ id: newId('f'), runId, workspaceId, category: 'EXCESSIVE_DETAIL', title: `¶${u.paragraphs[0] + 1}–${u.paragraphs[1] + 1} not assessed`, anchors: p0 ? [{ versionId: dv.id, paragraph: u.paragraphs[0], start: p0.start, end: p1.end, quote: '', validation: 'EXACT' }] : [], components: { direct: 0, specificity: 0, cross: 0, sensitivity: 0 }, score: 0, band: 'LOW', confidence: 'LOW', confidenceReason: 'Not assessed.', rationale: `${u.reason}. Contextual checks did not run for these paragraphs, and nothing was sent to the cloud instead. Rules-based checks still ran.`, proposedAction: 'REVIEW', source: 'UNAVAILABLE', status: 'UNASSESSED' });
   }
 
+  // 4b. OCR provenance: evidence that includes a word OCR was unsure about is flagged.
+  const ocrWords = new Map([draft, ...releases].filter((l) => l.version.ocr?.uncertain.length).map((l) => [l.version.id, l.version.ocr!.uncertain.map((u) => u.word.toLowerCase())]));
+  for (const f of deduped) {
+    const hit = f.anchors.some((a) => a.quote && ocrWords.get(a.versionId)?.some((w) => a.quote.toLowerCase().includes(w)));
+    if (hit) f.confidenceReason += ' Part of this evidence came from OCR with low confidence; compare it with the original scan.';
+  }
+
   // 5. Carry forward reviewer decisions; compute the reassessment diff (F13).
   const prevRun = (await db().runs.where('workspaceId').equals(workspaceId).sortBy('startedAt')).pop();
   const prev = prevRun ? await db().findings.where('runId').equals(prevRun.id).toArray() : [];
