@@ -38,23 +38,27 @@ if (stillsArg) {
 }
 
 const raw = join(out, 'mosaic-demo.raw.mp4');
-let last = -1;
-await renderMedia({
-  serveUrl, composition, codec: 'h264', outputLocation: raw, browserExecutable,
-  crf: 18, pixelFormat: 'yuv420p', audioCodec: 'aac', audioBitrate: '320k', concurrency: Number(process.env.CONCURRENCY ?? 4),
-  onProgress: ({ progress }) => { const p = Math.floor(progress * 20); if (p !== last) { last = p; console.log(`render ${p * 5}%`); } },
-});
-
-// Two-pass loudness normalisation to -14 LUFS integrated, -1 dBTP (spec 22.6).
-const target = 'I=-14:TP=-1.0:LRA=11';
-const probe = execFileSync('ffmpeg', ['-hide_banner', '-i', raw, '-af', `loudnorm=${target}:print_format=json`, '-f', 'null', '-'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).toString();
-let m;
-try { m = JSON.parse(probe.slice(probe.lastIndexOf('{'))); } catch { m = null; }
-const stderr = m ? null : execFileSync('sh', ['-c', `ffmpeg -hide_banner -i "${raw}" -af loudnorm=${target}:print_format=json -f null - 2>&1`], { encoding: 'utf8' });
-if (!m) m = JSON.parse(stderr.slice(stderr.lastIndexOf('{')));
 const final = join(out, 'mosaic-demo.mp4');
-execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', raw, '-c:v', 'copy', '-af',
-  `loudnorm=${target}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000`,
-  '-c:a', 'aac', '-b:a', '320k', '-movflags', '+faststart', final]);
-rmSync(raw);
+if (!args.includes('--finish-only')) {
+  let last = -1;
+  await renderMedia({
+    serveUrl, composition, codec: 'h264', outputLocation: raw, browserExecutable,
+    crf: 16, pixelFormat: 'yuv420p', audioCodec: 'aac', audioBitrate: '320k', concurrency: Number(process.env.CONCURRENCY ?? 4),
+    onProgress: ({ progress }) => { const p = Math.floor(progress * 20); if (p !== last) { last = p; console.log(`render ${p * 5}%`); } },
+  });
+}
+
+// Mastering pass (spec 22.6–22.8):
+//  video: Chrome's frames arrive full-range BT.601; convert to limited-range BT.709 and tag it, so players show the colours as rendered.
+//  audio: two-pass loudness normalisation to -14 LUFS, then a true-peak-safe limiter for -1 dBTP.
+const target = 'I=-14:TP=-1.5:LRA=11';
+const measure = execFileSync('sh', ['-c', `ffmpeg -hide_banner -nostats -i "${raw}" -vn -af loudnorm=${target}:print_format=json -f null - 2>&1`], { encoding: 'utf8' });
+const m = JSON.parse(measure.slice(measure.lastIndexOf('{')));
+execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', raw,
+  '-vf', 'scale=in_range=pc:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709,format=yuv420p',
+  '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-profile:v', 'high', '-tune', 'animation', '-r', '30',
+  '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
+  '-af', `loudnorm=${target}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=192000,alimiter=limit=0.83:level=false:attack=2:release=60,aresample=48000`,
+  '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-movflags', '+faststart', final]);
+if (!args.includes('--keep-raw')) rmSync(raw);
 console.log(`${final}  ${(statSync(final).size / 1e6).toFixed(1)} MB`);
