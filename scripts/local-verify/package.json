@@ -1,0 +1,16 @@
+{
+  "name": "@mosaic/local-verify",
+  "private": true,
+  "type": "module",
+  "description": "Runs the spec 21.2 inference verification protocol against the real Firebase AI Logic SDK and writes an evidence record.",
+  "scripts": {
+    "dev": "vite",
+    "verify": "node run.mjs"
+  },
+  "dependencies": {
+    "firebase": "13.2.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.5"
+  }
+}

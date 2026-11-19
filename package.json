@@ -1,0 +1,22 @@
+{
+  "name": "mosaic",
+  "private": true,
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "scripts/local-verify",
+    "design"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "^5.1.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

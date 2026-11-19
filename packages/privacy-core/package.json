@@ -1,0 +1,15 @@
+{
+  "name": "@mosaic/privacy-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Privacy invariants shared by the Mosaic web app: the private-inference guard, rules, evidence validation and scoring.",
+  "exports": {
+    "./private-inference-guard": "./src/private-inference-guard.ts"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {}
+}

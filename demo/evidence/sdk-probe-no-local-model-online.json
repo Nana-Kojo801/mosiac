@@ -1,0 +1,139 @@
+{
+  "kind": "mosaic-inference-verification",
+  "protocol": "spec 21.2",
+  "timestamp": "2026-11-19T01:53:36.088Z",
+  "environment": {
+    "description": "Claude Code cloud container (no eligible on-device hardware)",
+    "os": "Linux 6.18.44-fc-v653 x64",
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "cpuCount": 4,
+    "ramGiB": 16,
+    "browser": "Chromium (Playwright)",
+    "browserVersion": "157.0.8103.78",
+    "headless": true,
+    "promptApi": "Removed from the page by the runner before load (model unavailable)",
+    "network": "Online"
+  },
+  "results": {
+    "schemaVersion": 1,
+    "startedAt": "2026-11-19T01:53:35.126Z",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.8103.78 Safari/537.36",
+    "chromeVersion": "157.0.8103.78",
+    "firebaseSdkVersion": "13.2.0",
+    "cloudModelRequested": "gemini-3.5-flash-lite",
+    "appCheck": {
+      "provider": "recaptcha-v3",
+      "debugProvider": true
+    },
+    "online": true,
+    "browserBrands": [
+      "Not-A.Brand 99",
+      "HeadlessChrome 157",
+      "Chromium 157"
+    ],
+    "promptApiHiddenByRunner": true,
+    "languageModel": {
+      "present": false
+    },
+    "deviceModelInit": {
+      "attempted": false,
+      "skippedReason": "Prompt API availability: API not present"
+    },
+    "guardReadiness": {
+      "ok": false,
+      "reason": "NO_PROMPT_API"
+    },
+    "fenceViolations": 0,
+    "steps": [
+      {
+        "id": "private-guarded",
+        "task": "Extract context through Mosaic privacy guard",
+        "requestedPolicy": "ONLY_ON_DEVICE",
+        "expect": "ON_DEVICE_GENUINE on eligible hardware; otherwise refused before any request (UNASSESSED)",
+        "inferenceSource": "UNKNOWN",
+        "latencyMs": 0,
+        "ok": false,
+        "outputChars": null,
+        "outputValid": null,
+        "error": {
+          "code": "REFUSED_NO_PROMPT_API",
+          "message": "Private task not run on device: NO_PROMPT_API"
+        },
+        "verdict": "UNASSESSED_NO_CLOUD_RETRY"
+      },
+      {
+        "id": "sdk-raw-only-on-device",
+        "task": "Raw SDK ONLY_ON_DEVICE call, no Mosaic guard (documents SDK behaviour)",
+        "requestedPolicy": "ONLY_ON_DEVICE",
+        "expect": "Per docs: ON_DEVICE or an error. Observed in 13.2.0: cloud request when the Prompt API is absent",
+        "inferenceSource": "UNKNOWN",
+        "latencyMs": 542,
+        "ok": false,
+        "outputChars": null,
+        "outputValid": null,
+        "error": {
+          "code": "fetch-error",
+          "message": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/mosaic-4a9d2/models/gemini-3.5-flash-lite:generateContent: [401 Unauthorized] Firebase App Check token is invalid. (AI/fetch-error)"
+        },
+        "verdict": "ERROR"
+      },
+      {
+        "id": "fixture-prefer-on-device",
+        "task": "Explain sample test (bundled fixture)",
+        "requestedPolicy": "PREFER_ON_DEVICE",
+        "expect": "ON_DEVICE if the model is ready; IN_CLOUD otherwise",
+        "inferenceSource": "UNKNOWN",
+        "latencyMs": 204,
+        "ok": false,
+        "outputChars": null,
+        "outputValid": null,
+        "error": {
+          "code": "fetch-error",
+          "message": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/mosaic-4a9d2/models/gemini-3.5-flash-lite:generateContent: [401 Unauthorized] Firebase App Check token is invalid. (AI/fetch-error)"
+        },
+        "verdict": "ERROR"
+      },
+      {
+        "id": "generic-only-in-cloud",
+        "task": "Generate generic test pack (enum-only input)",
+        "requestedPolicy": "ONLY_IN_CLOUD",
+        "expect": "IN_CLOUD",
+        "inferenceSource": "UNKNOWN",
+        "latencyMs": 151,
+        "ok": false,
+        "outputChars": null,
+        "outputValid": null,
+        "error": {
+          "code": "fetch-error",
+          "message": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/mosaic-4a9d2/models/gemini-3.5-flash-lite:generateContent: [401 Unauthorized] Firebase App Check token is invalid. (AI/fetch-error)"
+        },
+        "verdict": "ERROR"
+      }
+    ],
+    "finishedAt": "2026-11-19T01:53:36.067Z"
+  },
+  "network": {
+    "googleApiRequestsTotal": 6,
+    "hostsContacted": [
+      "content-firebaseappcheck.googleapis.com",
+      "firebasevertexai.googleapis.com",
+      "fonts.gstatic.com",
+      "www.google.com",
+      "www.gstatic.com"
+    ],
+    "guardedPrivateCanaryRequests": 0,
+    "googleApiRequestsDuringGuardedPrivateStep": [
+      "POST content-firebaseappcheck.googleapis.com/v1/projects/mosaic-4a9d2/apps/1:545691456045:web:a1daa61bdc607d158adea4:exchangeDebugToken"
+    ],
+    "rawSdkCanaryRequests": 1,
+    "googleApiRequestsDuringRawSdkStep": [
+      "POST content-firebaseappcheck.googleapis.com/v1/projects/mosaic-4a9d2/apps/1:545691456045:web:a1daa61bdc607d158adea4:exchangeDebugToken",
+      "POST firebasevertexai.googleapis.com/v1beta/projects/mosaic-4a9d2/models/gemini-3.5-flash-lite:generateContent",
+      "POST content-firebaseappcheck.googleapis.com/v1/projects/mosaic-4a9d2/apps/1:545691456045:web:a1daa61bdc607d158adea4:exchangeDebugToken",
+      "POST firebasevertexai.googleapis.com/v1beta/projects/mosaic-4a9d2/models/gemini-3.5-flash-lite:generateContent",
+      "POST content-firebaseappcheck.googleapis.com/v1/projects/mosaic-4a9d2/apps/1:545691456045:web:a1daa61bdc607d158adea4:exchangeDebugToken"
+    ]
+  },
+  "pageErrors": [],
+  "notes": "No credentials, tokens or private text are recorded. The private step output is never stored."
+}
