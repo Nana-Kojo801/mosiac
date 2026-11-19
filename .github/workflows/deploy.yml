@@ -1,0 +1,47 @@
+name: Deploy to Firebase Hosting
+# Deploys the web app to https://mosaic-4a9d2.web.app on every push to the
+# default branch, or on demand from the Actions tab. Skips (without failing)
+# until the FIREBASE_SERVICE_ACCOUNT secret has been added.
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: hosting-live
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HAS_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT != '' }}
+    steps:
+      - name: Deploy credential not set yet
+        if: env.HAS_KEY != 'true'
+        run: echo "::notice::FIREBASE_SERVICE_ACCOUNT is not set, so nothing was deployed. See docs/deploy.md."
+      - uses: actions/checkout@v4
+        if: env.HAS_KEY == 'true'
+      - uses: actions/setup-node@v4
+        if: env.HAS_KEY == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - if: env.HAS_KEY == 'true'
+        run: npm ci
+      - if: env.HAS_KEY == 'true'
+        run: npm test
+      - name: Build (public config from .env.production; never a debug token)
+        if: env.HAS_KEY == 'true'
+        run: npm run build
+      - name: Refuse to deploy a bundle containing a debug token or canaries
+        if: env.HAS_KEY == 'true'
+        run: '! grep -rE "CANARY-MOSAIC|APPCHECK_DEBUG_TOKEN" apps/web/dist'
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        if: env.HAS_KEY == 'true'
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: mosaic-4a9d2
+          channelId: live

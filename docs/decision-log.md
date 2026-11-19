@@ -2,6 +2,13 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Native apps out of scope; deploy workflow ready
+
+- **Owner decision:** the native Android and iOS apps are set aside. The submission targets Web/Chrome only, and Android or iOS are not claimed (spec 13.4, 21.5).
+- Added a deploy workflow to Firebase Hosting, with the live channel deploying on pushes to the default branch (currently `claude/new-session-kckk1f`) or on demand. It skips until the `FIREBASE_SERVICE_ACCOUNT` secret exists, runs the tests, and refuses to deploy a bundle containing a debug token or canary.
+- Public Firebase web config is committed in `.env.production`. It is public by design and ends up in the bundle anyway, and committing it means only one GitHub secret is needed.
+- The deploy key must be created by the owner, because it requires their Google Cloud permissions. Instructions are in `docs/deploy.md`. The service account gets `roles/firebasehosting.admin` and `roles/serviceusage.apiKeysViewer` only.
+
 ## 2026-11-19 · iOS-style mobile layout
 
 - At 760 px and below, every screen uses a separate mobile shell from the approved mobile design:

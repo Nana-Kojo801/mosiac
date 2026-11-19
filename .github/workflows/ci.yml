@@ -17,7 +17,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run typecheck
-      - name: Build (no Firebase config in CI; model features report unavailable)
+      - name: Build (public config from .env.production)
         run: npm run build
       - name: Check the bundle for secrets and canaries
         run: |
