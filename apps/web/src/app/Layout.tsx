@@ -66,11 +66,11 @@ const mobileVariants: Variants = {
   center: { x: 0, y: 0, opacity: 1, transitionEnd: { zIndex: 2 } },
   exit: (c: Dir) => c.kind === 'tab' ? { x: `${-c.d * 100}%`, zIndex: 1 } : c.kind === 'push' ? { x: '-25%', opacity: 0.85, zIndex: 1 } : c.kind === 'pop' ? { x: '100%', zIndex: 3 } : { opacity: 0, zIndex: 1 },
 };
-// Desktop: a short horizontal glide in the direction of travel, with a fade.
+// Desktop: the new page is readable almost at once. A quick fade with a small shift, and the old page leaves fast.
 const desktopVariants: Variants = {
-  enter: (c: Dir) => ({ opacity: 0, x: c.kind === 'pop' ? -28 : c.kind === 'tab' ? 28 * c.d : 28 }),
-  center: { opacity: 1, x: 0 },
-  exit: (c: Dir) => ({ opacity: 0, x: c.kind === 'pop' ? 20 : c.kind === 'tab' ? -20 * c.d : -20, transition: { duration: 0.16, ease: [0.4, 0, 1, 1] } }),
+  enter: (c: Dir) => ({ opacity: 0.4, x: c.kind === 'pop' ? -10 : c.kind === 'tab' ? 10 * c.d : 10 }),
+  center: { opacity: 1, x: 0, transition: { opacity: { duration: 0.09, ease: 'easeOut' }, x: { duration: 0.18, ease: [0.2, 0.8, 0.2, 1] } } },
+  exit: { opacity: 0, transition: { duration: 0.04, ease: 'linear' } },
 };
 const fadeVariants: Variants = { enter: { opacity: 0 }, center: { opacity: 1 }, exit: { opacity: 0 } };
 
@@ -80,7 +80,7 @@ function AnimatedOutlet({ mobile }: { mobile: boolean }) {
   const dir = useDirection();
   const reduce = useReduceMotion();
   const variants = reduce ? fadeVariants : mobile ? mobileVariants : desktopVariants;
-  const transition: Transition = reduce ? { duration: 0.12 } : mobile ? (dir.kind === 'tab' ? { ...IOS, duration: 0.28 } : IOS) : { ...IOS, duration: 0.26 };
+  const transition: Transition = reduce ? { duration: 0.1 } : mobile ? (dir.kind === 'tab' ? { ...IOS, duration: 0.26 } : IOS) : { duration: 0.2 };
   return (
     <div className={mobile ? 'm-pages' : 'd-pages'}>
       <AnimatePresence custom={dir} mode="popLayout">

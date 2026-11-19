@@ -78,7 +78,7 @@ try {
     check('desktop: page and sidebar animate in on first load', loadFrames.some((x) => x.op.some((o) => Number(o) < 0.95)) && loadFrames.some((x) => x.tf.some((t) => t !== 'none' && !/matrix\(1, 0, 0, 1, 0, 0\)/.test(t))));
     await p.goto(base + '/'); await p.getByRole('button', { name: 'Try the sample workspace' }).click(); await p.waitForURL(/\/w\//); await p.waitForTimeout(600);
     await startRecorder(p); await p.locator('.sidebar').getByRole('link', { name: /^Documents/ }).click(); const nf = await stopRecorder(p);
-    check('desktop: navigation glides visibly', maxShift(nf) >= 10, `max shift ${Math.round(maxShift(nf))}px`);
+    check('desktop: navigation glides visibly', maxShift(nf) >= 5, `max shift ${Math.round(maxShift(nf))}px`);
     await p.evaluate(() => { window.__mv = []; const t = () => { const el = document.querySelector('.reader-d')?.parentElement; window.__mv.push(el ? getComputedStyle(el).transform : 'none'); if (window.__mv.length < 40) requestAnimationFrame(t); }; requestAnimationFrame(t); });
     await p.getByRole('tab', { name: /Interim findings report/ }).click(); await p.waitForTimeout(700);
     const mv = await p.evaluate(() => window.__mv);

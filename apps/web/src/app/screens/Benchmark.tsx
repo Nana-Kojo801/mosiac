@@ -17,7 +17,7 @@ export function Benchmark() {
   const app = useApp();
   const data = useMemo(() => generateDataset(), []);
   const rules = useMemo(() => runRulesConfig(), []);
-  const last = useLive(async () => (await db().settings.get('benchmark-last'))?.value as { generatedAt: string; configurations: Record<string, { status: string; metrics?: { findings: Metrics; crossReleaseSets: Metrics; cleanFalsePositiveRate: number | null } }> } | undefined, []);
+  const last = useLive(async () => (await db().settings.get('benchmark-last'))?.value as { generatedAt: string; configurations: Record<string, { status: string; metrics?: { findings: Metrics; crossReleaseSets: Metrics; cleanFalsePositiveRate: number | null } }> } | undefined, [], 'benchmark-last');
   const [prog, setProg] = useState<ModelRun | null>(null);
   const [ctrl, setCtrl] = useState<AbortController | null>(null);
   const steps = groupSteps(disclosureOfDraft(SAMPLE_DOCS.find((d) => d.key === 'D3')!.text));

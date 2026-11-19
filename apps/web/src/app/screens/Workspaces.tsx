@@ -11,7 +11,7 @@ import { useApp } from '../store';
 export function Workspaces() {
   const nav = useNavigate();
   const app = useApp();
-  const list = useLive(() => db().workspaces.orderBy('updatedAt').reverse().toArray(), []);
+  const list = useLive(() => db().workspaces.orderBy('updatedAt').reverse().toArray(), [], 'workspaces');
   const [q, setQ] = useState('');
   const [renaming, setRenaming] = useState<string | null>(null);
   const [name, setName] = useState('');

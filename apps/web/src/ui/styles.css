@@ -24,7 +24,7 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 .d-pages, .m-pages { position: relative; min-width: 0; min-height: 0; }
 .m-frame { position: fixed; inset: 0; z-index: 1; }
 .m-pages { position: absolute; inset: 0; overflow: hidden; }
-.page-slot { position: absolute; inset: 0; will-change: transform, opacity; }
+.page-slot { position: absolute; inset: 0; will-change: transform, opacity; contain: layout paint style; }
 .m-pages .page-slot { background: var(--bg); }
 .page-presence { height: 100%; }
 .d-page { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
@@ -39,9 +39,6 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 .skeleton i { display: block; height: 16px; border-radius: 10px; background: linear-gradient(90deg, var(--surface-sunk) 0%, var(--surface-2) 50%, var(--surface-sunk) 100%); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
 @keyframes skel-in { to { opacity: 1; } }
 @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
-.tbl tbody tr { animation: row-in 0.32s var(--ease-out) both; }
-.tbl tbody tr:nth-child(2) { animation-delay: 20ms; } .tbl tbody tr:nth-child(3) { animation-delay: 40ms; } .tbl tbody tr:nth-child(4) { animation-delay: 60ms; } .tbl tbody tr:nth-child(5) { animation-delay: 80ms; } .tbl tbody tr:nth-child(n+6) { animation-delay: 100ms; }
-@keyframes row-in { from { opacity: 0; transform: translateY(6px); } }
 .btn, .tool-tile, .count-d, .fchip, .ev-card, .step, .tl-item, .radio-d, .set-row, .doc-tab { transition: transform var(--dur-1) var(--ease-out), background var(--dur-1), box-shadow var(--dur-2); }
 .tool-tile:hover, .count-d:hover { transform: translateY(-2px); }
 .tool-tile:active, .count-d:active, .fchip:active, .ev-card:active, .step:active, .tl-item:active { transform: scale(0.98); }
@@ -123,16 +120,7 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 .page-slot[data-moving] .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--glass-opaque) !important; }
 .page-slot[data-moving] .glass::before { display: none; }
 
-/* Content cascade on page entry (light, short). */
-.main-inner > *, .m-content > * { animation: rise-in 0.34s cubic-bezier(0.32, 0.72, 0, 1) both; }
-.main-inner > :nth-child(2), .m-content > :nth-child(2) { animation-delay: 30ms; }
-.main-inner > :nth-child(3), .m-content > :nth-child(3) { animation-delay: 60ms; }
-.main-inner > :nth-child(4), .m-content > :nth-child(4) { animation-delay: 90ms; }
-.main-inner > :nth-child(n+5), .m-content > :nth-child(n+5) { animation-delay: 110ms; }
-@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } }
-.inspector .insp-body > * > * { animation: rise-in 0.3s cubic-bezier(0.32, 0.72, 0, 1) both; }
-@media (prefers-reduced-motion: reduce) { :root[data-motion="system"] .main-inner > *, :root[data-motion="system"] .m-content > *, :root[data-motion="system"] .inspector .insp-body > * > * { animation: none; } }
-:root[data-motion="reduced"] .main-inner > *, :root[data-motion="reduced"] .m-content > *, :root[data-motion="reduced"] .inspector .insp-body > * > * { animation: none; }
+/* No staggered content cascade on navigation: pages must be readable immediately. */
 
 /* Segmented controls and tabs with a sliding indicator */
 .seg { position: relative; }

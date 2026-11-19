@@ -23,7 +23,7 @@ export function DocumentReview() {
   const docId = sp.get('doc') ?? data?.draft?.doc.id ?? data?.docs[0]?.doc.id;
   const versionParam = sp.get('version');
   const current = data?.docs.find((d) => d.doc.id === docId);
-  const shown = useLive(async () => (versionParam ? db().versions.get(versionParam) : current?.version), [versionParam, current?.version.id]);
+  const shown = useLive(async () => (versionParam ? db().versions.get(versionParam) : current?.version), [versionParam, current?.version.id], `shown:${versionParam ?? current?.version.id ?? ''}`);
   const visible = useMemo(() => (data && shown ? data.findings.filter((f) => !isClosed(f.status) && f.anchors.some((a) => a.versionId === shown.id && a.quote)) : []), [data, shown]);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function DocumentReview() {
           <div className="doc-meta"><b style={{ color: 'var(--ink)', fontSize: 15 }}>{data.docs.find((d) => d.doc.id === shown.documentId)?.doc.title ?? 'Earlier version'}</b><span>{shown.label}{versionParam && shown.id !== current?.version.id ? ' · earlier version' : ''}</span><span className="pack-src"><Lock size={11} /> Private</span><span style={{ flex: 1 }} /><span className="hstack small"><span className="kbd">J</span><span className="kbd">K</span> next / previous finding</span></div>
           <div style={{ position: 'relative', overflow: 'hidden' }}>
             <AnimatePresence mode="popLayout" initial={false} custom={dirRef.current}>
-              <motion.div key={shown.id} custom={dirRef.current} variants={{ enter: (d: number) => ({ x: 40 * d, opacity: 0 }), center: { x: 0, opacity: 1 }, exit: (d: number) => ({ x: -40 * d, opacity: 0 }) }} initial="enter" animate="center" exit="exit" transition={{ type: 'tween', ease: [0.32, 0.72, 0, 1], duration: 0.24 }}>
+              <motion.div key={shown.id} custom={dirRef.current} variants={{ enter: (d: number) => ({ x: 24 * d, opacity: 0 }), center: { x: 0, opacity: 1 }, exit: (d: number) => ({ x: -24 * d, opacity: 0, transition: { duration: 0.08 } }) }} initial="enter" animate="center" exit="exit" transition={{ type: 'tween', ease: [0.2, 0.8, 0.2, 1], duration: 0.16 }}>
                 <MarkedText version={shown} findings={visible} active={finding?.id} onSelect={(fid) => { setSelected(fid); sheet.open(); }} />
               </motion.div>
             </AnimatePresence>

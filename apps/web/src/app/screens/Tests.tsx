@@ -15,7 +15,7 @@ import { Seg } from '../../ui/Seg';
 
 export function Tests() {
   const app = useApp();
-  const packs = useLive(() => db().packs.toArray(), []);
+  const packs = useLive(() => db().packs.toArray(), [], 'packs');
   const [open, setOpen] = useState<string | null>('core');
   const [domain, setDomain] = useState<Domain>('QUALITATIVE_RESEARCH');
   const [cats, setCats] = useState<GeneratorCategory[]>(['ROLE_RARITY', 'SHIFT_PATTERNS', 'TENURE_WINDOWS']);

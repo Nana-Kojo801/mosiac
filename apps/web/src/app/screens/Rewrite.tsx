@@ -26,7 +26,7 @@ export function Rewrite() {
     let v = data.draft.version;
     while (v.parentVersionId) { const p = await db().versions.get(v.parentVersionId); if (!p) break; v = p; if (p.sourceKind !== 'rewrite') break; }
     return v.id === data.draft.version.id ? undefined : v;
-  }, [data?.draft?.version.id]);
+  }, [data?.draft?.version.id], `rewriteBase:${data?.draft?.version.id}`);
   const focus = sp.get('focus');
   const cands = useMemo(() => {
     const list = (data?.findings ?? []).filter((f) => f.suggestion && !isClosed(f.status) && f.status !== 'UNASSESSED');

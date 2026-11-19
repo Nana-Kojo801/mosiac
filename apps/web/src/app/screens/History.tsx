@@ -15,7 +15,7 @@ export function History() {
   const data = useWorkspace(id);
   const app = useApp();
   const nav = useNavigate();
-  const records = useLive(async () => (id ? (await db().releases.where('workspaceId').equals(id).toArray()).sort((a, b) => b.approvedAt.localeCompare(a.approvedAt)) : []), [id]);
+  const records = useLive(async () => (id ? (await db().releases.where('workspaceId').equals(id).toArray()).sort((a, b) => b.approvedAt.localeCompare(a.approvedAt)) : []), [id], `releases:${id}`);
   const [sel, setSel] = useState<string | null>(null);
   const [compare, setCompare] = useState(false);
   if (data === undefined) return <PageSkeleton />;

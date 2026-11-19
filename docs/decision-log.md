@@ -2,6 +2,24 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Desktop navigation speed (owner: "really slow")
+
+**Measured** on the production build (headless Chromium, no GPU) as time from click until the arriving page's content is readable: about **300 ms** at normal CPU and about **405 ms** at 4× CPU slowdown. The DOM side was fast (about 25 ms from click to the new page existing). The time went into animation choices:
+- the new page faded in from transparent over 0.26 s;
+- a staggered content cascade ran for up to 0.45 s;
+- the inspector and Map/List swaps waited for the old content to fade out before showing the new.
+
+**Changes (desktop):**
+- The new page starts at 40% opacity, is readable within about 90 ms, and glides 10 px. The old page leaves in 40 ms.
+- The page cascade and table row stagger are removed.
+- Inspector and Map/List content appear at once with a short fade instead of waiting for the old content to exit. The document-tab slide is 0.16 s.
+- `contain: layout paint style` on page slots.
+- Screens that read their own lists (Journal, Stress tests, Workspaces, Release, History, Benchmark, Documents, Rewrite) now cache them per key, so content doesn't pop in after the page appears.
+
+Phone push, pop and tab slides keep their timing (0.3 s and 0.26 s).
+
+**Result:** frame recording shows readable content about 95 ms after the click (from about 300 ms). The `e2e/nav-speed.cjs` median is 167 ms at 1× and 256 ms at 4× in this GPU-less container, where frames take 25–48 ms. Motion check 17/17, end-to-end 29/29, unit tests 70/70.
+
 ## 2026-11-19 · Motion pass 2 (owner feedback)
 
 **Owner reported:** tab switches don't slide; no animations on desktop; motion feels heavy; scrollbars visible; extra space above some page titles; grey text on the blue landing button.

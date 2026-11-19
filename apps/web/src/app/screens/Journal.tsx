@@ -9,7 +9,7 @@ import { useApp } from '../store';
 const TASK: Record<string, string> = { extract: 'Extract context', review: 'Review connections', rewrite: 'Rewrite passage', generatePack: 'Generate test pack', explainSample: 'Explain sample test', rules: 'Rules' };
 
 export function Journal() {
-  const events = useLive(() => listEvents(), []);
+  const events = useLive(() => listEvents(), [], 'journal');
   const [sel, setSel] = useState(0);
   const app = useApp();
   const list = events ?? [];

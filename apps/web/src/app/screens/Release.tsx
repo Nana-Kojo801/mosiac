@@ -19,11 +19,11 @@ export function Release() {
   const app = useApp();
   const nav = useNavigate();
   const [check, setCheck] = useState([false, false, false]);
-  const blockers = useLive(() => (id ? approvalBlockers(id, check) : Promise.resolve([])), [id, check, data?.run?.id, data?.stale]);
+  const blockers = useLive(() => (id ? approvalBlockers(id, check) : Promise.resolve([])), [id, check, data?.run?.id, data?.stale], `blockers:${id}:${check.join()}:${data?.run?.id}:${data?.stale}`);
   // The first review in this workspace for the current draft document is the "before".
-  const firstRun = useLive(async () => (id ? (await db().runs.where('workspaceId').equals(id).sortBy('startedAt'))[0] : undefined), [id]);
-  const firstFindings = useLive(async () => (firstRun ? db().findings.where('runId').equals(firstRun.id).toArray() : []), [firstRun?.id]);
-  const firstDraftVersion = useLive(async () => (firstRun ? db().versions.get(firstRun.inputVersionIds[0]) : undefined), [firstRun?.id]);
+  const firstRun = useLive(async () => (id ? (await db().runs.where('workspaceId').equals(id).sortBy('startedAt'))[0] : undefined), [id], `firstRun:${id}`);
+  const firstFindings = useLive(async () => (firstRun ? db().findings.where('runId').equals(firstRun.id).toArray() : []), [firstRun?.id], `firstFindings:${firstRun?.id}`);
+  const firstDraftVersion = useLive(async () => (firstRun ? db().versions.get(firstRun.inputVersionIds[0]) : undefined), [firstRun?.id], `firstVersion:${firstRun?.id}`);
   if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const { draft, run, findings, stale, ws } = data;
