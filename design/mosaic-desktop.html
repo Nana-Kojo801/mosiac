@@ -1,0 +1,2312 @@
+<title>Mosaic Desktop Design</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>/* generated from src/tokens.mjs */
+:root, [data-appearance="light"] {
+  --bg: #EEF0F5;
+  --bg-deep: #E4E7EE;
+  --surface: #FFFFFF;
+  --surface-2: #F6F7FA;
+  --surface-sunk: #ECEEF3;
+  --ink: #12141B;
+  --ink-2: #4A4F5E;
+  --ink-3: #7A7F8E;
+  --hairline: rgba(18, 20, 27, 0.09);
+  --hairline-strong: rgba(18, 20, 27, 0.16);
+  --focus: #3346D3;
+  --risk-low-fg: #4B5468;
+  --risk-low-bg: #E9ECF2;
+  --risk-mod-fg: #8A4B00;
+  --risk-mod-bg: #FFF1D6;
+  --risk-high-fg: #B23A12;
+  --risk-high-bg: #FFE6DC;
+  --risk-crit-fg: #A3121F;
+  --risk-crit-bg: #FFDDE0;
+  --ok-fg: #1D6B47;
+  --ok-bg: #DDF3E7;
+  --unassessed-fg: #5B4A99;
+  --unassessed-bg: #ECE8FB;
+  --src-device-fg: #0F6A5B;
+  --src-device-bg: #D9F2EC;
+  --src-cloud-fg: #2B56B8;
+  --src-cloud-bg: #DFE8FB;
+  --src-rules-fg: #4B5468;
+  --src-rules-bg: #E9ECF2;
+  --mark-bg: rgba(255, 184, 64, 0.30);
+  --mark-line: #D88A00;
+  --mark-active-bg: rgba(255, 140, 40, 0.42);
+  --diff-del-bg: #FFE3E1;
+  --diff-del-fg: #9B1C14;
+  --diff-add-bg: #DDF3E7;
+  --diff-add-fg: #14583A;
+  --glass-tint: rgba(255, 255, 255, 0.58);
+  --glass-tint-strong: rgba(255, 255, 255, 0.76);
+  --glass-rim: rgba(255, 255, 255, 0.70);
+  --glass-rim-outer: rgba(18, 20, 27, 0.08);
+  --glass-spec-a: rgba(255, 255, 255, 0.95);
+  --glass-spec-b: rgba(255, 255, 255, 0.55);
+  --glass-shadow: 0 10px 30px -8px rgba(30, 36, 60, 0.22), 0 2px 6px rgba(30, 36, 60, 0.08);
+  --glass-opaque: #F8F9FB;
+  --scrim: rgba(18, 20, 27, 0.28);
+  --tile-a: rgba(51, 70, 211, 0.035);
+  --tile-b: rgba(15, 106, 91, 0.03);
+  --tile-c: rgba(216, 138, 0, 0.03);
+  --accent: #3346D3;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E4E7FB;
+  --accent-text: #2C3CB8;
+  --glass-blur: 22px;
+  --glass-blur-strong: 34px;
+  --glass-sat: 1.8;
+  --glass-radius-bar: 28px;
+  --glass-radius-sheet: 30px;
+  --refraction-scale: 34;
+  --refraction-edge: 22;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --fs-large-title: 34px;
+  --fs-title-1: 28px;
+  --fs-title-2: 22px;
+  --fs-title-3: 20px;
+  --fs-headline: 17px;
+  --fs-body: 17px;
+  --fs-callout: 16px;
+  --fs-subhead: 15px;
+  --fs-footnote: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+  --spring: cubic-bezier(0.22, 1.12, 0.36, 1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-1: 160ms;
+  --dur-2: 280ms;
+  --dur-3: 460ms;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --bg: #0C0D12;
+  --bg-deep: #07080B;
+  --surface: #171920;
+  --surface-2: #1D2029;
+  --surface-sunk: #12141A;
+  --ink: #ECEEF5;
+  --ink-2: #B1B5C3;
+  --ink-3: #80859A;
+  --hairline: rgba(236, 238, 245, 0.09);
+  --hairline-strong: rgba(236, 238, 245, 0.18);
+  --focus: #9AA6FF;
+  --risk-low-fg: #C3C8D6;
+  --risk-low-bg: #262A35;
+  --risk-mod-fg: #FFC86B;
+  --risk-mod-bg: #3A2A0E;
+  --risk-high-fg: #FF9D7A;
+  --risk-high-bg: #43200F;
+  --risk-crit-fg: #FF8A93;
+  --risk-crit-bg: #481018;
+  --ok-fg: #7FDCAA;
+  --ok-bg: #12321F;
+  --unassessed-fg: #C3B6FF;
+  --unassessed-bg: #2A2347;
+  --src-device-fg: #7FE0CB;
+  --src-device-bg: #0F302A;
+  --src-cloud-fg: #9DBBFF;
+  --src-cloud-bg: #16264A;
+  --src-rules-fg: #C3C8D6;
+  --src-rules-bg: #262A35;
+  --mark-bg: rgba(255, 184, 64, 0.22);
+  --mark-line: #FFB648;
+  --mark-active-bg: rgba(255, 150, 60, 0.38);
+  --diff-del-bg: #4A1714;
+  --diff-del-fg: #FFB3AC;
+  --diff-add-bg: #123522;
+  --diff-add-fg: #9BE7BE;
+  --glass-tint: rgba(34, 37, 48, 0.55);
+  --glass-tint-strong: rgba(34, 37, 48, 0.78);
+  --glass-rim: rgba(255, 255, 255, 0.14);
+  --glass-rim-outer: rgba(0, 0, 0, 0.45);
+  --glass-spec-a: rgba(255, 255, 255, 0.38);
+  --glass-spec-b: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --glass-opaque: #1F222C;
+  --scrim: rgba(0, 0, 0, 0.5);
+  --tile-a: rgba(154, 166, 255, 0.05);
+  --tile-b: rgba(127, 224, 203, 0.035);
+  --tile-c: rgba(255, 182, 72, 0.035);
+  --accent: #8E9BFF;
+  --accent-ink: #0C0D12;
+  --accent-soft: #232850;
+  --accent-text: #AEB8FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C0D12;
+  --bg-deep: #07080B;
+  --surface: #171920;
+  --surface-2: #1D2029;
+  --surface-sunk: #12141A;
+  --ink: #ECEEF5;
+  --ink-2: #B1B5C3;
+  --ink-3: #80859A;
+  --hairline: rgba(236, 238, 245, 0.09);
+  --hairline-strong: rgba(236, 238, 245, 0.18);
+  --focus: #9AA6FF;
+  --risk-low-fg: #C3C8D6;
+  --risk-low-bg: #262A35;
+  --risk-mod-fg: #FFC86B;
+  --risk-mod-bg: #3A2A0E;
+  --risk-high-fg: #FF9D7A;
+  --risk-high-bg: #43200F;
+  --risk-crit-fg: #FF8A93;
+  --risk-crit-bg: #481018;
+  --ok-fg: #7FDCAA;
+  --ok-bg: #12321F;
+  --unassessed-fg: #C3B6FF;
+  --unassessed-bg: #2A2347;
+  --src-device-fg: #7FE0CB;
+  --src-device-bg: #0F302A;
+  --src-cloud-fg: #9DBBFF;
+  --src-cloud-bg: #16264A;
+  --src-rules-fg: #C3C8D6;
+  --src-rules-bg: #262A35;
+  --mark-bg: rgba(255, 184, 64, 0.22);
+  --mark-line: #FFB648;
+  --mark-active-bg: rgba(255, 150, 60, 0.38);
+  --diff-del-bg: #4A1714;
+  --diff-del-fg: #FFB3AC;
+  --diff-add-bg: #123522;
+  --diff-add-fg: #9BE7BE;
+  --glass-tint: rgba(34, 37, 48, 0.55);
+  --glass-tint-strong: rgba(34, 37, 48, 0.78);
+  --glass-rim: rgba(255, 255, 255, 0.14);
+  --glass-rim-outer: rgba(0, 0, 0, 0.45);
+  --glass-spec-a: rgba(255, 255, 255, 0.38);
+  --glass-spec-b: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --glass-opaque: #1F222C;
+  --scrim: rgba(0, 0, 0, 0.5);
+  --tile-a: rgba(154, 166, 255, 0.05);
+  --tile-b: rgba(127, 224, 203, 0.035);
+  --tile-c: rgba(255, 182, 72, 0.035);
+  --accent: #8E9BFF;
+  --accent-ink: #0C0D12;
+  --accent-soft: #232850;
+  --accent-text: #AEB8FF;
+  color-scheme: dark;
+}
+[data-appearance="light"] {
+  --bg: #EEF0F5;
+  --bg-deep: #E4E7EE;
+  --surface: #FFFFFF;
+  --surface-2: #F6F7FA;
+  --surface-sunk: #ECEEF3;
+  --ink: #12141B;
+  --ink-2: #4A4F5E;
+  --ink-3: #7A7F8E;
+  --hairline: rgba(18, 20, 27, 0.09);
+  --hairline-strong: rgba(18, 20, 27, 0.16);
+  --focus: #3346D3;
+  --risk-low-fg: #4B5468;
+  --risk-low-bg: #E9ECF2;
+  --risk-mod-fg: #8A4B00;
+  --risk-mod-bg: #FFF1D6;
+  --risk-high-fg: #B23A12;
+  --risk-high-bg: #FFE6DC;
+  --risk-crit-fg: #A3121F;
+  --risk-crit-bg: #FFDDE0;
+  --ok-fg: #1D6B47;
+  --ok-bg: #DDF3E7;
+  --unassessed-fg: #5B4A99;
+  --unassessed-bg: #ECE8FB;
+  --src-device-fg: #0F6A5B;
+  --src-device-bg: #D9F2EC;
+  --src-cloud-fg: #2B56B8;
+  --src-cloud-bg: #DFE8FB;
+  --src-rules-fg: #4B5468;
+  --src-rules-bg: #E9ECF2;
+  --mark-bg: rgba(255, 184, 64, 0.30);
+  --mark-line: #D88A00;
+  --mark-active-bg: rgba(255, 140, 40, 0.42);
+  --diff-del-bg: #FFE3E1;
+  --diff-del-fg: #9B1C14;
+  --diff-add-bg: #DDF3E7;
+  --diff-add-fg: #14583A;
+  --glass-tint: rgba(255, 255, 255, 0.58);
+  --glass-tint-strong: rgba(255, 255, 255, 0.76);
+  --glass-rim: rgba(255, 255, 255, 0.70);
+  --glass-rim-outer: rgba(18, 20, 27, 0.08);
+  --glass-spec-a: rgba(255, 255, 255, 0.95);
+  --glass-spec-b: rgba(255, 255, 255, 0.55);
+  --glass-shadow: 0 10px 30px -8px rgba(30, 36, 60, 0.22), 0 2px 6px rgba(30, 36, 60, 0.08);
+  --glass-opaque: #F8F9FB;
+  --scrim: rgba(18, 20, 27, 0.28);
+  --tile-a: rgba(51, 70, 211, 0.035);
+  --tile-b: rgba(15, 106, 91, 0.03);
+  --tile-c: rgba(216, 138, 0, 0.03);
+  --accent: #3346D3;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E4E7FB;
+  --accent-text: #2C3CB8;
+  color-scheme: light;
+}
+[data-appearance="dark"] {
+  --bg: #0C0D12;
+  --bg-deep: #07080B;
+  --surface: #171920;
+  --surface-2: #1D2029;
+  --surface-sunk: #12141A;
+  --ink: #ECEEF5;
+  --ink-2: #B1B5C3;
+  --ink-3: #80859A;
+  --hairline: rgba(236, 238, 245, 0.09);
+  --hairline-strong: rgba(236, 238, 245, 0.18);
+  --focus: #9AA6FF;
+  --risk-low-fg: #C3C8D6;
+  --risk-low-bg: #262A35;
+  --risk-mod-fg: #FFC86B;
+  --risk-mod-bg: #3A2A0E;
+  --risk-high-fg: #FF9D7A;
+  --risk-high-bg: #43200F;
+  --risk-crit-fg: #FF8A93;
+  --risk-crit-bg: #481018;
+  --ok-fg: #7FDCAA;
+  --ok-bg: #12321F;
+  --unassessed-fg: #C3B6FF;
+  --unassessed-bg: #2A2347;
+  --src-device-fg: #7FE0CB;
+  --src-device-bg: #0F302A;
+  --src-cloud-fg: #9DBBFF;
+  --src-cloud-bg: #16264A;
+  --src-rules-fg: #C3C8D6;
+  --src-rules-bg: #262A35;
+  --mark-bg: rgba(255, 184, 64, 0.22);
+  --mark-line: #FFB648;
+  --mark-active-bg: rgba(255, 150, 60, 0.38);
+  --diff-del-bg: #4A1714;
+  --diff-del-fg: #FFB3AC;
+  --diff-add-bg: #123522;
+  --diff-add-fg: #9BE7BE;
+  --glass-tint: rgba(34, 37, 48, 0.55);
+  --glass-tint-strong: rgba(34, 37, 48, 0.78);
+  --glass-rim: rgba(255, 255, 255, 0.14);
+  --glass-rim-outer: rgba(0, 0, 0, 0.45);
+  --glass-spec-a: rgba(255, 255, 255, 0.38);
+  --glass-spec-b: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --glass-opaque: #1F222C;
+  --scrim: rgba(0, 0, 0, 0.5);
+  --tile-a: rgba(154, 166, 255, 0.05);
+  --tile-b: rgba(127, 224, 203, 0.035);
+  --tile-c: rgba(255, 182, 72, 0.035);
+  --accent: #8E9BFF;
+  --accent-ink: #0C0D12;
+  --accent-soft: #232850;
+  --accent-text: #AEB8FF;
+  color-scheme: dark;
+}
+[data-appearance="light"][data-accent="teal"] {
+  --accent: #0E7667;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #D7F0EB;
+  --accent-text: #0B6457;
+}
+[data-appearance="dark"][data-accent="teal"] {
+  --accent: #5FD3BE;
+  --accent-ink: #06120F;
+  --accent-soft: #103631;
+  --accent-text: #86E3D1;
+}
+
+/* ===== base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
+#app-root { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: var(--fs-subhead); line-height: 1.4; min-height: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2.5px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+.ic { flex: none; display: inline-block; vertical-align: middle; }
+.mono, code, kbd { font-family: var(--font-mono); font-size: 0.86em; }
+.tnum { font-variant-numeric: tabular-nums; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+
+.logo .lg-a { fill: var(--accent); }
+.logo .lg-b { fill: var(--ink); opacity: 0.82; }
+.logo .lg-c { fill: var(--ink); opacity: 0.34; }
+
+/* ===== Liquid Glass (12.4) ===== */
+.glass {
+  position: relative;
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-rim), 0 0 0 0.5px var(--glass-rim-outer);
+  isolation: isolate;
+}
+.glass::before {
+  /* specular edge highlight: brighter top-left and bottom-right rims */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 1;
+  background: linear-gradient(135deg, var(--glass-spec-a) 0%, transparent 32%, transparent 68%, var(--glass-spec-b) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.glass-strong { background: var(--glass-tint-strong); }
+.glass.refracting { background: var(--glass-tint-strong); }
+.glass-flat { box-shadow: inset 0 -0.5px 0 var(--hairline-strong); }
+.glass-flat::before { display: none; }
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: var(--glass-opaque); }
+}
+[data-transparency="reduced"] .glass,
+[data-transparency="reduced"] .glass-strong { background: var(--glass-opaque) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+[data-transparency="reduced"] .glass::before { display: none; }
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .glass-strong { background: var(--glass-opaque) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .glass::before { display: none; }
+}
+@media (prefers-contrast: more) {
+  .glass, .glass-strong { background: var(--glass-opaque) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: 0 0 0 1.5px var(--ink) !important; }
+  .glass::before { display: none; }
+  .chip, .src, .status { box-shadow: inset 0 0 0 1px currentColor; }
+}
+
+/* ===== buttons ===== */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; font-weight: 600; font-size: var(--fs-subhead); white-space: nowrap; transition: transform var(--dur-1) var(--ease-out), background var(--dur-1); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-tinted { background: var(--accent-soft); color: var(--accent-text); }
+.btn-plain { color: var(--accent-text); padding: 0 10px; }
+.btn-quiet { background: var(--surface-sunk); color: var(--ink); }
+.btn-danger { background: var(--risk-crit-bg); color: var(--risk-crit-fg); }
+.btn-sm { min-height: 34px; padding: 0 14px; font-size: var(--fs-footnote); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.42; pointer-events: none; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; color: var(--ink); }
+.icon-btn.glass { width: 40px; height: 40px; }
+
+/* ===== chips: risk always pairs icon + text + color ===== */
+.chip, .src, .status, .pack-src { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; font-weight: 600; white-space: nowrap; line-height: 1; }
+.chip { padding: 5px 9px 5px 7px; font-size: var(--fs-caption); }
+.chip-sm { padding: 3px 7px 3px 5px; }
+.chip-low { color: var(--risk-low-fg); background: var(--risk-low-bg); }
+.chip-mod { color: var(--risk-mod-fg); background: var(--risk-mod-bg); }
+.chip-high { color: var(--risk-high-fg); background: var(--risk-high-bg); }
+.chip-crit { color: var(--risk-crit-fg); background: var(--risk-crit-bg); }
+.chip-unassessed { color: var(--unassessed-fg); background: var(--unassessed-bg); }
+.chip-ok { color: var(--ok-fg); background: var(--ok-bg); }
+.src { padding: 4px 8px 4px 6px; font-size: var(--fs-micro); letter-spacing: 0.01em; }
+.src-device { color: var(--src-device-fg); background: var(--src-device-bg); }
+.src-cloud { color: var(--src-cloud-fg); background: var(--src-cloud-bg); }
+.src-rules, .src-unknown { color: var(--src-rules-fg); background: var(--src-rules-bg); }
+.src-unavail { color: var(--unassessed-fg); background: var(--unassessed-bg); }
+.src-fixture { color: var(--ink-2); background: transparent; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.status { font-size: var(--fs-caption); color: var(--ink-2); font-weight: 500; }
+.status-resolved { color: var(--ok-fg); }
+.status-unassessed { color: var(--unassessed-fg); }
+.status-under_review { color: var(--accent-text); }
+.pack-src { padding: 3px 7px 3px 6px; font-size: var(--fs-micro); color: var(--ink-2); background: var(--surface-sunk); }
+.pack-cloud { color: var(--src-cloud-fg); background: var(--src-cloud-bg); }
+.policy { font-size: var(--fs-micro); padding: 2px 6px; border-radius: 6px; background: var(--surface-sunk); color: var(--ink-2); letter-spacing: 0; }
+.preview-flag { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ===== evidence marks ===== */
+mark.ev { background: var(--mark-bg); color: inherit; border-radius: 4px; padding: 1px 2px; box-shadow: inset 0 -2px 0 var(--mark-line); cursor: pointer; transition: background var(--dur-1); }
+mark.ev:hover, mark.ev.active { background: var(--mark-active-bg); }
+mark.ev-high, mark.ev-crit { --mark-line: var(--risk-high-fg); }
+mark.ev-low { --mark-line: var(--ink-3); background: var(--surface-sunk); }
+mark.ev.flash { animation: flash 1.1s var(--ease-out); }
+@keyframes flash { 0%, 40% { box-shadow: inset 0 -2px 0 var(--mark-line), 0 0 0 4px var(--mark-active-bg); } 100% { box-shadow: inset 0 -2px 0 var(--mark-line), 0 0 0 0 transparent; } }
+.para { position: relative; }
+.para-anchor { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--ink-3); user-select: none; }
+del.diff, ins.diff { text-decoration: none; border-radius: 4px; padding: 1px 3px; }
+del.diff { background: var(--diff-del-bg); color: var(--diff-del-fg); text-decoration: line-through; text-decoration-thickness: 1px; }
+ins.diff { background: var(--diff-add-bg); color: var(--diff-add-fg); }
+
+/* ===== score ===== */
+.score { display: grid; gap: 8px; }
+.score-row { display: grid; grid-template-columns: 1fr auto 32px; align-items: center; gap: 10px; font-size: var(--fs-footnote); color: var(--ink-2); }
+.score-pips { display: inline-flex; gap: 3px; }
+.score-pips i { width: 16px; height: 6px; border-radius: 3px; background: var(--surface-sunk); box-shadow: inset 0 0 0 0.5px var(--hairline-strong); }
+.score-pips i.on { background: var(--ink-2); box-shadow: none; }
+.score-num { font-family: var(--font-mono); font-size: var(--fs-micro); text-align: right; color: var(--ink-3); }
+.score-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 8px; border-top: 0.5px solid var(--hairline-strong); font-size: var(--fs-footnote); color: var(--ink-2); }
+.score-total strong { font-size: var(--fs-title-3); color: var(--ink); font-variant-numeric: tabular-nums; }
+.score-total small { font-size: var(--fs-footnote); color: var(--ink-3); font-weight: 500; }
+
+/* ===== mosaic (fictional group-size illustration) ===== */
+.mosaic { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; aspect-ratio: 1; max-width: 100%; }
+.mosaic .tile { border-radius: 3px; background: var(--accent); transition: opacity var(--dur-3) var(--ease-out), transform var(--dur-3) var(--spring), background var(--dur-3); }
+.mosaic .tile.out { background: var(--ink-3); opacity: 0.16; transform: scale(0.72); }
+.mosaic .tile.out-1 { opacity: 0.22; }
+.mosaic .tile.out-2 { opacity: 0.16; }
+.mosaic .tile.out-3 { opacity: 0.11; }
+.illustrative { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-micro); color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ===== switches & segmented ===== */
+.switch { position: relative; width: 51px; height: 31px; flex: none; }
+.switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+.switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--surface-sunk); box-shadow: inset 0 0 0 0.5px var(--hairline-strong); transition: background var(--dur-2); }
+.switch span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.18), 0 0 0 0.5px rgba(0,0,0,.06); transition: transform var(--dur-2) var(--spring); }
+.switch input:checked + span { background: var(--ok-fg); }
+.switch input:checked + span::after { transform: translateX(20px); }
+.switch input:focus-visible + span { outline: 2.5px solid var(--focus); outline-offset: 2px; }
+.seg { display: inline-flex; padding: 2px; border-radius: 10px; background: var(--surface-sunk); gap: 2px; }
+.seg button { min-height: 30px; padding: 0 12px; border-radius: 8px; font-size: var(--fs-footnote); font-weight: 600; color: var(--ink-2); }
+.seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 0.5px var(--hairline); }
+
+/* ===== code / payload ===== */
+.payload { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; background: var(--surface-sunk); border-radius: 12px; padding: 12px 14px; overflow-x: auto; white-space: pre; color: var(--ink); box-shadow: inset 0 0 0 0.5px var(--hairline-strong); }
+.payload .k { color: var(--accent-text); }
+.payload .s { color: var(--src-device-fg); }
+
+/* ===== banners ===== */
+.banner { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; font-size: var(--fs-footnote); line-height: 1.45; }
+.banner .ic { margin-top: 1px; }
+.banner strong { display: block; font-size: var(--fs-subhead); margin-bottom: 2px; }
+.banner-warn { background: var(--risk-mod-bg); color: var(--risk-mod-fg); }
+.banner-info { background: var(--accent-soft); color: var(--accent-text); }
+.banner-neutral { background: var(--surface-sunk); color: var(--ink-2); }
+.banner-bad { background: var(--risk-crit-bg); color: var(--risk-crit-fg); }
+.banner-un { background: var(--unassessed-bg); color: var(--unassessed-fg); }
+.banner .banner-body { flex: 1; min-width: 0; }
+.banner .btn { margin-top: 8px; }
+
+/* ===== toast ===== */
+#toast-host { position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: grid; gap: 8px; z-index: 200; pointer-events: none; }
+.toast { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; font-size: var(--fs-footnote); font-weight: 600; animation: toast-in var(--dur-2) var(--spring); }
+.toast.out { opacity: 0; transform: translateY(8px); transition: all var(--dur-2); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+
+/* ===== preview control panel (design-tool chrome, deliberately plain) ===== */
+.pv { font-family: var(--font-ui); font-size: 13px; color: var(--ink); display: grid; gap: 6px; align-content: start; }
+.pv-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pv-tag { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 8px; border: 1.5px dashed var(--ink-3); border-radius: 6px; color: var(--ink-2); }
+.pv-ver { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.pv-note { color: var(--ink-2); font-size: 12px; line-height: 1.45; margin-bottom: 6px; }
+.pv-hint { color: var(--ink-3); font-size: 11.5px; line-height: 1.4; }
+.pv-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 8px; }
+.pv-select { width: 100%; min-height: 36px; border-radius: 8px; border: 1px solid var(--hairline-strong); background: var(--surface); padding: 0 10px; font-size: 13px; }
+.pv-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 2px; border-radius: 8px; background: var(--surface-sunk); }
+.pv-seg button { min-height: 30px; border-radius: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.pv-seg button[aria-checked="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.pv-switch { display: flex; align-items: center; gap: 8px; min-height: 32px; font-size: 13px; cursor: pointer; }
+.pv-switch input { width: 16px; height: 16px; accent-color: var(--accent); }
+.pv-reset { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; min-height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--hairline-strong); font-size: 12.5px; font-weight: 600; justify-self: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
+
+/* ===== preview bar (design-tool chrome) ===== */
+#app-root { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
+.pvbar { flex: none; background: var(--surface); border-bottom: 1px solid var(--hairline-strong); padding-block: 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); position: relative; z-index: 5; }
+.pv-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.pv-inline .pv-head { gap: 8px; }
+.pv-inline .pv-note, .pv-inline .pv-hint { display: none; }
+.pv-inline .pv-label { margin: 0; }
+.pv-inline .pv-select { width: auto; min-height: 30px; max-width: 200px; }
+.pv-inline .pv-seg { min-width: 120px; }
+.pv-inline .pv-seg button { min-height: 26px; padding: 0 8px; }
+.pv-inline .pv-switch { min-height: 28px; }
+.pv-inline .pv-reset { margin: 0; min-height: 30px; }
+.viewport { flex: 1; position: relative; overflow: hidden; background: var(--bg-deep); }
+.win { position: absolute; left: 0; top: 0; transform-origin: 0 0; background: var(--bg); overflow: hidden; }
+.backdrop { position: absolute; inset: 0; width: 100%; height: 100%; }
+.backdrop .t1 { fill: var(--tile-a); } .backdrop .t2 { fill: var(--tile-b); } .backdrop .t3 { fill: var(--tile-c); }
+.app { position: absolute; inset: 0; }
+
+/* ===== shell ===== */
+.shell { position: absolute; inset: 0; display: grid; grid-template-columns: 264px minmax(0, 1fr) 352px; gap: 12px; padding: 12px; }
+.shell.no-inspector { grid-template-columns: 264px minmax(0, 1fr); }
+.sidebar { border-radius: 22px; display: flex; flex-direction: column; padding: 14px 10px 10px; min-height: 0; }
+.sidebar > * { position: relative; z-index: 2; }
+.sb-brand { display: flex; align-items: center; gap: 9px; padding: 4px 8px 12px; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.sb-brand .preview-flag { margin-left: auto; font-size: 9.5px; }
+.ws-switch { display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 70%, transparent); box-shadow: inset 0 0 0 0.5px var(--hairline); text-align: left; }
+[data-transparency="reduced"] .ws-switch { background: var(--surface); }
+.ws-switch .ws-t { font-weight: 600; font-size: 14px; display: block; }
+.ws-switch .ws-s { font-size: 11.5px; color: var(--ink-3); display: block; }
+.ws-switch .ic:last-child { margin-left: auto; color: var(--ink-3); }
+.nav { flex: 1; overflow-y: auto; margin-top: 12px; display: grid; align-content: start; gap: 1px; scrollbar-width: none; }
+.nav-h { font-size: 11px; font-weight: 600; color: var(--ink-3); letter-spacing: 0.05em; text-transform: uppercase; padding: 12px 10px 5px; }
+.nav-i { display: flex; align-items: center; gap: 10px; min-height: 34px; padding: 0 10px; border-radius: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink); text-align: left; width: 100%; }
+.nav-i .ic { color: var(--ink-2); }
+.nav-i:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.nav-i[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+.nav-i[aria-current="page"] .ic { color: var(--accent-ink); }
+.nav-i .n { margin-left: auto; font-size: 11.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.nav-i[aria-current="page"] .n { color: var(--accent-ink); opacity: 0.85; }
+.nav-i .n.hot { color: var(--risk-high-fg); }
+.sb-foot { display: grid; gap: 6px; padding-top: 8px; border-top: 0.5px solid var(--hairline-strong); margin-top: 8px; }
+.dev-chip { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 12px; font-size: 12px; text-align: left; width: 100%; }
+.dev-chip:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.dev-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.dev-chip .dot.ok { background: var(--ok-fg); box-shadow: 0 0 0 3px var(--ok-bg); }
+.dev-chip .dot.warn { background: var(--risk-mod-fg); box-shadow: 0 0 0 3px var(--risk-mod-bg); }
+.dev-chip .dot.bad { background: var(--risk-crit-fg); box-shadow: 0 0 0 3px var(--risk-crit-bg); }
+.dev-chip b { display: block; font-size: 12.5px; font-weight: 600; }
+.dev-chip span { color: var(--ink-3); }
+
+.main { position: relative; min-width: 0; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hairline-strong), 0 10px 30px -18px rgba(20, 30, 60, 0.25); }
+.main-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 84px 36px 48px; scrollbar-width: thin; }
+.main-inner { max-width: 880px; margin: 0 auto; }
+.main-inner.wide { max-width: 1100px; }
+.topbar-d { position: absolute; z-index: 10; top: 10px; left: 10px; right: 10px; height: 56px; border-radius: 18px; display: flex; align-items: center; gap: 10px; padding: 0 10px 0 16px; }
+.topbar-d > * { position: relative; z-index: 2; }
+.crumbs { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-3); min-width: 0; }
+.crumbs b { color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap; }
+.topbar-d .spacer { flex: 1; }
+.pill-status { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border-radius: 16px; font-size: 12.5px; font-weight: 600; background: color-mix(in srgb, var(--surface) 75%, transparent); box-shadow: inset 0 0 0 0.5px var(--hairline); }
+[data-transparency="reduced"] .pill-status { background: var(--surface-2); }
+.pill-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+.pill-status .dot.ok { background: var(--ok-fg); } .pill-status .dot.warn { background: var(--risk-mod-fg); } .pill-status .dot.bad { background: var(--risk-crit-fg); }
+.tb-btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
+.kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 5px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); background: var(--surface-2); box-shadow: inset 0 -1px 0 var(--hairline-strong), inset 0 0 0 0.5px var(--hairline-strong); }
+
+.inspector { border-radius: 22px; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.inspector > * { position: relative; z-index: 2; }
+.insp-head { padding: 16px 18px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.insp-head h2 { font-size: 13px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.insp-body { flex: 1; overflow-y: auto; padding: 0 14px 18px; scrollbar-width: thin; }
+.insp-card { background: var(--surface); border-radius: 16px; padding: 14px; box-shadow: 0 0 0 0.5px var(--hairline); }
+.insp-card + .insp-card { margin-top: 10px; }
+.insp-label { font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 4px 8px; }
+.insp-title { font-size: 19px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; }
+.insp-actions { display: grid; gap: 8px; margin-top: 14px; }
+.insp-actions .btn { width: 100%; }
+.insp-actions .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* ===== content primitives ===== */
+.page-h { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.page-h h1 { font-size: 30px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.1; }
+.page-h p { color: var(--ink-2); margin-top: 6px; font-size: 14.5px; max-width: 60ch; }
+.h2 { font-size: 17px; font-weight: 700; margin: 28px 0 10px; display: flex; align-items: baseline; justify-content: space-between; }
+.h2 .btn-plain { font-size: 13px; min-height: 28px; font-weight: 600; }
+.panel { background: var(--surface-2); border-radius: 16px; padding: 16px; }
+.panel.line { background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hstack { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.muted { color: var(--ink-3); }
+.small { font-size: 12.5px; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th { text-align: left; font-size: 11.5px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px; border-bottom: 1px solid var(--hairline-strong); white-space: nowrap; }
+.tbl td { padding: 11px 10px; border-bottom: 0.5px solid var(--hairline-strong); vertical-align: middle; }
+.tbl tr.sel td { background: var(--accent-soft); }
+.tbl tr.clickable { cursor: pointer; }
+.tbl tr.clickable:hover td { background: var(--surface-2); }
+.tbl tr.sel:hover td { background: var(--accent-soft); }
+.tbl tr.done td { color: var(--ink-3); }
+.tbl .t-title { font-weight: 600; }
+.tbl .mono { color: var(--ink-3); }
+.tbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.filters-d { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.fchip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border-radius: 15px; background: var(--surface); color: var(--ink-2); font-size: 12.5px; font-weight: 600; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.fchip[aria-pressed="true"] { background: var(--ink); color: var(--bg); box-shadow: none; }
+.fchip .n { opacity: 0.65; font-variant-numeric: tabular-nums; }
+
+/* overview */
+.status-d { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; }
+.counts-d { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
+.count-d { background: var(--surface); border-radius: 12px; padding: 12px; box-shadow: inset 0 0 0 0.5px var(--hairline); text-align: left; }
+.count-d strong { display: block; font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; font-weight: 700; }
+.count-d span { display: inline-flex; gap: 4px; align-items: center; font-size: 12px; color: var(--ink-2); margin-top: 6px; }
+.count-d.high strong { color: var(--risk-high-fg); } .count-d.mod strong { color: var(--risk-mod-fg); } .count-d.un strong { color: var(--unassessed-fg); }
+.coverage-d { display: grid; gap: 10px; font-size: 12.5px; color: var(--ink-2); }
+.cov-row { display: grid; grid-template-columns: 70px 1fr auto; gap: 10px; align-items: center; }
+.bar { height: 6px; border-radius: 3px; background: var(--surface-sunk); overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; background: var(--src-device-fg); }
+.bar i.rules { background: var(--ink-3); }
+.bar i.un { background: repeating-linear-gradient(45deg, var(--unassessed-fg) 0 3px, transparent 3px 6px); opacity: 0.6; }
+.tool-tile { display: grid; gap: 6px; padding: 14px; border-radius: 14px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline-strong); text-align: left; transition: box-shadow var(--dur-1), transform var(--dur-1); }
+.tool-tile:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tool-tile .ic { color: var(--accent-text); }
+.tool-tile b { font-size: 14px; }
+.tool-tile span { font-size: 12.5px; color: var(--ink-3); }
+.doc-ic { width: 30px; height: 36px; border-radius: 6px; display: inline-grid; place-items: center; background: var(--surface-2); color: var(--ink-3); box-shadow: inset 0 0 0 0.5px var(--hairline-strong); vertical-align: middle; }
+.doc-ic.draft { background: var(--accent-soft); color: var(--accent-text); box-shadow: none; }
+
+/* reader */
+.doc-tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--hairline-strong); }
+.doc-tab { padding: 10px 12px; font-size: 13.5px; font-weight: 600; color: var(--ink-3); border-bottom: 2px solid transparent; margin-bottom: -1px; display: inline-flex; gap: 6px; align-items: center; }
+.doc-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.reader-d { font-size: 16.5px; line-height: 1.7; max-width: 68ch; }
+.reader-d .para { display: grid; grid-template-columns: 34px 1fr; gap: 8px; padding: 4px 0 14px; border-radius: 8px; }
+.reader-d .para-anchor { padding-top: 6px; text-align: right; padding-right: 6px; }
+.reader-d .para.flash { animation: paraflash 1.2s var(--ease-out); }
+@keyframes paraflash { 0%, 50% { background: var(--accent-soft); } 100% { background: transparent; } }
+.doc-meta { display: flex; gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-3); margin-bottom: 14px; flex-wrap: wrap; }
+
+/* evidence cards in inspector */
+.ev-card { display: grid; gap: 6px; padding: 11px 12px; border-radius: 12px; background: var(--surface-2); text-align: left; width: 100%; }
+.ev-card:hover { box-shadow: inset 0 0 0 1px var(--accent); }
+.ev-card .ev-src { display: flex; gap: 6px; align-items: center; font-size: 11.5px; color: var(--ink-3); font-weight: 600; }
+.ev-card .ev-q { font-size: 13.5px; line-height: 1.5; }
+.ev-list { display: grid; gap: 8px; }
+.diffbox { font-size: 13.5px; line-height: 1.6; background: var(--surface-2); border-radius: 12px; padding: 10px 12px; }
+.note-field { width: 100%; min-height: 70px; border-radius: 10px; border: 0; background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--hairline-strong); padding: 9px 11px; font-size: 13.5px; resize: vertical; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; font-size: 12.5px; margin: 0; }
+.kv dt { color: var(--ink-3); }
+.kv dd { margin: 0; text-align: right; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+
+/* map */
+.graph-wrap { background: var(--surface-2); border-radius: 18px; padding: 14px; overflow-x: auto; }
+.graph-wrap svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.g-node rect { fill: var(--surface); stroke: var(--hairline-strong); stroke-width: 1; }
+.g-node.draft rect { fill: var(--accent-soft); stroke: none; }
+.g-node.cat rect { fill: var(--surface); stroke-dasharray: 0; }
+.g-node.finding rect { fill: var(--risk-high-bg); stroke: var(--risk-high-fg); stroke-width: 1.2; }
+.g-node.finding.mod rect { fill: var(--risk-mod-bg); stroke: var(--risk-mod-fg); }
+.g-node.finding.resolved rect { fill: var(--ok-bg); stroke: var(--ok-fg); }
+.g-node.sel rect { stroke: var(--focus); stroke-width: 2.5; }
+.g-node text { fill: var(--ink); font-family: var(--font-ui); font-size: 13px; font-weight: 600; }
+.g-node .sub { fill: var(--ink-3); font-size: 11px; font-weight: 500; }
+.g-node .kind { fill: var(--ink-3); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; }
+.g-node.draft text { fill: var(--accent-text); }
+.g-node.finding text { fill: var(--risk-high-fg); }
+.g-node.finding.mod text { fill: var(--risk-mod-fg); }
+.g-node.finding.resolved text { fill: var(--ok-fg); }
+.g-node { cursor: pointer; }
+.g-edge { fill: none; stroke: var(--ink-3); stroke-width: 1.5; opacity: 0.5; pointer-events: none; transition: opacity var(--dur-1); }
+.g-edge.hot { stroke: var(--risk-high-fg); opacity: 0.85; stroke-width: 2.2; }
+.g-edge.cut { stroke-dasharray: 4 5; opacity: 0.3; }
+.g-edge.sel { stroke: var(--focus); opacity: 1; stroke-width: 3; }
+.g-hit { fill: none; stroke: transparent; stroke-width: 18; cursor: pointer; }
+.g-hit:hover + .g-edge { opacity: 1; stroke-width: 2.6; }
+.g-col { fill: var(--ink-3); font-family: var(--font-ui); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; }
+.g-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-3); margin-top: 10px; }
+.g-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.steps { display: grid; gap: 2px; }
+.step { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 10px; text-align: left; width: 100%; }
+.step:hover { background: var(--surface-2); }
+.step[aria-pressed="true"] { background: var(--accent-soft); }
+.step .st-l { font-size: 13px; font-weight: 600; display: block; }
+.step .st-s { font-size: 11.5px; color: var(--ink-3); display: block; }
+.step .st-n { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* rewrite */
+.diff-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.diff-cols > div { padding: 16px 18px; }
+.diff-cols > div + div { border-left: 1px solid var(--hairline-strong); background: var(--surface-2); }
+.diff-cols h3 { font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
+.diff-cols p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; display: grid; grid-template-columns: 26px 1fr; }
+.diff-cols p .para-anchor { padding-top: 3px; }
+.edit-d { background: var(--surface); border-radius: 14px; padding: 12px; box-shadow: 0 0 0 0.5px var(--hairline); display: grid; gap: 8px; }
+.edit-d + .edit-d { margin-top: 8px; }
+.edit-d.applied { box-shadow: inset 0 0 0 1.5px var(--ok-fg); }
+.edit-d .top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.keeps { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--ink-2); }
+.keeps .ic { color: var(--ok-fg); margin-top: 2px; }
+.reassess { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.reassess div { background: var(--surface-2); border-radius: 10px; padding: 8px 4px; text-align: center; }
+.reassess strong { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.reassess span { font-size: 10.5px; color: var(--ink-2); font-weight: 600; }
+
+/* release */
+.compare-d { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch; }
+.compare-d .col { background: var(--surface-2); border-radius: 16px; padding: 18px; display: grid; gap: 14px; }
+.compare-d .arrow { align-self: center; color: var(--ink-3); }
+.compare-d h3 { font-size: 13px; color: var(--ink-3); font-weight: 600; }
+.compare-d .big { font-size: 38px; font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -0.02em; }
+.compare-d .lbl { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; }
+.check { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; padding: 10px 4px; width: 100%; text-align: left; font-size: 13.5px; }
+.check + .check { border-top: 0.5px solid var(--hairline-strong); }
+.check .box { width: 20px; height: 20px; border-radius: 6px; box-shadow: inset 0 0 0 1.5px var(--ink-3); display: grid; place-items: center; color: transparent; margin-top: 1px; }
+.check[aria-checked="true"] .box { background: var(--accent); box-shadow: none; color: var(--accent-ink); }
+.timeline { position: relative; display: grid; gap: 12px; padding-left: 28px; }
+.timeline::before { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; background: var(--hairline-strong); }
+.tl-item { position: relative; background: var(--surface-2); border-radius: 14px; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%; }
+.tl-item.sel { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tl-item::before { content: ""; position: absolute; left: -24px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); box-shadow: 0 0 0 2px var(--ink-3); }
+.tl-item.approved::before { background: var(--ok-fg); box-shadow: 0 0 0 2px var(--ok-fg); }
+.tl-item.current::before { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+
+/* tests */
+.pack-d { background: var(--surface); border-radius: 16px; box-shadow: inset 0 0 0 1px var(--hairline-strong); overflow: hidden; }
+.pack-d .ph { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 14px 16px; align-items: center; }
+.pack-d h3 { font-size: 15px; font-weight: 650; }
+.pack-d .pt { border-top: 0.5px solid var(--hairline-strong); padding: 6px 16px 12px; }
+.pack-d .pt div { padding: 8px 0; display: grid; grid-template-columns: 200px 1fr; gap: 12px; font-size: 13px; }
+.pack-d .pt div + div { border-top: 0.5px solid var(--hairline); }
+.pack-d .pt b { font-weight: 600; }
+.pack-d .pt span { color: var(--ink-2); }
+.switch.sm { width: 42px; height: 26px; }
+.switch.sm span::after { width: 22px; height: 22px; }
+.switch.sm input:checked + span::after { transform: translateX(16px); }
+
+/* landing */
+.landing-d { position: absolute; inset: 0; overflow-y: auto; }
+.lnav { position: sticky; top: 12px; z-index: 10; margin: 12px auto 0; width: min(1120px, calc(100% - 32px)); height: 58px; border-radius: 29px; display: flex; align-items: center; gap: 18px; padding: 0 10px 0 20px; }
+.lnav > * { position: relative; z-index: 2; }
+.lnav .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; }
+.lnav a, .lnav .lk { font-size: 13.5px; color: var(--ink-2); font-weight: 500; text-decoration: none; }
+.lnav .spacer { flex: 1; }
+.l-hero { width: min(1120px, calc(100% - 32px)); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; padding: 56px 0 40px; }
+.l-hero h1 { font-size: 52px; line-height: 1.04; font-weight: 780; letter-spacing: -0.035em; }
+.l-hero .sub { font-size: 18px; line-height: 1.5; color: var(--ink-2); margin-top: 18px; max-width: 46ch; }
+.l-ctas { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+.l-ctas .btn { min-height: 50px; padding: 0 22px; font-size: 15px; }
+.l-trust { display: grid; gap: 10px; margin-top: 28px; font-size: 14px; color: var(--ink-2); }
+.l-trust div { display: flex; gap: 10px; align-items: flex-start; }
+.l-trust .ic { color: var(--accent-text); margin-top: 1px; }
+.l-reveal { background: var(--surface); border-radius: 28px; padding: 20px; box-shadow: 0 0 0 0.5px var(--hairline-strong), 0 30px 60px -30px rgba(20, 30, 60, 0.35); display: grid; grid-template-columns: 1fr 200px; gap: 20px; }
+.l-docs { display: grid; gap: 10px; align-content: start; }
+.l-doc { padding: 12px 14px; border-radius: 14px; background: var(--surface-2); font-size: 13.5px; line-height: 1.5; transition: box-shadow var(--dur-2); }
+.l-doc b { display: flex; gap: 6px; align-items: center; font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; font-weight: 600; }
+.l-doc.lit { box-shadow: inset 0 0 0 1.5px var(--mark-line); }
+.l-count { font-size: 56px; font-weight: 780; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 12px; }
+.l-count small { font-size: 16px; color: var(--ink-3); font-weight: 600; letter-spacing: 0; }
+.l-cap { font-size: 13px; color: var(--ink-2); margin-top: 6px; min-height: 38px; }
+.l-split { width: min(1120px, calc(100% - 32px)); margin: 8px auto 60px; }
+.l-split h2 { font-size: 24px; font-weight: 750; letter-spacing: -0.02em; margin-bottom: 6px; }
+.l-split > p { color: var(--ink-2); font-size: 15px; margin-bottom: 18px; max-width: 70ch; }
+.route-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.route-col { border-radius: 20px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.route-col > * { position: relative; z-index: 2; }
+.route-col h3 { font-size: 15px; font-weight: 700; display: flex; gap: 8px; align-items: center; }
+.route-item { background: var(--surface); border-radius: 12px; padding: 10px 12px; font-size: 13px; display: grid; gap: 4px; }
+.route-item span { color: var(--ink-3); font-size: 12px; }
+
+/* setup */
+.setup-d { position: absolute; inset: 0; overflow-y: auto; padding: 32px 16px; }
+.setup-card { width: min(980px, 100%); margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+.setup-card .glass { border-radius: 24px; padding: 22px; }
+.setup-card .glass > * { position: relative; z-index: 2; }
+.model-state { display: flex; align-items: center; gap: 14px; }
+.model-state .ms-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--surface-sunk); color: var(--ink-2); }
+.model-state.ok .ms-ic { background: var(--ok-bg); color: var(--ok-fg); }
+.model-state.warn .ms-ic { background: var(--risk-mod-bg); color: var(--risk-mod-fg); }
+.model-state.bad .ms-ic { background: var(--risk-crit-bg); color: var(--risk-crit-fg); }
+.model-state h3 { font-size: 22px; font-weight: 750; }
+.req { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding: 10px 0; font-size: 13.5px; }
+.req + .req { border-top: 0.5px solid var(--hairline-strong); }
+.req .ic { color: var(--ink-3); margin-top: 1px; }
+.req span { color: var(--ink-3); display: block; font-size: 12.5px; }
+.indet { height: 6px; border-radius: 3px; background: var(--surface-sunk); overflow: hidden; position: relative; }
+.indet::after { content: ""; position: absolute; inset: 0; width: 35%; border-radius: 3px; background: var(--accent); animation: indet 1.4s var(--ease-out) infinite; }
+@keyframes indet { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.spin { animation: spin 1.2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.radio-d { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 10px 12px; border-radius: 12px; text-align: left; width: 100%; font-size: 13.5px; }
+.radio-d .dot { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--ink-3); margin-top: 1px; }
+.radio-d[aria-checked="true"] { background: var(--accent-soft); }
+.radio-d[aria-checked="true"] .dot { box-shadow: inset 0 0 0 5px var(--accent); }
+.radio-d span { color: var(--ink-3); display: block; font-size: 12.5px; }
+
+/* import */
+.drop-d { border: 1.5px dashed var(--hairline-strong); border-radius: 20px; padding: 34px; text-align: center; display: grid; gap: 10px; justify-items: center; background: var(--surface-2); }
+.drop-d .d-ic { width: 56px; height: 56px; border-radius: 16px; background: var(--accent-soft); color: var(--accent-text); display: grid; place-items: center; }
+.drop-d.over { border-color: var(--accent); background: var(--accent-soft); }
+
+/* settings */
+.set-group { background: var(--surface-2); border-radius: 16px; overflow: hidden; }
+.set-row { display: flex; align-items: center; gap: 14px; padding: 13px 16px; font-size: 14px; width: 100%; text-align: left; }
+.set-row + .set-row { border-top: 0.5px solid var(--hairline-strong); }
+.set-row .sr-main { flex: 1; min-width: 0; }
+.set-row .sr-main span { display: block; color: var(--ink-3); font-size: 12.5px; margin-top: 2px; }
+.set-row.danger { color: var(--risk-crit-fg); }
+.set-row .end { color: var(--ink-3); font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+
+/* benchmark */
+.bench-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.bench-table th, .bench-table td { padding: 11px 10px; text-align: right; border-bottom: 0.5px solid var(--hairline-strong); }
+.bench-table th:first-child, .bench-table td:first-child { text-align: left; }
+.bench-table th { color: var(--ink-3); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+.bench-table td { font-family: var(--font-mono); color: var(--ink-3); }
+.bench-table td:first-child { font-family: var(--font-ui); color: var(--ink); font-weight: 500; }
+
+/* empty */
+.empty-d { text-align: center; padding: 48px 24px; display: grid; justify-items: center; gap: 10px; background: var(--surface-2); border-radius: 20px; }
+.empty-d .mini-mosaic { display: grid; grid-template-columns: repeat(4, 14px); gap: 4px; margin-bottom: 6px; }
+.empty-d .mini-mosaic i { width: 14px; height: 14px; border-radius: 3px; background: var(--surface-sunk); }
+.empty-d .mini-mosaic i:nth-child(6) { background: var(--accent); }
+.empty-d h3 { font-size: 20px; font-weight: 700; }
+.empty-d p { color: var(--ink-2); max-width: 44ch; }
+
+/* modal */
+.modal-layer { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+.modal-scrim { position: absolute; inset: 0; background: var(--scrim); opacity: 0; transition: opacity var(--dur-2); pointer-events: auto; }
+.modal-scrim.in { opacity: 1; }
+.modal { position: absolute; left: 50%; top: 50%; width: 520px; max-height: calc(100% - 80px); overflow-y: auto; transform: translate(-50%, -46%) scale(0.96); opacity: 0; border-radius: 28px; padding: 22px; pointer-events: auto; transition: transform var(--dur-3) var(--spring), opacity var(--dur-2); }
+.modal.in { transform: translate(-50%, -50%); opacity: 1; }
+.modal > * { position: relative; z-index: 2; }
+.modal h2 { font-size: 20px; font-weight: 750; margin-bottom: 6px; }
+.modal .m-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.modal .msurf { background: color-mix(in srgb, var(--surface) 88%, transparent); border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+[data-transparency="reduced"] .modal .msurf { background: var(--surface); }
+
+#toast-host { position: fixed; }
+</style>
+<div id="app-root" data-appearance="light" data-accent="indigo">
+  <div class="pvbar">
+    <div class="pv pv-inline" id="pv" aria-label="Design preview controls"></div>
+  </div>
+  <div class="viewport" id="viewport">
+    <div class="win" id="win">
+      <svg class="backdrop" id="backdrop" aria-hidden="true"></svg>
+      <div class="app" id="app"></div>
+      <div class="modal-layer" id="modals"></div>
+    </div>
+  </div>
+  <div id="toast-host"></div>
+</div>
+<script>const ICONS = {"activity":"<path d=\"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2\" />","app-window":"<rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" /><path d=\"M10 4v4\" /><path d=\"M2 8h20\" /><path d=\"M6 4v4\" />","arrow-right":"<path d=\"M5 12h14\" /><path d=\"m12 5 7 7-7 7\" />","at-sign":"<circle cx=\"12\" cy=\"12\" r=\"4\" /><path d=\"M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8\" />","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\" /><path d=\"m16 9-5.5 5.5L8 12\" />","box":"<path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\" /><path d=\"m3.3 7 8.7 5 8.7-5\" /><path d=\"M12 22V12\" />","calendar-days":"<path d=\"M8 2v3\" /><path d=\"M16 2v3\" /><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" /><path d=\"M3 9h18\" /><path d=\"M8 13h.01\" /><path d=\"M12 13h.01\" /><path d=\"M16 13h.01\" /><path d=\"M8 17h.01\" /><path d=\"M12 17h.01\" /><path d=\"M16 17h.01\" />","cat":"<path d=\"M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z\" /><path d=\"M8 14v.5\" /><path d=\"M16 14v.5\" /><path d=\"M11.25 16.25h1.5L12 17l-.75-.75Z\" />","chart-column":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /><path d=\"M18 17V9\" /><path d=\"M13 17V5\" /><path d=\"M8 17v-3\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-down":"<path d=\"m6 9 6 6 6-6\" />","chevron-left":"<path d=\"m15 18-6-6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","chevron-up":"<path d=\"m18 15-6-6-6 6\" />","chevrons-up-down":"<path d=\"m7 15 5 5 5-5\" /><path d=\"m7 9 5-5 5 5\" />","circle-alert":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\" /><line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\" />","circle-check":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"m16 9-5.5 5.5L8 12\" />","circle-check-big":"<path d=\"M21.801 10A10 10 0 1 1 17 3.335\" /><path d=\"m9 11 3 3L22 4\" />","circle-dashed":"<path d=\"M10.1 2.182a10 10 0 0 1 3.8 0\" /><path d=\"M13.9 21.818a10 10 0 0 1-3.8 0\" /><path d=\"M17.609 3.721a10 10 0 0 1 2.69 2.7\" /><path d=\"M2.182 13.9a10 10 0 0 1 0-3.8\" /><path d=\"M20.279 17.609a10 10 0 0 1-2.7 2.69\" /><path d=\"M21.818 10.1a10 10 0 0 1 0 3.8\" /><path d=\"M3.721 6.391a10 10 0 0 1 2.7-2.69\" /><path d=\"M6.391 20.279a10 10 0 0 1-2.69-2.7\" />","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\" /><circle cx=\"12\" cy=\"12\" r=\"10\" />","circle-help":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /><path d=\"M12 17h.01\" />","circle-slash":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><line x1=\"9\" x2=\"15\" y1=\"15\" y2=\"9\" />","clipboard":"<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /><path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" />","clipboard-check":"<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /><path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /><path d=\"m9 14 2 2 4-4\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"M12 6v6l4 2\" />","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\" />","cpu":"<path d=\"M12 20v2\" /><path d=\"M12 2v2\" /><path d=\"M17 20v2\" /><path d=\"M17 2v2\" /><path d=\"M2 12h2\" /><path d=\"M2 17h2\" /><path d=\"M2 7h2\" /><path d=\"M20 12h2\" /><path d=\"M20 17h2\" /><path d=\"M20 7h2\" /><path d=\"M7 20v2\" /><path d=\"M7 2v2\" /><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" /><rect x=\"8\" y=\"8\" width=\"8\" height=\"8\" rx=\"1\" />","delete":"<path d=\"M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z\" /><path d=\"m12 9 6 6\" /><path d=\"m18 9-6 6\" />","diff":"<path d=\"M12 3v14\" /><path d=\"M5 10h14\" /><path d=\"M5 21h14\" />","dot":"<circle cx=\"12\" cy=\"12\" r=\"1\" />","download":"<path d=\"M12 15V3\" /><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /><path d=\"m7 10 5 5 5-5\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /><circle cx=\"12\" cy=\"12\" r=\"3\" />","file-check":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"m9 15 2 2 4-4\" />","file-output":"<path d=\"M4.226 20.925A2 2 0 0 0 6 22h12a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v3.127\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"m5 11-3 3\" /><path d=\"m5 17-3-3h10\" />","file-pen":"<path d=\"M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z\" />","file-text":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"M10 9H8\" /><path d=\"M16 13H8\" /><path d=\"M16 17H8\" />","file-up":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"M12 12v6\" /><path d=\"m15 15-3-3-3 3\" />","file-warning":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /><path d=\"M12 9v4\" /><path d=\"M12 17h.01\" />","file-x":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /><path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /><path d=\"m14.5 12.5-5 5\" /><path d=\"m9.5 12.5 5 5\" />","filter":"<path d=\"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z\" />","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\" /><path d=\"M6.453 15h11.094\" /><path d=\"M8.5 2h7\" />","folder-lock":"<rect width=\"8\" height=\"5\" x=\"14\" y=\"17\" rx=\"1\" /><path d=\"M10 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v2.5\" /><path d=\"M20 17v-2a2 2 0 1 0-4 0v2\" />","group":"<path d=\"M3 7V5c0-1.1.9-2 2-2h2\" /><path d=\"M17 3h2c1.1 0 2 .9 2 2v2\" /><path d=\"M21 17v2c0 1.1-.9 2-2 2h-2\" /><path d=\"M7 21H5c-1.1 0-2-.9-2-2v-2\" /><rect width=\"7\" height=\"5\" x=\"7\" y=\"7\" rx=\"1\" /><rect width=\"7\" height=\"5\" x=\"10\" y=\"12\" rx=\"1\" />","hard-drive":"<path d=\"M10 16h.01\" /><path d=\"M2.212 11.577a2 2 0 0 0-.212.896V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.527a2 2 0 0 0-.212-.896L18.55 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z\" /><path d=\"M21.946 12.013H2.054\" /><path d=\"M6 16h.01\" />","heart-pulse":"<path d=\"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5\" /><path d=\"M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\" />","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /><path d=\"M3 3v5h5\" /><path d=\"M12 7v5l4 2\" />","hourglass":"<path d=\"M5 22h14\" /><path d=\"M5 2h14\" /><path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /><path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />","import":"<path d=\"M12 3v12\" /><path d=\"m8 11 4 4 4-4\" /><path d=\"M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"M12 16v-4\" /><path d=\"M12 8h.01\" />","layout-dashboard":"<rect width=\"7\" height=\"9\" x=\"3\" y=\"3\" rx=\"1\" /><rect width=\"7\" height=\"5\" x=\"14\" y=\"3\" rx=\"1\" /><rect width=\"7\" height=\"9\" x=\"14\" y=\"12\" rx=\"1\" /><rect width=\"7\" height=\"5\" x=\"3\" y=\"16\" rx=\"1\" />","link-2":"<path d=\"M9 17H7A5 5 0 0 1 7 7h2\" /><path d=\"M15 7h2a5 5 0 1 1 0 10h-2\" /><line x1=\"8\" x2=\"16\" y1=\"12\" y2=\"12\" />","list":"<path d=\"M3 5h.01\" /><path d=\"M3 12h.01\" /><path d=\"M3 19h.01\" /><path d=\"M8 5h13\" /><path d=\"M8 12h13\" /><path d=\"M8 19h13\" />","list-checks":"<path d=\"M13 5h8\" /><path d=\"M13 12h8\" /><path d=\"M13 19h8\" /><path d=\"m3 17 2 2 4-4\" /><path d=\"m3 7 2 2 4-4\" />","loader":"<path d=\"M12 2v4\" /><path d=\"m16.2 7.8 2.9-2.9\" /><path d=\"M18 12h4\" /><path d=\"m16.2 16.2 2.9 2.9\" /><path d=\"M12 18v4\" /><path d=\"m4.9 19.1 2.9-2.9\" /><path d=\"M2 12h4\" /><path d=\"m4.9 4.9 2.9 2.9\" />","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /><path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />","map":"<path d=\"M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z\" /><path d=\"M15 5.764v15\" /><path d=\"M9 3.236v15\" />","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /><circle cx=\"12\" cy=\"10\" r=\"3\" />","memory-stick":"<path d=\"M12 12v-2\" /><path d=\"M12 18v-2\" /><path d=\"M16 12v-2\" /><path d=\"M16 18v-2\" /><path d=\"M2 11h1.5\" /><path d=\"M20 18v-2\" /><path d=\"M20.5 11H22\" /><path d=\"M4 18v-2\" /><path d=\"M8 12v-2\" /><path d=\"M8 18v-2\" /><rect x=\"2\" y=\"6\" width=\"20\" height=\"10\" rx=\"2\" />","monitor-x":"<path d=\"m14.5 12.5-5-5\" /><path d=\"m9.5 12.5 5-5\" /><rect width=\"20\" height=\"14\" x=\"2\" y=\"3\" rx=\"2\" /><path d=\"M12 17v4\" /><path d=\"M8 21h8\" />","octagon-alert":"<path d=\"M12 16h.01\" /><path d=\"M12 8v4\" /><path d=\"M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z\" />","package":"<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /><path d=\"M12 22V12\" /><polyline points=\"3.29 7 12 12 20.71 7\" /><path d=\"m7.5 4.27 9 5.15\" />","pen-line":"<path d=\"M13 21h8\" /><path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" />","pencil-ruler":"<path d=\"M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13\" /><path d=\"m8 6 2-2\" /><path d=\"m18 16 2-2\" /><path d=\"m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17\" /><path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" /><path d=\"m15 5 4 4\" />","play":"<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />","plus":"<path d=\"M5 12h14\" /><path d=\"M12 5v14\" />","radio":"<path d=\"M16.247 7.761a6 6 0 0 1 0 8.478\" /><path d=\"M19.075 4.933a10 10 0 0 1 0 14.134\" /><path d=\"M4.925 19.067a10 10 0 0 1 0-14.134\" /><path d=\"M7.753 16.239a6 6 0 0 1 0-8.478\" /><circle cx=\"12\" cy=\"12\" r=\"2\" />","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /><path d=\"M3 3v5h5\" />","rotate-cw":"<path d=\"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\" /><path d=\"M21 3v5h-5\" />","scan-search":"<path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /><path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /><path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /><path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" /><circle cx=\"12\" cy=\"12\" r=\"3\" /><path d=\"m16 16-1.9-1.9\" />","send":"<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /><path d=\"m21.854 2.147-10.94 10.939\" />","settings":"<path d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\" /><circle cx=\"12\" cy=\"12\" r=\"3\" />","shuffle":"<path d=\"m18 14 4 4-4 4\" /><path d=\"m18 2 4 4-4 4\" /><path d=\"M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22\" /><path d=\"M2 6h1.972a4 4 0 0 1 3.6 2.2\" /><path d=\"M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45\" />","sparkle":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" />","stamp":"<path d=\"M14 13V8.5C14 7 15 7 15 5a3 3 0 0 0-6 0c0 2 1 2 1 3.5V13\" /><path d=\"M20 15.5a2.5 2.5 0 0 0-2.5-2.5h-11A2.5 2.5 0 0 0 4 15.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1z\" /><path d=\"M5 22h14\" />","timeline":"<path d=\"M4 12h.01\" /><path d=\"M4 16h.01\" /><path d=\"M4 20h.01\" /><path d=\"M4 4h.01\" /><path d=\"M4 8h.01\" /><path d=\"M9.414 13.414a2 2 0 0 0 1.414.586H19a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-8.172a2 2 0 0 0-1.414.586L8 12z\" /><path d=\"M9.414 21.414a2 2 0 0 0 1.414.586H19a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-8.172a2 2 0 0 0-1.414.586L8 20z\" /><path d=\"M9.414 5.414A2 2 0 0 0 10.828 6H19a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-8.172a2 2 0 0 0-1.414.586L8 4z\" />","trash-2":"<path d=\"M10 11v6\" /><path d=\"M14 11v6\" /><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6\" /><path d=\"M3 6h18\" /><path d=\"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\" />","triangle-alert":"<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /><path d=\"M12 9v4\" /><path d=\"M12 17h.01\" />","undo":"<path d=\"M3 7v6h6\" /><path d=\"M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13\" />","undo-2":"<path d=\"M9 14 4 9l5-5\" /><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\" />","waypoints":"<path d=\"m10.586 5.414-5.172 5.172\" /><path d=\"m18.586 13.414-5.172 5.172\" /><path d=\"M6 12h12\" /><circle cx=\"12\" cy=\"20\" r=\"2\" /><circle cx=\"12\" cy=\"4\" r=\"2\" /><circle cx=\"20\" cy=\"12\" r=\"2\" /><circle cx=\"4\" cy=\"12\" r=\"2\" />","wifi":"<path d=\"M12 20h.01\" /><path d=\"M2 8.82a15 15 0 0 1 20 0\" /><path d=\"M5 12.859a10 10 0 0 1 14 0\" /><path d=\"M8.5 16.429a5 5 0 0 1 7 0\" />","wifi-off":"<path d=\"M12 20h.01\" /><path d=\"M8.5 16.429a5 5 0 0 1 7 0\" /><path d=\"M5 12.859a10 10 0 0 1 5.17-2.69\" /><path d=\"M19 12.859a10 10 0 0 0-2.007-1.523\" /><path d=\"M2 8.82a15 15 0 0 1 4.177-2.643\" /><path d=\"M22 8.82a15 15 0 0 0-11.288-3.764\" /><path d=\"m2 2 20 20\" />"};
+/* ==========================================================================
+   Mosaic design preview: shared fixtures, state and helpers.
+   DESIGN PREVIEW ONLY. Nothing here calls Firebase or any model. Every value
+   shown is sample data written for the preview; group counts are computed
+   from the seeded fictional population below, not typed in.
+   ========================================================================== */
+
+/* ---------- small utilities ---------- */
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ic = (name, size = 18, cls = '') =>
+  `<svg class="ic ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('mosaic-preview:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('mosaic-preview:' + k, JSON.stringify(v)); } catch { /* storage unavailable */ } },
+};
+const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- fixtures: one fictional research workspace ---------- */
+const WORKSPACE = {
+  id: 'ws-sample',
+  title: 'Night Shift Study',
+  org: 'Larkspur Health Network (fictional)',
+  description: 'Interviews with overnight care staff. Two reports are already published; transcript P-07 is the next release.',
+};
+
+const PRIVATE_WORKSPACES = [
+  { id: 'ws-chi', title: 'Community Health Interviews', docs: 4, edited: 'Edited 2 days ago', status: 'Needs review' },
+  { id: 'ws-avr', title: 'Volunteer Programme Evaluation', docs: 2, edited: 'Edited last week', status: 'Approved release' },
+];
+
+const DOCS = {
+  R1: {
+    id: 'R1', kind: 'release', title: 'Interim findings report', short: 'Interim report',
+    meta: 'Approved release · 12 Mar 2026 · v2', approved: '12 Mar 2026', pages: 4,
+    paras: [
+      'This interim report summarises themes from twelve interviews conducted between October and December 2025.',
+      'Participants were drawn from ward-based nursing staff and from the overnight pharmacy team, which supports all three inpatient sites.',
+      'Across roles, participants described handover as the most stressful point of a night shift.',
+    ],
+  },
+  R2: {
+    id: 'R2', kind: 'release', title: 'Onboarding experience case study', short: 'Case study',
+    meta: 'Approved release · 3 Jun 2026 · v1', approved: '3 Jun 2026', pages: 3,
+    paras: [
+      'This case study follows how new starters experienced their first three months on nights.',
+      'One participant described joining with the winter onboarding cohort, which started in the weeks after the January rota change.',
+      'Peer shadowing was described as more useful than formal induction sessions.',
+    ],
+  },
+  D3: {
+    id: 'D3', kind: 'draft', title: 'Interview P-07 transcript', short: 'P-07 transcript',
+    meta: 'Draft v3 · Private · edited today', pages: 2,
+    paras: [
+      'Interviewer: Thanks for making time after your shift. Could you start with how you came to the role?',
+      'P-07: Sure. I came over after my transfer from the coastal satellite clinic, so I already knew the dispensing system. Most people on nights had never used it.',
+      'P-07: For the first few months I was the only one on nights who could run the compounding hood, which meant I got called for everything.',
+      'Interviewer: What changed when the new rota started?',
+      'P-07: The week the new rota started, on 14 January, two of us were moved to permanent nights. Breaks got shorter and handovers got messy.',
+      'P-07: We’d eat in the level 3 break room because it was the only place with a signal.',
+      'P-07: Honestly, I thought about leaving. My manager knew I was struggling, and I’d told occupational health about the anxiety.',
+      'Follow-up contact: p07.followup@example.org',
+    ],
+  },
+};
+
+const CATEGORY = {
+  CROSS_RELEASE: { label: 'Cross-release context', icon: 'link-2' },
+  RARE_ATTRIBUTE: { label: 'Rare attribute', icon: 'sparkle' },
+  PRECISE_DATE: { label: 'Precise date', icon: 'calendar-days' },
+  NARROW_LOCATION: { label: 'Narrow location', icon: 'map-pin' },
+  SENSITIVE_CONTEXT: { label: 'Sensitive context', icon: 'heart-pulse' },
+  DIRECT_IDENTIFIER: { label: 'Direct identifier', icon: 'at-sign' },
+};
+
+// comps: direct 0-3, specificity 0-3, crossRelease 0-3, sensitivity 0-2  (8.2)
+const FINDINGS = [
+  {
+    id: 'F-01', category: 'CROSS_RELEASE', title: 'Three details combine to describe one person',
+    comps: { direct: 0, specificity: 3, cross: 3, sensitivity: 2 }, confidence: 'MEDIUM',
+    confReason: 'The link rests on contextual overlap across three documents. Knowledge outside this workspace is not assessed.',
+    source: 'DEVICE', status: 'OPEN',
+    anchors: [
+      { doc: 'D3', para: 1, quote: 'after my transfer from the coastal satellite clinic' },
+      { doc: 'R1', para: 1, quote: 'the overnight pharmacy team' },
+      { doc: 'R2', para: 1, quote: 'the winter onboarding cohort' },
+    ],
+    rationale: 'Read alone, the transfer is background. Read with the pharmacy team in the interim report and the winter cohort in the case study, it describes a very small group.',
+    action: 'Generalize the transfer',
+    rewrite: { para: 1, from: 'after my transfer from the coastal satellite clinic', to: 'after moving from another site in the network' },
+    keeps: 'P-07 already knew the dispensing system.',
+  },
+  {
+    id: 'F-02', category: 'RARE_ATTRIBUTE', title: 'A skill only one person on nights had',
+    comps: { direct: 0, specificity: 3, cross: 1, sensitivity: 1 }, confidence: 'HIGH',
+    confReason: 'The passage says outright that no one else on nights had this skill.',
+    source: 'DEVICE', status: 'UNDER_REVIEW',
+    anchors: [
+      { doc: 'D3', para: 2, quote: 'the only one on nights who could run the compounding hood' },
+      { doc: 'R1', para: 1, quote: 'the overnight pharmacy team' },
+    ],
+    rationale: 'A unique skill is a strong pointer on its own, and the interim report already names the team it belongs to.',
+    action: 'Describe the skill more broadly',
+    rewrite: { para: 2, from: 'the only one on nights who could run the compounding hood', to: 'one of the few people on nights trained on specialist equipment' },
+    keeps: 'P-07 carried an uneven share of call-outs.',
+  },
+  {
+    id: 'F-03', category: 'PRECISE_DATE', title: 'An exact date ties the draft to the January cohort',
+    comps: { direct: 0, specificity: 2, cross: 1, sensitivity: 1 }, confidence: 'MEDIUM',
+    confReason: 'The date matches the rota change described in the case study.',
+    source: 'DEVICE', status: 'OPEN',
+    anchors: [
+      { doc: 'D3', para: 4, quote: 'on 14 January' },
+      { doc: 'R2', para: 1, quote: 'the January rota change' },
+    ],
+    rationale: 'The analysis needs the sequence of events, not the day. The date links this interview to the cohort in the case study.',
+    action: 'Remove the exact date',
+    rewrite: { para: 4, from: 'The week the new rota started, on 14 January, two of us', to: 'When the new rota started, two of us' },
+    keeps: 'Two staff moved to permanent nights when the rota changed.',
+  },
+  {
+    id: 'F-04', category: 'NARROW_LOCATION', title: 'A specific room is named',
+    comps: { direct: 0, specificity: 2, cross: 0, sensitivity: 0 }, confidence: 'LOW',
+    confReason: 'Break rooms like this exist on every site, so the pointer is weak. Flagged for completeness.',
+    source: 'DEVICE', status: 'OPEN', chunk: 2,
+    anchors: [{ doc: 'D3', para: 5, quote: 'the level 3 break room' }],
+    rationale: 'A floor number adds precision the analysis does not use.',
+    action: 'Generalize the room',
+    rewrite: { para: 5, from: 'the level 3 break room', to: 'a staff break room' },
+    keeps: 'Staff ate where there was phone signal.',
+  },
+  {
+    id: 'F-05', category: 'SENSITIVE_CONTEXT', title: 'A health disclosure the finding does not need',
+    comps: { direct: 0, specificity: 1, cross: 0, sensitivity: 2 }, confidence: 'MEDIUM',
+    confReason: 'Health information is sensitive by category. Whether it is needed is your call.',
+    source: 'DEVICE', status: 'OPEN', chunk: 2,
+    anchors: [{ doc: 'D3', para: 6, quote: 'and I’d told occupational health about the anxiety' }],
+    rationale: 'The point about considering leaving stands without the health detail.',
+    action: 'Remove the health detail',
+    rewrite: { para: 6, from: ', and I’d told occupational health about the anxiety', to: '' },
+    keeps: 'P-07 considered leaving and their manager knew they were struggling.',
+  },
+  {
+    id: 'F-06', category: 'DIRECT_IDENTIFIER', title: 'An email address',
+    comps: { direct: 3, specificity: 0, cross: 0, sensitivity: 0 }, confidence: 'HIGH', override: 'HIGH',
+    confReason: 'Matched the email address rule.',
+    source: 'RULES', status: 'OPEN',
+    anchors: [{ doc: 'D3', para: 7, quote: 'p07.followup@example.org' }],
+    rationale: 'Contact details identify a person directly. A detected direct identifier is raised to high priority.',
+    action: 'Remove the address',
+    rewrite: { para: 7, from: 'p07.followup@example.org', to: '[contact removed]' },
+    keeps: 'Nothing analytical is lost.',
+  },
+];
+
+const STATUS = {
+  OPEN: { label: 'Open', icon: 'circle-dot' },
+  UNDER_REVIEW: { label: 'Under review', icon: 'eye' },
+  ACCEPTED_RESIDUAL: { label: 'Accepted residual', icon: 'circle-check-big' },
+  RESOLVED: { label: 'Resolved', icon: 'circle-check' },
+  DISMISSED: { label: 'Dismissed', icon: 'circle-slash' },
+  UNASSESSED: { label: 'Not assessed', icon: 'circle-dashed' },
+};
+
+const PACKS = [
+  {
+    id: 'core', name: 'Core disclosure checks', version: 'v1.3', source: 'bundled', count: 8, enabled: true,
+    tests: [
+      ['DIRECT_IDENTIFIERS', 'Direct identifiers', 'Does the text name, contact or uniquely number a person?'],
+      ['PRECISE_DATES', 'Overly precise dates', 'Is a date more specific than the analysis needs?'],
+      ['RARE_ATTRIBUTES', 'Rare descriptive attributes', 'Does a role, skill or trait apply to very few people?'],
+      ['NARROW_LOCATION', 'Narrow location', 'Does a place description point to a small area or site?'],
+      ['DISTINCTIVE_EVENTS', 'Distinctive events', 'Would people nearby recognise this event?'],
+      ['CROSS_RELEASE', 'Repeated context across releases', 'Does this detail repeat or combine with an earlier release?'],
+      ['EXCESSIVE_DETAIL', 'Excessive detail', 'Is there more detail than the finding needs?'],
+      ['SENSITIVE_CONTEXT', 'Sensitive context', 'Does the text reveal health, legal or other sensitive context?'],
+    ],
+  },
+  {
+    id: 'qr', name: 'Qualitative research expansion', version: '2026.11.18-a', source: 'cloud', count: 12, enabled: true,
+    tests: [
+      ['ROLE_RARITY', 'Role rarity in small teams', 'Would this role description fit only a handful of people in a team of this size?'],
+      ['TENURE_WINDOWS', 'Start-date windows', 'Does a start or leave date fall in a narrow, recorded window?'],
+      ['SHIFT_PATTERNS', 'Shift patterns', 'Does a described rota or shift pattern apply to few people?'],
+    ],
+  },
+  {
+    id: 'ed', name: 'Editorial release checks', version: 'v1.0', source: 'bundled', count: 6, enabled: false,
+    tests: [
+      ['QUOTE_ATTRIBUTION', 'Quote attribution', 'Could a direct quote be attributed through style or content?'],
+      ['PHOTO_CAPTIONS', 'Captions and alt text', 'Do captions add detail missing from the body text?'],
+    ],
+  },
+];
+
+const PACK_SOURCE = {
+  bundled: { label: 'Bundled', icon: 'package' },
+  cloud: { label: 'Generated in cloud', icon: 'cloud' },
+  cached: { label: 'Cached', icon: 'hard-drive' },
+};
+
+// The exact outbound body for a generic pack request. Built only from enums.
+const PACK_REQUEST = {
+  task: 'generatePack',
+  domain: 'QUALITATIVE_RESEARCH',
+  categories: ['ROLE_RARITY', 'TENURE_WINDOWS', 'SHIFT_PATTERNS'],
+  packSchemaVersion: 1,
+};
+
+const JOURNAL = [
+  { t: '10:42:18', task: 'Extract context', scope: 'P-07 · ¶1–5', policy: 'ONLY_ON_DEVICE', src: 'DEVICE', ms: 2400, outcome: 'ok' },
+  { t: '10:42:21', task: 'Extract context', scope: 'P-07 · ¶6–8', policy: 'ONLY_ON_DEVICE', src: 'DEVICE', ms: 1900, outcome: 'ok', chunk: 2 },
+  { t: '10:42:21', task: 'Direct checks', scope: 'P-07 · all', policy: 'NO_MODEL', src: 'RULES', ms: 12, outcome: 'ok' },
+  { t: '10:42:24', task: 'Link releases', scope: '3 documents', policy: 'ONLY_ON_DEVICE', src: 'DEVICE', ms: 3100, outcome: 'ok' },
+  { t: '10:44:02', task: 'Generate test pack', scope: 'Generic enums only', policy: 'ONLY_IN_CLOUD', src: 'CLOUD', ms: 3400, outcome: 'ok', cloud: true },
+  { t: '10:44:40', task: 'Explain sample test', scope: 'Fixture fx-07', policy: 'PREFER_ON_DEVICE', src: 'CLOUD', ms: 1200, outcome: 'ok', note: 'Fell back to cloud: no local model on this device. Fixture data only.' },
+  { t: '10:47:11', task: 'Rewrite passage', scope: 'P-07 · ¶2', policy: 'ONLY_ON_DEVICE', src: 'DEVICE', ms: 1600, outcome: 'ok' },
+];
+
+// Routing table (7.2). The landing diagram is drawn from this list; in the
+// build, the same table drives the privacy gate so the two cannot drift.
+const ROUTING = [
+  { task: 'Extract context from private documents', data: 'Private', policy: 'ONLY_ON_DEVICE', fail: 'Marked not assessed; rules and manual review stay available' },
+  { task: 'Review connections across releases', data: 'Private', policy: 'ONLY_ON_DEVICE', fail: 'Partial results kept; no cloud retry' },
+  { task: 'Rewrite a private passage', data: 'Private', policy: 'ONLY_ON_DEVICE', fail: 'Manual editing' },
+  { task: 'Generate generic test packs', data: 'Fixed enums', policy: 'ONLY_IN_CLOUD', fail: 'Bundled or cached pack' },
+  { task: 'Explain a sample test', data: 'Bundled fixture', policy: 'PREFER_ON_DEVICE', fail: 'SDK may use cloud; actual source shown' },
+  { task: 'Direct-identifier checks, scoring, export', data: 'Local data', policy: 'NO_MODEL', fail: 'Works offline' },
+];
+
+const SOURCE = {
+  DEVICE: { label: 'On device', icon: 'cpu', cls: 'device' },
+  CLOUD: { label: 'Cloud', icon: 'cloud', cls: 'cloud' },
+  RULES: { label: 'Rules only', icon: 'list-checks', cls: 'rules' },
+  UNAVAILABLE: { label: 'Unavailable', icon: 'circle-slash', cls: 'unavail' },
+  UNKNOWN: { label: 'Unknown', icon: 'circle-help', cls: 'unknown' },
+  FIXTURE: { label: 'Sample result', icon: 'flask-conical', cls: 'fixture' },
+};
+
+const MODEL_STATES = {
+  checking: { label: 'Checking', icon: 'loader', tone: 'neutral', body: 'Asking the browser whether the built-in model is available.' },
+  unsupported: { label: 'Unsupported', icon: 'monitor-x', tone: 'warn', body: 'This browser or device can’t run the built-in model. Rules-based checks and manual review still work, and nothing is sent to the cloud instead.' },
+  download: { label: 'Download needed', icon: 'download', tone: 'neutral', body: 'The model downloads once (several GB) over an unmetered connection, then works offline.' },
+  downloading: { label: 'Downloading', icon: 'loader', tone: 'neutral', body: 'Chrome is downloading the model. Progress shows when the browser reports it.' },
+  ready: { label: 'Ready', icon: 'circle-check', tone: 'ok', body: 'Private analysis runs on this device.' },
+  unavailable: { label: 'Temporarily unavailable', icon: 'clock', tone: 'warn', body: 'The model is busy or paused by the browser. Private tasks wait; they never move to the cloud.' },
+  offline: { label: 'Offline', icon: 'wifi-off', tone: 'neutral', body: 'The model is ready and works offline. Cloud test-pack generation is paused until you reconnect.' },
+  error: { label: 'Error', icon: 'triangle-alert', tone: 'bad', body: 'The model failed to load (storage error). Retry, or free space on the Chrome profile drive.' },
+};
+
+const SCENARIOS = {
+  normal: { label: 'Normal', note: 'Model ready, online.' },
+  unsupported: { label: 'Unsupported device', note: 'No local model. Sample shows recorded results; private work is rules-only.' },
+  offline: { label: 'Offline', note: 'Local work continues. Cloud packs unavailable.' },
+  partial: { label: 'Partial scan', note: 'One chunk timed out and is marked not assessed.' },
+  empty: { label: 'Empty', note: 'No private workspaces or documents yet.' },
+  error: { label: 'Errors', note: 'Import failures and a malformed model reply.' },
+};
+
+/* ---------- seeded fictional population (8.3) ---------- */
+// 100 toy records. IDs are not names. Counts are computed from these sets.
+const POPULATION = (() => {
+  let seed = 20261119;
+  const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const ids = Array.from({ length: 100 }, (_, i) => i);
+  for (let i = ids.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [ids[i], ids[j]] = [ids[j], ids[i]]; }
+  const A = ids.slice(0, 24); // overnight pharmacy team
+  const outside = ids.slice(24);
+  const AB = A.slice(0, 8);
+  const B = [...AB, ...outside.slice(0, 7)]; // winter onboarding cohort
+  const C = [AB[0], outside[10], outside[20]]; // transfer from coastal satellite clinic
+  const Cg = [...AB.slice(0, 7), ...A.slice(8, 22), ...outside.slice(30, 69)]; // moved from another site in the network
+  const records = Array.from({ length: 100 }, (_, i) => ({ id: 'T-' + String(i + 1).padStart(3, '0'), i }));
+  return { records, A: new Set(A), B: new Set(B), C: new Set(C), Cg: new Set(Cg) };
+})();
+
+function groupSteps(applied) {
+  const P = POPULATION;
+  const steps = [{ label: 'Fictional population', from: 'Seeded toy records', set: new Set(P.records.map((r) => r.i)) }];
+  const narrow = (label, from, s) => { const prev = steps[steps.length - 1].set; steps.push({ label, from, set: new Set([...prev].filter((i) => s.has(i))) }); };
+  narrow('Overnight pharmacy team', 'Interim report ¶2', P.A);
+  if (!applied.has('F-03')) narrow('Winter onboarding cohort', 'Case study ¶2, linked by the date in P-07 ¶5', P.B);
+  if (applied.has('F-01')) narrow('Moved from another site', 'P-07 ¶2 (revised)', P.Cg);
+  else narrow('Transfer from the coastal satellite clinic', 'P-07 ¶2', P.C);
+  return steps.map((s) => ({ ...s, count: s.set.size }));
+}
+
+/* ---------- state ---------- */
+const S = {
+  appearance: store.get('appearance', 'light'),
+  accent: store.get('accent', 'indigo'),
+  reduced: store.get('reduced', false),
+  refraction: store.get('refraction', true),
+  scenario: store.get('scenario', 'normal'),
+  applied: new Set(),        // rewrites applied to the draft (creates v4)
+  rescanned: false,          // reassessment run after rewrites
+  statusOverride: {},        // finding id -> status
+  approved: false,
+  checklist: [false, false, false],
+  selected: 'F-01',
+  packsEnabled: { core: true, qr: true, ed: false },
+  consent: null,             // null | 'pending' | 'approved' | 'sent'
+  modelPreview: null,        // override the model state shown on setup
+  listeners: new Set(),
+};
+
+function setState(patch) {
+  Object.assign(S, patch);
+  ['appearance', 'accent', 'reduced', 'refraction', 'scenario'].forEach((k) => { if (k in patch) store.set(k, S[k]); });
+  applyAppearance();
+  S.listeners.forEach((fn) => fn(patch));
+}
+function onState(fn) { S.listeners.add(fn); }
+
+function resetSample() {
+  setState({ applied: new Set(), rescanned: false, statusOverride: {}, approved: false, checklist: [false, false, false], selected: 'F-01', consent: null });
+}
+
+function applyAppearance() {
+  const r = document.getElementById('app-root');
+  if (!r) return;
+  r.dataset.appearance = S.appearance;
+  r.dataset.accent = S.accent;
+  r.dataset.transparency = S.reduced ? 'reduced' : 'full';
+  r.dataset.refraction = S.refraction && !S.reduced ? 'on' : 'off';
+  Refraction.refresh();
+}
+
+/* ---------- derived data ---------- */
+const scoreOf = (f) => f.comps.direct + f.comps.specificity + f.comps.cross + f.comps.sensitivity;
+function bandOf(f) {
+  const s = scoreOf(f);
+  let b = s >= 9 ? 'CRITICAL' : s >= 6 ? 'HIGH' : s >= 3 ? 'MODERATE' : 'LOW';
+  if (f.override === 'HIGH' && (b === 'LOW' || b === 'MODERATE')) b = 'HIGH';
+  return b;
+}
+const BAND = {
+  CRITICAL: { label: 'Critical', cls: 'crit', icon: 'octagon-alert' },
+  HIGH: { label: 'High priority', cls: 'high', icon: 'triangle-alert' },
+  MODERATE: { label: 'Needs review', cls: 'mod', icon: 'circle-alert' },
+  LOW: { label: 'Low', cls: 'low', icon: 'info' },
+};
+const CONF = { HIGH: 'High confidence', MEDIUM: 'Medium confidence', LOW: 'Low confidence' };
+
+function findings() {
+  const sc = S.scenario;
+  let list = FINDINGS.map((f) => ({ ...f }));
+  if (sc === 'unsupported') list = list.map((f) => (f.source === 'DEVICE' ? { ...f, source: 'FIXTURE' } : f));
+  if (sc === 'partial' || sc === 'error') {
+    list = list.filter((f) => f.chunk !== 2);
+    list.push({
+      id: 'F-07', category: null, title: sc === 'error' ? '¶6–8 not assessed: the model reply was malformed' : '¶6–8 not assessed: the local model timed out',
+      comps: { direct: 0, specificity: 0, cross: 0, sensitivity: 0 }, confidence: null, source: sc === 'error' ? 'DEVICE' : 'UNAVAILABLE', status: 'UNASSESSED',
+      anchors: [{ doc: 'D3', para: 5, quote: '' }],
+      rationale: sc === 'error'
+        ? 'The reply did not match the findings schema. It was retried once on this device and then set aside. No cloud retry was made.'
+        : 'This chunk did not finish within the time limit. It stays not assessed until you run it again. No cloud retry was made.',
+      action: 'Run this chunk again', unassessed: true,
+    });
+  }
+  for (const f of list) {
+    if (S.statusOverride[f.id]) f.status = S.statusOverride[f.id];
+    if (S.applied.has(f.id)) f.status = S.rescanned ? 'RESOLVED' : 'UNDER_REVIEW';
+    f.band = f.unassessed ? null : bandOf(f);
+    f.score = scoreOf(f);
+  }
+  return list;
+}
+const findingById = (id) => findings().find((f) => f.id === id);
+const openFindings = () => findings().filter((f) => !['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(f.status));
+
+function draftParas() {
+  const paras = [...DOCS.D3.paras];
+  for (const f of FINDINGS) if (S.applied.has(f.id) && f.rewrite) paras[f.rewrite.para] = paras[f.rewrite.para].replace(f.rewrite.from, f.rewrite.to);
+  return paras;
+}
+const draftVersion = () => (S.applied.size ? 'v4' : 'v3');
+
+function modelState() {
+  if (S.modelPreview) return S.modelPreview;
+  return { normal: 'ready', unsupported: 'unsupported', offline: 'offline', partial: 'ready', empty: 'ready', error: 'error' }[S.scenario];
+}
+const isOffline = () => S.scenario === 'offline';
+
+function journal() {
+  const sc = S.scenario;
+  let j = JOURNAL.map((e) => ({ ...e }));
+  if (sc === 'unsupported') {
+    j = j.map((e) => (e.policy === 'ONLY_ON_DEVICE' ? { ...e, src: 'UNAVAILABLE', ms: null, outcome: 'unavailable', note: 'No local model. Marked not assessed. No cloud retry.' } : e));
+  }
+  if (sc === 'partial') j[1] = { ...j[1], src: 'UNAVAILABLE', ms: 30000, outcome: 'timeout', note: 'Timed out after 30 s. Marked not assessed. No cloud retry.' };
+  if (sc === 'error') j[1] = { ...j[1], outcome: 'malformed', note: 'Reply failed schema validation. Retried once on device, then set aside.' };
+  if (sc === 'offline') j[4] = { ...j[4], src: 'UNAVAILABLE', ms: null, outcome: 'offline', note: 'Not sent: offline. Using cached pack 2026.11.18-a.' };
+  return j.reverse();
+}
+
+/* ---------- markup helpers ---------- */
+function riskChip(band, opts = {}) {
+  if (!band) return `<span class="chip chip-unassessed">${ic('circle-dashed', 14)}<span>Not assessed</span></span>`;
+  const b = BAND[band];
+  return `<span class="chip chip-${b.cls}${opts.small ? ' chip-sm' : ''}">${ic(b.icon, 14)}<span>${b.label}</span></span>`;
+}
+function sourceBadge(src, opts = {}) {
+  const s = SOURCE[src] || SOURCE.UNKNOWN;
+  return `<span class="src src-${s.cls}" title="Actual execution source">${ic(s.icon, 13)}<span>${opts.short ? s.label.replace(' only', '') : s.label}</span></span>`;
+}
+function statusChip(status) {
+  const s = STATUS[status];
+  return `<span class="status status-${status.toLowerCase()}">${ic(s.icon, 13)}<span>${s.label}</span></span>`;
+}
+function packBadge(source) {
+  const p = PACK_SOURCE[source];
+  return `<span class="pack-src pack-${source}">${ic(p.icon, 12)}<span>${p.label}</span></span>`;
+}
+function policyTag(p) {
+  return `<code class="policy">${p}</code>`;
+}
+function scoreBars(f) {
+  const rows = [['Direct disclosure', f.comps.direct, 3], ['Contextual specificity', f.comps.specificity, 3], ['Cross-release evidence', f.comps.cross, 3], ['Unnecessary sensitivity', f.comps.sensitivity, 2]];
+  return `<div class="score">
+    ${rows.map(([l, v, m]) => `<div class="score-row"><span class="score-label">${l}</span><span class="score-pips" aria-label="${v} of ${m}">${Array.from({ length: m }, (_, i) => `<i class="${i < v ? 'on' : ''}"></i>`).join('')}</span><span class="score-num">${v}/${m}</span></div>`).join('')}
+    <div class="score-total"><span>Review priority</span><strong>${f.score}<small>/11</small></strong></div>
+  </div>`;
+}
+// Paragraph text with evidence marks for every finding anchored in it.
+function markPara(docId, idx, text, opts = {}) {
+  let html = esc(text);
+  const list = opts.findings || findings();
+  for (const f of list) {
+    if (S.applied.has(f.id) && docId === 'D3') continue;
+    for (const a of f.anchors) {
+      if (a.doc !== docId || a.para !== idx || !a.quote) continue;
+      const q = esc(a.quote);
+      if (!html.includes(q)) continue;
+      const active = opts.active === f.id ? ' active' : '';
+      html = html.replace(q, `<mark class="ev ev-${f.band ? BAND[f.band].cls : 'un'}${active}" data-f="${f.id}" tabindex="0" role="button" aria-label="${esc(f.title)}">${q}</mark>`);
+    }
+  }
+  return html;
+}
+function mosaicGrid(steps, stage, opts = {}) {
+  // stage: index into steps to show. Tiles eliminated at step k get class out-k.
+  const last = steps[Math.min(stage, steps.length - 1)].set;
+  const outAt = new Map();
+  steps.forEach((s, k) => { if (k === 0) return; for (const i of steps[k - 1].set) if (!s.set.has(i) && !outAt.has(i)) outAt.set(i, k); });
+  const tiles = POPULATION.records.map((r) => {
+    const k = outAt.get(r.i);
+    const state = last.has(r.i) ? 'in' : (k && k <= stage ? `out out-${Math.min(k, 3)}` : 'in');
+    return `<i class="tile ${state}" title="${r.id}"></i>`;
+  }).join('');
+  return `<div class="mosaic${opts.cls ? ' ' + opts.cls : ''}" role="img" aria-label="${last.size} of 100 fictional records remain">${tiles}</div>`;
+}
+function logo(size = 22) {
+  // 3x3 tesserae, one accent tile: separate pieces that form a picture
+  const t = [0, 1, 2].flatMap((y) => [0, 1, 2].map((x) => `<rect x="${x * 8 + 1}" y="${y * 8 + 1}" width="6.4" height="6.4" rx="1.8" class="${x === 2 && y === 0 ? 'lg-a' : (x + y) % 2 ? 'lg-b' : 'lg-c'}"/>`)).join('');
+  return `<svg class="logo" width="${size}" height="${size}" viewBox="0 0 25 25" aria-hidden="true">${t}</svg>`;
+}
+function toast(msg, icon = 'check') {
+  let host = $('#toast-host');
+  if (!host) return;
+  const el = document.createElement('div');
+  el.className = 'toast glass';
+  el.setAttribute('role', 'status');
+  el.innerHTML = `${ic(icon, 16)}<span>${esc(msg)}</span>`;
+  host.appendChild(el);
+  setTimeout(() => el.classList.add('out'), 2200);
+  setTimeout(() => el.remove(), 2700);
+}
+
+/* ---------- Liquid Glass refraction (progressive enhancement, 12.4) ---------- */
+// Baseline glass is pure CSS. Where Chromium supports SVG filters in
+// backdrop-filter, elements marked [data-refract] get an edge-refraction
+// displacement map sized to their box.
+const Refraction = {
+  cache: new Map(),
+  svg: null,
+  get supported() {
+    return typeof window !== 'undefined' && !!window.chrome && !/Firefox|FxiOS/.test(navigator.userAgent) && CSS.supports('backdrop-filter', 'blur(1px)');
+  },
+  get on() { return S.refraction && !S.reduced && this.supported && !window.matchMedia('(prefers-reduced-transparency: reduce)').matches; },
+  ensureSvg() {
+    if (this.svg) return this.svg;
+    this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this.svg.setAttribute('width', '0'); this.svg.setAttribute('height', '0');
+    this.svg.setAttribute('aria-hidden', 'true');
+    this.svg.style.position = 'absolute';
+    document.body.appendChild(this.svg);
+    return this.svg;
+  },
+  map(w, h, r, edge) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d'); const img = ctx.createImageData(w, h); const d = img.data;
+    const hw = w / 2, hh = h / 2;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const px = x + 0.5 - hw, py = y + 0.5 - hh;
+      const qx = Math.abs(px) - (hw - r), qy = Math.abs(py) - (hh - r);
+      let dist, nx, ny;
+      if (qx > 0 && qy > 0) { const L = Math.hypot(qx, qy); dist = L - r; nx = (qx / L) * Math.sign(px); ny = (qy / L) * Math.sign(py); }
+      else if (qx > qy) { dist = qx - r; nx = Math.sign(px); ny = 0; }
+      else { dist = qy - r; nx = 0; ny = Math.sign(py); }
+      const depth = -dist; let m = 0;
+      if (depth >= 0 && depth < edge) { const t = 1 - depth / edge; m = t * t * (3 - 2 * t); }
+      const i = (y * w + x) * 4;
+      d[i] = 128 - nx * m * 127; d[i + 1] = 128 - ny * m * 127; d[i + 2] = 128; d[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    return c.toDataURL();
+  },
+  filterFor(w, h, r) {
+    const key = `${w}x${h}r${r}`;
+    if (this.cache.has(key)) return this.cache.get(key);
+    const id = 'lg-' + this.cache.size;
+    const edge = Math.min(22, h / 2.2);
+    const href = this.map(w, h, r, edge);
+    const svg = this.ensureSvg();
+    const f = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    f.setAttribute('id', id);
+    f.setAttribute('filterUnits', 'userSpaceOnUse');
+    f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', w); f.setAttribute('height', h);
+    f.setAttribute('color-interpolation-filters', 'sRGB');
+    f.innerHTML = `<feGaussianBlur in="SourceGraphic" stdDeviation="5" edgeMode="duplicate" result="b"/>
+      <feImage href="${href}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="m"/>
+      <feDisplacementMap in="b" in2="m" scale="34" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feColorMatrix in="d" type="saturate" values="1.7"/>`;
+    svg.appendChild(f);
+    this.cache.set(key, id);
+    return id;
+  },
+  apply(el) {
+    const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+    if (!w || !h) return;
+    const r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, h / 2, w / 2);
+    const id = this.filterFor(w, h, Math.round(r));
+    el.style.backdropFilter = `url(#${id})`;
+    el.style.webkitBackdropFilter = `url(#${id})`;
+    el.classList.add('refracting');
+  },
+  clear(el) { el.style.backdropFilter = ''; el.style.webkitBackdropFilter = ''; el.classList.remove('refracting'); },
+  scan(root = document) { $$('[data-refract]', root).forEach((el) => (this.on ? this.apply(el) : this.clear(el))); },
+  refresh() { requestAnimationFrame(() => this.scan()); },
+};
+window.addEventListener('resize', () => Refraction.refresh());
+
+/* ---------- design preview control panel (not product UI) ---------- */
+const SCREEN_GROUPS = [
+  ['Start', [['landing', 'Landing'], ['setup', 'Setup']]],
+  ['Workspace', [['workspaces', 'Workspace list'], ['overview', 'Workspace overview'], ['import', 'Import'], ['document', 'Document review'], ['map', 'Disclosure map'], ['findings', 'Findings'], ['tests', 'Stress tests']]],
+  ['Release', [['rewrite', 'Rewrite studio'], ['release', 'Release review'], ['history', 'Release history'], ['export', 'Reports & export']]],
+  ['System', [['journal', 'Inference journal'], ['benchmark', 'Benchmark lab'], ['settings', 'Settings']]],
+];
+
+function previewControls(current) {
+  const seg = (name, val, opts) => `<div class="pv-seg" role="radiogroup" aria-label="${name}">${opts.map(([v, l]) => `<button type="button" role="radio" aria-checked="${val === v}" data-pv="${name}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  return `
+  <div class="pv-head"><span class="pv-tag">Design preview</span><span class="pv-ver">Phase 0 · draft 1</span></div>
+  <p class="pv-note">Sample data only. This page calls no model and no Firebase service, and nothing on it is real analysis.</p>
+  <label class="pv-label" for="pv-screen">Screen</label>
+  <select id="pv-screen" class="pv-select">${SCREEN_GROUPS.map(([g, items]) => `<optgroup label="${g}">${items.map(([v, l]) => `<option value="${v}"${v === current ? ' selected' : ''}>${l}</option>`).join('')}</optgroup>`).join('')}</select>
+  <label class="pv-label" for="pv-scenario">State</label>
+  <select id="pv-scenario" class="pv-select">${Object.entries(SCENARIOS).map(([k, v]) => `<option value="${k}"${k === S.scenario ? ' selected' : ''}>${v.label}</option>`).join('')}</select>
+  <p class="pv-hint">${esc(SCENARIOS[S.scenario].note)}</p>
+  <span class="pv-label">Appearance</span>${seg('appearance', S.appearance, [['light', 'Light'], ['dark', 'Dark']])}
+  <span class="pv-label">Accent candidate</span>${seg('accent', S.accent, [['indigo', 'Indigo'], ['teal', 'Teal']])}
+  <label class="pv-switch"><input type="checkbox" id="pv-reduced" ${S.reduced ? 'checked' : ''}><span>Reduce transparency</span></label>
+  <label class="pv-switch"><input type="checkbox" id="pv-refraction" ${S.refraction ? 'checked' : ''} ${Refraction.supported ? '' : 'disabled'}><span>Refraction effects${Refraction.supported ? '' : ' (needs Chromium)'}</span></label>
+  <button type="button" class="pv-reset" id="pv-reset">${ic('rotate-ccw', 14)} Reset sample</button>`;
+}
+
+function bindPreviewControls(host, onScreen) {
+  host.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-pv]');
+    if (b) setState({ [b.dataset.pv]: b.dataset.v });
+    if (e.target.closest('#pv-reset')) { resetSample(); toast('Sample reset'); }
+  });
+  host.addEventListener('change', (e) => {
+    if (e.target.id === 'pv-screen') onScreen(e.target.value);
+    if (e.target.id === 'pv-scenario') setState({ scenario: e.target.value, modelPreview: null });
+    if (e.target.id === 'pv-reduced') setState({ reduced: e.target.checked });
+    if (e.target.id === 'pv-refraction') setState({ refraction: e.target.checked });
+  });
+}
+
+/* ==========================================================================
+   Mosaic desktop design preview. Glass sidebar, toolbar and inspector around
+   a solid reading surface. Split-pane analysis workspace.
+   ========================================================================== */
+
+const D = {
+  screen: 'landing',
+  filter: 'all',
+  mapMode: 'map',
+  mapStage: 3,
+  mapSel: { type: 'finding', id: 'F-01' },
+  doc: 'D3',
+  dismissing: null,
+  landingStage: 0,
+  expandedPack: 'core',
+  genDomain: 'QUALITATIVE_RESEARCH',
+  genCats: new Set(PACK_REQUEST.categories),
+  exportKind: 'clean',
+  exportFmt: 'Markdown',
+  storageMode: 'persist',
+  journalSel: 0,
+  historySel: 'current',
+  sessionOnly: false,
+  dragOver: false,
+};
+
+const NAV = [
+  ['Review', [['overview', 'Overview', 'layout-dashboard'], ['document', 'Documents', 'file-text'], ['findings', 'Findings', 'list-checks'], ['map', 'Disclosure map', 'waypoints'], ['rewrite', 'Rewrite studio', 'pen-line']]],
+  ['Release', [['release', 'Release review', 'clipboard-check'], ['history', 'Release history', 'history'], ['export', 'Reports & export', 'file-output']]],
+  ['Tools', [['tests', 'Stress tests', 'flask-conical'], ['journal', 'Inference journal', 'activity'], ['benchmark', 'Benchmark lab', 'chart-column']]],
+];
+const WITH_INSPECTOR = new Set(['document', 'findings', 'map', 'tests', 'rewrite', 'release', 'history', 'export', 'journal']);
+const TITLES = { workspaces: 'Workspaces', overview: 'Overview', import: 'Import', document: 'Documents', findings: 'Findings', map: 'Disclosure map', tests: 'Stress tests', rewrite: 'Rewrite studio', release: 'Release review', history: 'Release history', export: 'Reports & export', journal: 'Inference journal', benchmark: 'Benchmark lab', settings: 'Settings' };
+
+const appEl = $('#app');
+const modalsEl = $('#modals');
+const go = (s, extra = '') => `data-go="${s}" ${extra}`;
+const counts = () => {
+  const o = openFindings();
+  return { high: o.filter((f) => f.band === 'HIGH' || f.band === 'CRITICAL').length, mod: o.filter((f) => f.band === 'MODERATE').length, low: o.filter((f) => f.band === 'LOW').length, un: o.filter((f) => f.unassessed).length };
+};
+const coverage = () => ({ ctx: S.scenario === 'unsupported' ? 0 : S.scenario === 'partial' || S.scenario === 'error' ? 5 : 8, rules: 8 });
+const covBars = () => { const c = coverage(); return `<div class="coverage-d">
+  <div class="cov-row"><span>Context</span><span class="bar"><i style="width:${(c.ctx / 8) * 100}%"></i>${c.ctx < 8 ? `<i class="un" style="width:${((8 - c.ctx) / 8) * 100}%"></i>` : ''}</span><span class="tnum">${c.ctx}/8 ¶ ${S.scenario === 'unsupported' ? '' : 'on device'}</span></div>
+  <div class="cov-row"><span>Rules</span><span class="bar"><i class="rules" style="width:100%"></i></span><span class="tnum">8/8 ¶</span></div></div>`; };
+const fmtMs = (ms) => (ms == null ? '—' : ms >= 1000 ? (ms / 1000).toFixed(1) + ' s' : ms + ' ms');
+
+function scenarioBanner(where) {
+  const sc = S.scenario;
+  if (sc === 'unsupported') return `<div class="banner banner-warn">${ic('monitor-x', 18)}<div class="banner-body"><strong>This browser can’t run the on-device model</strong>You’re viewing recorded sample results. Private workspaces run rules-only checks here, and nothing is sent to the cloud instead. <a href="#" data-go="setup" style="color:inherit;font-weight:600">See requirements</a></div></div>`;
+  if (sc === 'offline' && where !== 'quiet') return `<div class="banner banner-neutral">${ic('wifi-off', 18)}<div class="banner-body"><strong>Offline</strong>Private review keeps working on this device. Cloud test packs resume when you reconnect.</div></div>`;
+  if ((sc === 'partial' || sc === 'error') && where === 'review') return `<div class="banner banner-un">${ic('circle-dashed', 18)}<div class="banner-body"><strong>Partial scan</strong>${sc === 'error' ? 'The model reply for ¶6–8 failed validation and was set aside after one local retry.' : '¶6–8 timed out on this device.'} Those paragraphs are not assessed.<br><button type="button" class="btn btn-sm btn-tinted" data-act="run-chunk">${ic('rotate-cw', 14)} Run ¶6–8 again</button></div></div>`;
+  return '';
+}
+const withGap = (html) => (html ? `<div style="margin-bottom:16px">${html}</div>` : '');
+
+/* ---------- shell ---------- */
+function sidebar() {
+  const ms = MODEL_STATES[modelState()];
+  const dot = { ok: 'ok', warn: 'warn', bad: 'bad', neutral: '' }[ms.tone];
+  const c = counts();
+  const n = { findings: openFindings().length, rewrite: FINDINGS.filter((f) => f.rewrite && !S.applied.has(f.id)).length, document: 3 };
+  return `<aside class="sidebar glass" aria-label="Workspace navigation">
+    <div class="sb-brand">${logo(22)}<span>Mosaic</span><span class="preview-flag">Preview</span></div>
+    <button type="button" class="ws-switch" ${go('workspaces')}>${logo(18)}<span><span class="ws-t">${WORKSPACE.title}</span><span class="ws-s">Sample · fictional</span></span>${ic('chevrons-up-down', 15)}</button>
+    <nav class="nav">${NAV.map(([h, items]) => `<div class="nav-h">${h}</div>${items.map(([k, l, icon]) => `<button type="button" class="nav-i" ${go(k)} ${D.screen === k ? 'aria-current="page"' : ''}>${ic(icon, 16)}<span>${l}</span>${n[k] ? `<span class="n ${k === 'findings' && c.high ? 'hot' : ''}">${n[k]}</span>` : ''}</button>`).join('')}`).join('')}</nav>
+    <div class="sb-foot">
+      <button type="button" class="dev-chip" ${go('setup')}><span class="dot ${dot}"></span><span><b>On-device model</b><span>${ms.label}${isOffline() ? ' · offline' : ''}</span></span></button>
+      <button type="button" class="nav-i" ${go('settings')} ${D.screen === 'settings' ? 'aria-current="page"' : ''}>${ic('settings', 16)}<span>Settings</span></button>
+    </div>
+  </aside>`;
+}
+
+function topbar() {
+  const ms = modelState();
+  const label = isOffline() ? 'Offline · local work continues' : { ready: 'On-device ready', unsupported: 'Rules only on this browser', error: 'Model error', unavailable: 'Model busy', download: 'Model not downloaded', downloading: 'Downloading model', checking: 'Checking model' }[ms] || 'On-device ready';
+  const dot = isOffline() ? '' : ms === 'ready' ? 'ok' : ms === 'error' ? 'bad' : 'warn';
+  const inWs = !['workspaces', 'settings'].includes(D.screen);
+  return `<header class="topbar-d glass" data-refract>
+    <div class="crumbs">${inWs ? `<span>${WORKSPACE.title}</span>${ic('chevron-right', 14)}` : ''}<b>${TITLES[D.screen]}</b></div>
+    <span class="spacer"></span>
+    <span class="pill-status"><span class="dot ${dot}"></span>${label}</span>
+    ${inWs ? `<button type="button" class="btn btn-quiet tb-btn" ${go('import')}>${ic('file-up', 15)} Import</button><button type="button" class="btn btn-primary tb-btn" data-act="rescan">${ic('scan-search', 15)} Run review</button>` : ''}
+  </header>`;
+}
+
+function render() {
+  if (D.screen === 'landing') { appEl.innerHTML = landing(); afterRender(); return; }
+  if (D.screen === 'setup') { appEl.innerHTML = setup(); afterRender(); return; }
+  const scr = SCREENS[D.screen]();
+  const insp = WITH_INSPECTOR.has(D.screen) && scr.inspector;
+  const prev = $('.main-scroll', appEl);
+  const keep = prev && prev.dataset.screen === D.screen ? prev.scrollTop : 0;
+  const prevI = $('.insp-body', appEl);
+  const keepI = prevI && prevI.dataset.screen === D.screen ? prevI.scrollTop : 0;
+  appEl.innerHTML = `<div class="shell ${insp ? '' : 'no-inspector'}">
+    ${sidebar()}
+    <section class="main" aria-label="${TITLES[D.screen]}">${topbar()}<div class="main-scroll" data-screen="${D.screen}"><div class="main-inner ${scr.wide ? 'wide' : ''}">${scr.body}</div></div></section>
+    ${insp ? `<aside class="inspector glass" aria-label="Inspector"><div class="insp-head"><h2>${scr.inspectorTitle || 'Inspector'}</h2>${scr.inspectorHead || ''}</div><div class="insp-body" data-screen="${D.screen}">${scr.inspector}</div></aside>` : ''}
+  </div>`;
+  $('.main-scroll', appEl).scrollTop = keep;
+  if ($('.insp-body', appEl)) $('.insp-body', appEl).scrollTop = keepI;
+  if (scr.mount) scr.mount();
+  afterRender();
+}
+function afterRender() {
+  Refraction.scan(appEl);
+  const sel = $('#pv-screen'); if (sel) sel.value = D.screen;
+}
+
+/* ---------- landing ---------- */
+function landing() {
+  const steps = groupSteps(new Set());
+  const st = D.landingStage;
+  const lit = (k) => (st >= k ? ' lit' : '');
+  const cols = [
+    ['ONLY_ON_DEVICE', 'On this device', 'cpu', 'Private documents and anything derived from them.'],
+    ['ONLY_IN_CLOUD', 'In the cloud, after you approve', 'cloud', 'Only fixed, generic inputs. You see the exact request.'],
+    ['PREFER_ON_DEVICE', 'Either, for bundled samples', 'shuffle', 'The SDK picks; the actual source is shown.'],
+  ];
+  return `<div class="landing-d">
+    <nav class="lnav glass" aria-label="Site">
+      <span class="brand">${logo(22)} Mosaic</span>
+      <span class="lk">How it works</span><span class="lk">Privacy model</span><button type="button" class="lk" ${go('setup')}>Device support</button>
+      <span class="spacer"></span>
+      <span class="preview-flag">${ic('pencil-ruler', 12)} Design preview</span>
+      <button type="button" class="btn btn-primary btn-sm" data-act="start-sample">Open the sample</button>
+    </nav>
+    <section class="l-hero">
+      <div>
+        <h1>Protect the information you never realized you were revealing.</h1>
+        <p class="sub">Each release can look anonymous on its own. Mosaic checks how your drafts and past releases read together, and it does the private part on your own device.</p>
+        <div class="l-ctas"><button type="button" class="btn btn-primary" data-act="start-sample">Try the sample workspace</button><button type="button" class="btn btn-tinted" data-act="create-ws">Create a private workspace</button></div>
+        <div class="l-trust">
+          <div>${ic('lock', 17)}<span>Drafts are analysed in your browser with the built-in model. They never go to a server.</span></div>
+          <div>${ic('cloud', 17)}<span>The cloud only writes generic test packs from fixed categories, after you approve the exact request.</span></div>
+          <div>${ic('badge-check', 17)}<span>Every result shows where it actually ran. No account needed.</span></div>
+        </div>
+      </div>
+      <div class="l-reveal" aria-live="polite">
+        <div class="l-docs">
+          <div class="l-doc${lit(1)}"><b>${ic('file-check', 13)} Interim report · published March 2026</b>Participants were drawn from ward-based nursing staff and from <mark class="ev">the overnight pharmacy team</mark>.</div>
+          <div class="l-doc${lit(2)}"><b>${ic('file-check', 13)} Case study · published June 2026</b>One participant described joining with <mark class="ev">the winter onboarding cohort</mark>, after the January rota change.</div>
+          <div class="l-doc${lit(3)}"><b>${ic('file-pen', 13)} Interview transcript · draft</b>I came over <mark class="ev ev-high">after my transfer from the coastal satellite clinic</mark>, so I already knew the system.</div>
+          <span class="illustrative" style="margin-top:4px">${ic('flask-conical', 12)} Educational illustration · fictional records</span>
+        </div>
+        <div>
+          ${mosaicGrid(steps, st)}
+          <div class="l-count" id="l-count">${steps[st].count}<small> of 100</small></div>
+          <p class="l-cap" id="l-cap">${['A fictional population of 100 people.', 'The March report narrows it to one team.', 'The June case study narrows it again.', 'The new draft leaves one person.'][st]}</p>
+          <button type="button" class="btn btn-plain btn-sm" data-act="replay" style="padding:0">${ic('rotate-ccw', 14)} Replay</button>
+        </div>
+      </div>
+    </section>
+    <section class="l-split">
+      <h2>Cloud writes the tests. Your device reads the documents.</h2>
+      <p>Mosaic uses Firebase AI Logic for both. Each task has a fixed routing policy, and a private task never falls back to the cloud, even when the local model fails.</p>
+      <div class="route-grid">${cols.map(([pol, h, icon, sub]) => `<div class="route-col glass"><h3>${ic(icon, 18)} ${h}</h3><span class="small muted">${sub}</span>${ROUTING.filter((r) => r.policy === pol).map((r) => `<div class="route-item"><b>${r.task}</b><span>${policyTag(r.policy)} · if unavailable: ${r.fail.toLowerCase()}</span></div>`).join('')}</div>`).join('')}</div>
+    </section>
+  </div>`;
+}
+
+/* ---------- setup ---------- */
+function setup() {
+  const ms = modelState();
+  const m = MODEL_STATES[ms];
+  const tone = { ok: 'ok', warn: 'warn', bad: 'bad', neutral: '' }[m.tone];
+  const action = {
+    checking: '',
+    unsupported: `<button type="button" class="btn btn-quiet" data-act="toast" data-msg="Opens the device support page">Supported browsers and devices</button>`,
+    download: `<button type="button" class="btn btn-primary" data-act="model-state" data-v="downloading">${ic('download', 16)} Download model</button>`,
+    downloading: `<div class="indet" role="progressbar" aria-label="Downloading model"></div><p class="small muted">Waiting for Chrome to report progress. No estimate is shown until it does.</p><button type="button" class="btn btn-quiet" data-act="model-state" data-v="download">Cancel</button>`,
+    ready: `<button type="button" class="btn btn-tinted" data-act="toast" data-msg="Preview only: no test prompt was run">${ic('play', 16)} Run a short test prompt</button>`,
+    unavailable: `<button type="button" class="btn btn-quiet" data-act="model-state" data-v="ready">${ic('rotate-cw', 16)} Try again</button>`,
+    offline: '',
+    error: `<button type="button" class="btn btn-primary" data-act="model-state" data-v="downloading">${ic('rotate-cw', 16)} Retry</button>`,
+  }[ms];
+  return `<div class="setup-d">
+    <div style="width:min(980px,100%);margin:0 auto 18px;display:flex;align-items:center;gap:12px">
+      <button type="button" class="btn btn-quiet btn-sm" ${go('landing')}>${ic('chevron-left', 15)} Back</button>
+      <h1 style="font-size:28px;font-weight:750;letter-spacing:-0.02em">Set up this browser</h1>
+      <span style="flex:1"></span><span class="preview-flag">${ic('pencil-ruler', 12)} Design preview</span>
+    </div>
+    <div class="setup-card">
+      <div class="glass" style="display:grid;gap:14px;align-content:start">
+        <div class="model-state ${tone}"><span class="ms-ic">${ic(m.icon, 26, ms === 'checking' || ms === 'downloading' ? 'spin' : '')}</span><div><span class="small muted">Built-in model (Gemini Nano in Chrome)</span><h3>${m.label}</h3></div></div>
+        <p style="color:var(--ink-2)">${m.body}</p>
+        ${action}
+        <div><div class="insp-label" style="margin-left:0">Preview a state</div><div class="filters-d" style="margin:0">${Object.entries(MODEL_STATES).map(([k, v]) => `<button type="button" class="fchip" aria-pressed="${k === ms}" data-act="model-state" data-v="${k}">${v.label}</button>`).join('')}</div></div>
+        <div><div class="insp-label" style="margin-left:0">What Chrome needs</div>
+          <div class="req">${ic('app-window', 16)}<div>Desktop Chrome with the Prompt API<span>Mobile Chrome doesn’t run the built-in model</span></div></div>
+          <div class="req">${ic('hard-drive', 16)}<div>About 22 GB free on the Chrome profile drive<span>The model itself is smaller; Chrome keeps headroom</span></div></div>
+          <div class="req">${ic('memory-stick', 16)}<div>More than 4 GB of video memory, or 16 GB RAM and 4 CPU cores<span>Meeting these doesn’t guarantee support; Chrome decides</span></div></div>
+          <div class="req">${ic('wifi', 16)}<div>An unmetered connection for the first download<span>After that, private review works offline</span></div></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px;align-content:start">
+        <div class="glass"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">${ic('cloud', 17)} What the cloud does</h3><p style="color:var(--ink-2);font-size:14px">It writes generic test packs from a fixed list of categories, such as “rare roles in small teams”. You see and approve the exact request first. Document text, names and file names are never part of it.</p></div>
+        <div class="glass"><h3 style="font-size:16px;font-weight:700;margin-bottom:8px">${ic('hard-drive', 17)} Where workspaces live</h3>
+          <button type="button" class="radio-d" role="radio" aria-checked="${D.storageMode === 'persist'}" data-act="storage" data-v="persist"><span class="dot"></span><div><b>Keep in this browser</b><span>Stored in IndexedDB until you delete it. Browsers can evict data; export anything you need to keep.</span></div></button>
+          <button type="button" class="radio-d" role="radio" aria-checked="${D.storageMode === 'session'}" data-act="storage" data-v="session"><span class="dot"></span><div><b>This session only</b><span>Deleted when you close the workspace.</span></div></button>
+        </div>
+        <button type="button" class="btn btn-primary" data-act="start-sample" style="min-height:48px">Continue to the sample workspace</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- workspace screens ---------- */
+const SCREENS = {};
+
+SCREENS.workspaces = () => {
+  const empty = S.scenario === 'empty';
+  return {
+    body: `
+      <div class="page-h"><div><h1>Workspaces</h1><p>Each workspace holds a draft and the releases it is checked against. Everything stays in this browser.</p></div><button type="button" class="btn btn-primary" data-act="create-ws">${ic('plus', 16)} New workspace</button></div>
+      <div class="h2" style="margin-top:0">Sample</div>
+      <button type="button" class="tool-tile" ${go('overview')} style="width:100%;grid-template-columns:auto 1fr auto;align-items:center;gap:14px">${logo(28)}<span><b style="display:block;font-size:15px">${WORKSPACE.title}</b><span>${WORKSPACE.org} · 3 documents · 2 approved releases</span></span><span class="hstack">${riskChip(counts().high ? 'HIGH' : 'MODERATE', { small: true })}<span class="pack-src">${ic('flask-conical', 12)} Fictional sample</span>${ic('chevron-right', 16)}</span></button>
+      <div class="h2">Private</div>
+      ${empty ? `<div class="empty-d"><div class="mini-mosaic">${'<i></i>'.repeat(12)}</div><h3>No private workspaces yet</h3><p>Create one for a draft you plan to publish. It stays in this browser and is never synced.</p><button type="button" class="btn btn-primary" data-act="create-ws">${ic('plus', 16)} Create workspace</button></div>` : `
+      <table class="tbl"><thead><tr><th>Title</th><th>Documents</th><th>Last edited</th><th>Status</th><th></th></tr></thead><tbody>
+        ${PRIVATE_WORKSPACES.map((w) => `<tr class="clickable" data-act="toast" data-msg="Opens ${esc(w.title)} (not part of the sample)"><td class="t-title">${ic('folder-lock', 15)} ${w.title}</td><td class="num">${w.docs}</td><td class="muted">${w.edited.replace('Edited ', '')}</td><td>${w.status === 'Approved release' ? `<span class="chip chip-ok chip-sm">${ic('circle-check', 13)}<span>Approved release</span></span>` : riskChip('MODERATE', { small: true })}</td><td style="text-align:right"><button type="button" class="btn btn-sm btn-plain" data-act="toast" data-msg="Rename">Rename</button><button type="button" class="btn btn-sm btn-plain" style="color:var(--risk-crit-fg)" data-modal="delete" data-id="${w.id}">Delete</button></td></tr>`).join('')}
+      </tbody></table>`}`,
+  };
+};
+
+SCREENS.overview = () => {
+  if (D.blank) {
+    return { body: `
+      <div class="page-h"><div><h1>Untitled workspace</h1><p>Private · in this browser</p></div></div>
+      <div class="empty-d"><div class="mini-mosaic">${'<i></i>'.repeat(12)}</div><h3>Add your documents</h3><p>Add the draft you plan to publish and any releases that are already out. Everything is classed private.</p><div class="hstack" style="justify-content:center"><button type="button" class="btn btn-primary" ${go('import')}>${ic('file-up', 16)} Import files</button><button type="button" class="btn btn-tinted" ${go('import')}>${ic('clipboard', 16)} Paste text</button></div></div>` };
+  }
+  const c = counts();
+  const v = draftVersion();
+  return {
+    body: `
+      ${withGap(scenarioBanner('review'))}
+      <div class="page-h"><div><h1>${WORKSPACE.title}</h1><p>${WORKSPACE.description}</p></div></div>
+      <div class="status-d">
+        <div class="panel">
+          <div class="hstack" style="justify-content:space-between"><div><span class="small muted">Next release</span><div style="font-size:17px;font-weight:650">P-07 transcript · draft ${v}</div></div>${S.approved ? `<span class="chip chip-ok">${ic('circle-check', 14)}<span>Approved</span></span>` : riskChip(c.high ? 'HIGH' : c.mod ? 'MODERATE' : 'LOW')}</div>
+          <div class="counts-d">
+            <button type="button" class="count-d high" ${go('findings')} data-filter="high"><strong>${c.high}</strong><span>${ic('triangle-alert', 12)} High priority</span></button>
+            <button type="button" class="count-d mod" ${go('findings')} data-filter="mod"><strong>${c.mod}</strong><span>${ic('circle-alert', 12)} Needs review</span></button>
+            <button type="button" class="count-d" ${go('findings')} data-filter="low"><strong>${c.low}</strong><span>${ic('info', 12)} Low</span></button>
+            <button type="button" class="count-d un" ${go('findings')} data-filter="un"><strong>${c.un}</strong><span>${ic('circle-dashed', 12)} Not assessed</span></button>
+          </div>
+        </div>
+        <div class="panel" style="display:grid;gap:12px;align-content:start">
+          <span class="small muted">Coverage</span>
+          ${covBars()}
+          <div class="hstack" style="margin-top:4px"><button type="button" class="btn btn-quiet btn-sm" ${go('document')}>${ic('file-text', 14)} Open draft</button><button type="button" class="btn btn-tinted btn-sm" ${go('rewrite')}>${ic('pen-line', 14)} Rewrite</button></div>
+        </div>
+      </div>
+      <div class="h2">Documents <button type="button" class="btn btn-plain" ${go('import')}>${ic('plus', 14)} Add</button></div>
+      <table class="tbl"><thead><tr><th></th><th>Title</th><th>Role</th><th>Version</th><th>Classification</th><th>Findings</th></tr></thead><tbody>
+        ${['D3', 'R2', 'R1'].map((id) => { const d = DOCS[id]; const nf = findings().filter((f) => f.anchors.some((a) => a.doc === id && a.quote)).length; return `<tr class="clickable" data-go="document" data-doc="${id}"><td style="width:40px"><span class="doc-ic ${d.kind === 'draft' ? 'draft' : ''}">${ic(d.kind === 'draft' ? 'file-pen' : 'file-check', 15)}</span></td><td class="t-title">${d.title}</td><td>${d.kind === 'draft' ? 'Draft to review' : `Approved ${d.approved}`}</td><td class="mono">${id === 'D3' ? v : d.meta.split('· ').pop()}</td><td><span class="pack-src">${ic('lock', 11)} Private</span></td><td class="num">${nf}</td></tr>`; }).join('')}
+      </tbody></table>
+      <div class="h2">Tools</div>
+      <div class="grid-3">
+        <button type="button" class="tool-tile" ${go('map')}>${ic('waypoints', 20)}<b>Disclosure map</b><span>How the three documents connect</span></button>
+        <button type="button" class="tool-tile" ${go('tests')}>${ic('flask-conical', 20)}<b>Stress tests</b><span>${Object.values(S.packsEnabled).filter(Boolean).length} packs on</span></button>
+        <button type="button" class="tool-tile" ${go('release')}>${ic('clipboard-check', 20)}<b>Release review</b><span>${S.approved ? 'Approved on this device' : 'Not approved yet'}</span></button>
+      </div>
+      <p class="small muted" style="margin-top:18px">Last review ran ${S.scenario === 'unsupported' ? 'from recorded sample results' : 'on this device at 10:42'} with Core disclosure checks v1.3 and Qualitative research expansion 2026.11.18-a.</p>`,
+  };
+};
+
+SCREENS.import = () => {
+  const err = S.scenario === 'error';
+  const files = [
+    { n: 'interview-p07-v3.docx', s: '2 pages · 1,204 words', st: `<span class="chip chip-ok chip-sm">${ic('circle-check', 13)}<span>Text extracted</span></span>`, role: 'Draft to review' },
+    { n: 'interim-report-v2.pdf', s: '4 pages', st: `<span class="status">${ic('loader', 13, 'spin')}<span>Reading page 3 of 4</span></span>`, role: 'Approved release' },
+    ...(err ? [
+      { n: 'field-notes-scan.pdf', s: '6 pages · no text layer', st: `<span class="chip chip-crit chip-sm">${ic('file-warning', 13)}<span>Looks scanned</span></span>`, role: '—', act: `<button type="button" class="btn btn-sm btn-tinted" data-act="toast" data-msg="OCR runs locally and marks uncertain words for correction">Run OCR on this device</button>` },
+      { n: 'budget.xlsx', s: 'Spreadsheet', st: `<span class="chip chip-crit chip-sm">${ic('file-x', 13)}<span>Not supported</span></span>`, role: '—', act: '<span class="small muted">Use TXT, Markdown, PDF or DOCX</span>' },
+      { n: 'appendix-c.docx', s: 'File is damaged', st: `<span class="chip chip-crit chip-sm">${ic('file-x', 13)}<span>Couldn’t read</span></span>`, role: '—', act: '<span class="small muted">Re-save the file and try again</span>' },
+    ] : []),
+  ];
+  return {
+    body: `
+      <div class="page-h"><div><h1>Import</h1><p>Files are read in this browser. Nothing is uploaded, links stay inactive and macros never run.</p></div></div>
+      <div class="drop-d ${D.dragOver ? 'over' : ''}" id="drop"><span class="d-ic">${ic('file-up', 26)}</span><strong style="font-size:16px">Drop files here</strong><span class="small muted">TXT, Markdown, text-based PDF or DOCX · up to 20 MB and 100 pages each</span><div class="hstack" style="justify-content:center"><button type="button" class="btn btn-sm btn-primary" data-act="toast" data-msg="Opens the file picker">Choose files</button><button type="button" class="btn btn-sm btn-tinted" data-act="toast" data-msg="Opens a paste box">Paste text</button></div></div>
+      <div class="grid-2" style="margin-top:16px">
+        <div class="panel"><span class="small muted">Classification</span><div class="hstack" style="margin-top:6px;justify-content:space-between"><b>Private</b>${ic('lock', 17)}</div><p class="small muted" style="margin-top:6px">Every imported file is private and is analysed only on this device. Bundled samples are the only cloud-eligible content.</p></div>
+        <div class="panel"><span class="small muted">Role</span><div class="seg" style="margin-top:8px"><button type="button" aria-pressed="true">Draft to review</button><button type="button" aria-pressed="false">Already published</button></div><p class="small muted" style="margin-top:8px">Published releases become the history new drafts are checked against.</p></div>
+      </div>
+      <div class="h2">Files</div>
+      <table class="tbl"><thead><tr><th>File</th><th>Details</th><th>Status</th><th>Role</th><th></th></tr></thead><tbody>
+        ${files.map((f) => `<tr><td class="t-title">${ic('file-text', 15)} ${f.n}</td><td class="muted">${f.s}</td><td>${f.st}</td><td>${f.role}</td><td style="text-align:right">${f.act || `<button type="button" class="btn btn-sm btn-plain" data-act="toast" data-msg="Removed from import">Remove</button>`}</td></tr>`).join('')}
+      </tbody></table>
+      <div class="hstack" style="justify-content:flex-end;margin-top:16px"><button type="button" class="btn btn-quiet" ${go('overview')}>Cancel</button><button type="button" class="btn btn-primary" data-act="toast" data-msg="Preview: nothing was imported">Add to workspace</button></div>`,
+  };
+};
+
+function findingInspector(f) {
+  if (!f) return `<div class="insp-card"><p class="muted">Select a finding to see its evidence.</p></div>`;
+  const cat = f.category ? CATEGORY[f.category] : null;
+  const done = ['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(f.status);
+  const r = f.rewrite;
+  return `
+    <div class="insp-card">
+      <div class="hstack" style="justify-content:space-between;margin-bottom:8px">${riskChip(f.band)}<span class="small muted mono">${f.id}</span></div>
+      <div class="insp-title">${esc(f.title)}</div>
+      <div class="hstack" style="margin-top:10px">${sourceBadge(f.source)}${f.source !== 'RULES' ? policyTag('ONLY_ON_DEVICE') : ''}${statusChip(f.status)}</div>
+      ${cat ? `<p class="small muted" style="margin-top:8px">${ic(cat.icon, 13)} ${cat.label}</p>` : ''}
+      <p style="margin-top:10px;font-size:13.5px;line-height:1.55;color:var(--ink-2)">${esc(f.rationale)}</p>
+    </div>
+    ${f.unassessed ? `<div class="insp-actions"><button type="button" class="btn btn-primary" data-act="run-chunk">${ic('rotate-cw', 15)} Run ¶6–8 again on this device</button><button type="button" class="btn btn-quiet" data-act="goto" data-doc="D3" data-para="5">Review ¶6–8 by hand</button></div>` : `
+    <div class="insp-label">Evidence · ${f.anchors.length} passage${f.anchors.length > 1 ? 's' : ''}</div>
+    <div class="ev-list">${f.anchors.map((a) => `<button type="button" class="ev-card" data-act="goto" data-doc="${a.doc}" data-para="${a.para}"><span class="ev-src">${ic(DOCS[a.doc].kind === 'draft' ? 'file-pen' : 'file-check', 12)} ${DOCS[a.doc].title} · ¶${a.para + 1}</span><span class="ev-q">“…${markPara(a.doc, a.para, a.quote, { findings: [f] })}…”</span></button>`).join('')}</div>
+    <div class="insp-label">Review priority</div>
+    <div class="insp-card">${scoreBars(f)}</div>
+    <div class="insp-label">Confidence</div>
+    <div class="insp-card"><b style="font-size:13.5px">${CONF[f.confidence]}</b><p class="small" style="color:var(--ink-2);margin-top:4px">${esc(f.confReason)}</p></div>
+    ${r ? `<div class="insp-label">Suggested change</div><div class="insp-card"><div class="diffbox"><del class="diff">${esc(r.from)}</del>${r.to ? ` <ins class="diff">${esc(r.to)}</ins>` : ''}</div><div class="keeps" style="margin-top:8px">${ic('circle-check', 14)}<span><b>Still true:</b> ${esc(f.keeps)}</span></div></div>` : ''}
+    ${D.dismissing === f.id ? `<div class="insp-label">Why dismiss? (optional, stays on this device)</div><textarea class="note-field" id="dismiss-note" placeholder="For example: already public in the funder’s report"></textarea><div class="insp-actions"><div class="two"><button type="button" class="btn btn-quiet" data-act="dismiss-cancel">Cancel</button><button type="button" class="btn btn-danger" data-act="dismiss" data-id="${f.id}">Dismiss</button></div></div>` : done ? `<div class="insp-actions"><button type="button" class="btn btn-quiet" data-act="reopen" data-id="${f.id}">${ic('undo-2', 15)} Reopen</button></div>` : `
+    <div class="insp-actions">
+      ${r ? `<button type="button" class="btn btn-primary" data-go="rewrite">${ic('pen-line', 15)} Preview rewrite</button>` : ''}
+      <div class="two"><button type="button" class="btn btn-quiet" data-act="residual" data-id="${f.id}">Accept residual</button><button type="button" class="btn btn-quiet" data-act="dismiss-start" data-id="${f.id}">Dismiss…</button></div>
+    </div>`}
+    <p class="small muted" style="margin:14px 4px 0">Advisory. Mosaic suggests; you decide what to publish.</p>`}`;
+}
+
+SCREENS.document = () => {
+  const id = D.doc;
+  const d = DOCS[id];
+  const paras = id === 'D3' ? draftParas() : d.paras;
+  const sel = findingById(S.selected);
+  return {
+    body: `
+      ${id === 'D3' ? withGap(scenarioBanner('review')) : ''}
+      <div class="doc-tabs" role="tablist">${['D3', 'R1', 'R2'].map((k) => `<button type="button" class="doc-tab" role="tab" aria-selected="${k === id}" data-act="doc" data-v="${k}">${ic(DOCS[k].kind === 'draft' ? 'file-pen' : 'file-check', 14)} ${DOCS[k].short}</button>`).join('')}</div>
+      <div class="doc-meta"><b style="color:var(--ink);font-size:15px">${d.title}</b><span>${id === 'D3' ? `Draft ${draftVersion()}` : d.meta}</span><span class="pack-src">${ic('lock', 11)} Private</span><span style="flex:1"></span><span class="hstack small"><span class="kbd">J</span><span class="kbd">K</span> next / previous finding</span></div>
+      <article class="reader-d" aria-label="Document text">${paras.map((t, i) => `<div class="para" id="p-${id}-${i}"><span class="para-anchor">¶${i + 1}</span><p>${markPara(id, i, t, { active: S.selected })}</p></div>`).join('')}</article>
+      <p class="small muted" style="margin-top:8px">Text extracted in this browser. Original formatting, embedded objects and file metadata are not reviewed here.</p>`,
+    inspectorTitle: 'Finding',
+    inspector: findingInspector(sel && sel.anchors.some((a) => a.doc === id) ? sel : findings().find((f) => f.anchors.some((a) => a.doc === id && a.quote))),
+    mount() {
+      if (D.gotoPara != null) {
+        const pe = $(`#p-${id}-${D.gotoPara}`);
+        D.gotoPara = null;
+        if (pe) setTimeout(() => { pe.scrollIntoView({ block: 'center', behavior: reduceMotion() ? 'auto' : 'smooth' }); pe.classList.add('flash'); }, 60);
+      }
+    },
+  };
+};
+
+SCREENS.findings = () => {
+  const all = findings();
+  const f = D.filter;
+  const pass = (x) => f === 'all' || (f === 'high' && (x.band === 'HIGH' || x.band === 'CRITICAL')) || (f === 'mod' && x.band === 'MODERATE') || (f === 'low' && x.band === 'LOW') || (f === 'un' && x.unassessed) || (f === 'device' && x.source === 'DEVICE') || (f === 'rules' && x.source === 'RULES') || (f === 'closed' && ['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(x.status));
+  const list = all.filter(pass);
+  const n = (fn) => all.filter(fn).length;
+  const chips = [['all', 'All', all.length], ['high', 'High priority', n((x) => x.band === 'HIGH')], ['mod', 'Needs review', n((x) => x.band === 'MODERATE')], ['low', 'Low', n((x) => x.band === 'LOW')], ['un', 'Not assessed', n((x) => x.unassessed)], ['device', 'On device', n((x) => x.source === 'DEVICE')], ['rules', 'Rules', n((x) => x.source === 'RULES')], ['closed', 'Closed', n((x) => ['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(x.status))]].filter((c) => c[2] || c[0] === 'all');
+  return {
+    wide: true,
+    body: `
+      ${withGap(scenarioBanner('review'))}
+      <div class="page-h"><div><h1>Findings</h1><p>P-07 transcript · draft ${draftVersion()} checked against 2 approved releases.</p></div></div>
+      <div class="filters-d" role="toolbar" aria-label="Filter findings">${chips.map(([k, l, c]) => `<button type="button" class="fchip" aria-pressed="${k === f}" data-act="filter" data-v="${k}">${l} <span class="n">${c}</span></button>`).join('')}</div>
+      <table class="tbl"><thead><tr><th>Priority</th><th>Finding</th><th>Documents</th><th>Source</th><th>Status</th><th class="num">Score</th></tr></thead><tbody>
+        ${list.map((x) => { const done = ['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(x.status); return `<tr class="clickable ${x.id === S.selected ? 'sel' : ''} ${done ? 'done' : ''}" data-act="select" data-id="${x.id}" tabindex="0"><td>${riskChip(x.band, { small: true })}</td><td><div class="t-title">${esc(x.title)}</div><div class="small muted">${x.id}${x.category ? ' · ' + CATEGORY[x.category].label : ''}</div></td><td class="small">${[...new Set(x.anchors.map((a) => DOCS[a.doc].short))].join(', ')}</td><td>${sourceBadge(x.source)}</td><td>${statusChip(x.status)}</td><td class="num mono">${x.unassessed ? '—' : x.score + '/11'}</td></tr>`; }).join('')}
+      </tbody></table>
+      ${list.length ? '' : `<div class="empty-d" style="margin-top:12px"><h3>Nothing in this filter</h3><p>That doesn’t mean the draft is anonymous. It means no finding matches.</p></div>`}
+      <p class="small muted" style="margin-top:14px">Scores are review priority from four rubric dimensions, not a probability of identification. A low score is not clearance.</p>`,
+    inspectorTitle: 'Finding',
+    inspector: findingInspector(findingById(S.selected)),
+  };
+};
+
+/* desktop graph */
+const DG = {
+  nodes: {
+    R1: { x: 20, y: 40, w: 180, h: 62, t: 'Interim report', s: 'Approved · 12 Mar 2026', k: 'RELEASE', cls: 'release' },
+    R2: { x: 20, y: 160, w: 180, h: 62, t: 'Case study', s: 'Approved · 3 Jun 2026', k: 'RELEASE', cls: 'release' },
+    D3: { x: 20, y: 280, w: 180, h: 62, t: 'P-07 transcript', s: 'Draft', k: 'DRAFT', cls: 'draft' },
+    c1: { x: 300, y: 30, w: 160, h: 50, t: 'Team or role', s: '2 passages', k: 'CATEGORY', cls: 'cat' },
+    c2: { x: 300, y: 120, w: 160, h: 50, t: 'Start window', s: '2 passages', k: 'CATEGORY', cls: 'cat' },
+    c3: { x: 300, y: 210, w: 160, h: 50, t: 'Transfer history', s: '1 passage', k: 'CATEGORY', cls: 'cat' },
+    c4: { x: 300, y: 300, w: 160, h: 50, t: 'Health context', s: '1 passage', k: 'CATEGORY', cls: 'cat' },
+    'F-01': { x: 560, y: 70, w: 200, h: 92, t: 'F-01 · combined', s: '', k: 'FINDING', cls: 'finding' },
+    'F-02': { x: 560, y: 184, w: 200, h: 50, t: 'F-02 · unique skill', s: '', k: '', cls: 'finding' },
+    'F-03': { x: 560, y: 246, w: 200, h: 50, t: 'F-03 · exact date', s: '', k: '', cls: 'finding' },
+    'F-05': { x: 560, y: 308, w: 200, h: 50, t: 'F-05 · health detail', s: '', k: '', cls: 'finding' },
+  },
+};
+
+function dGraph() {
+  const fs = findings();
+  const has = (id) => fs.some((f) => f.id === id);
+  const N = DG.nodes;
+  const visible = (e) => [e.a, e.b].every((n) => !n.startsWith('F-') || has(n)) && (![e.a, e.b].includes('c4') || has('F-05'));
+  const cut = (e) => (e.id === 'e5' && S.applied.has('F-01')) || (e.id === 'e4' && S.applied.has('F-03')) || (e.id === 'e2' && S.applied.has('F-02')) || (e.id === 'e6' && S.applied.has('F-05'));
+  const path = (e) => { const a = N[e.a], b = N[e.b]; const x1 = a.x + a.w, y1 = a.y + a.h / 2, x2 = b.x, y2 = b.y + b.h / 2; const mx = (x1 + x2) / 2; return `M${x1} ${y1} C${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`; };
+  const selE = D.mapSel.type === 'edge' ? D.mapSel.id : null;
+  const selN = D.mapSel.type !== 'edge' ? D.mapSel.id : null;
+  const edges = G_EDGES.filter(visible).map((e) => `<g><path class="g-hit" d="${path(e)}" data-act="map-sel" data-type="edge" data-id="${e.id}" tabindex="0" role="button" aria-label="${esc(N[e.a].t)} to ${esc(N[e.b].t)}"></path><path class="g-edge${e.hot && !S.applied.has('F-01') ? ' hot' : ''}${cut(e) ? ' cut' : ''}${selE === e.id ? ' sel' : ''}" d="${path(e)}"></path></g>`).join('');
+  const nodes = Object.entries(N).filter(([k]) => (!k.startsWith('F-') || has(k)) && (k !== 'c4' || has('F-05'))).map(([k, n]) => {
+    const f = k.startsWith('F-') ? fs.find((x) => x.id === k) : null;
+    const resolved = f && ['RESOLVED', 'DISMISSED', 'ACCEPTED_RESIDUAL'].includes(f.status);
+    const sub = f ? (resolved ? STATUS[f.status].label : BAND[f.band].label) : n.s;
+    const mod = f && f.band === 'MODERATE' ? ' mod' : '';
+    const type = f ? 'finding' : k.startsWith('c') ? 'cat' : 'doc';
+    const big = k === 'F-01';
+    return `<g class="g-node ${n.cls}${mod}${resolved ? ' resolved' : ''}${selN === k ? ' sel' : ''}" data-act="map-sel" data-type="${type}" data-id="${k}" tabindex="0" role="button"><rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="12"></rect>${n.k ? `<text class="kind" x="${n.x + 12}" y="${n.y + 16}">${n.k}</text>` : ''}<text x="${n.x + 12}" y="${n.y + (n.k ? 34 : 22)}">${esc(n.t)}</text><text class="sub" x="${n.x + 12}" y="${n.y + (n.k ? 50 : 38)}">${esc(sub)}</text>${big && !resolved ? `<text class="sub" x="${n.x + 12}" y="${n.y + 72}">Group: ${groupSteps(S.applied).slice(-1)[0].count} of 100 fictional</text>` : ''}</g>`;
+  }).join('');
+  return `<svg viewBox="0 0 780 372" role="group" aria-label="Disclosure map"><text class="g-col" x="20" y="22">DOCUMENTS</text><text class="g-col" x="300" y="18">CATEGORIES</text><text class="g-col" x="560" y="58">FINDINGS</text>${edges}${nodes}</svg>`;
+}
+// reuse the mobile edge semantics
+const G_EDGES = [
+  { id: 'e1', a: 'R1', b: 'c1', reason: 'The interim report names the overnight pharmacy team.', refs: [['R1', 1]] },
+  { id: 'e2', a: 'D3', b: 'c1', reason: 'P-07 describes a skill that belongs to that team.', refs: [['D3', 2]] },
+  { id: 'e3', a: 'R2', b: 'c2', reason: 'The case study places one participant in the winter onboarding cohort, after the January rota change.', refs: [['R2', 1]] },
+  { id: 'e4', a: 'D3', b: 'c2', reason: 'P-07 gives the date of the rota change, which matches that cohort.', refs: [['D3', 4]] },
+  { id: 'e5', a: 'D3', b: 'c3', reason: 'P-07 mentions a transfer from the coastal satellite clinic.', refs: [['D3', 1]] },
+  { id: 'e6', a: 'D3', b: 'c4', reason: 'P-07 mentions contact with occupational health.', refs: [['D3', 6]] },
+  { id: 'e7', a: 'c1', b: 'F-01', reason: 'Team, start window and transfer together narrow the fictional group to one record.', refs: [['R1', 1], ['R2', 1], ['D3', 1]], hot: true },
+  { id: 'e8', a: 'c2', b: 'F-01', reason: 'Team, start window and transfer together narrow the fictional group to one record.', refs: [['R1', 1], ['R2', 1], ['D3', 1]], hot: true },
+  { id: 'e9', a: 'c3', b: 'F-01', reason: 'Team, start window and transfer together narrow the fictional group to one record.', refs: [['R1', 1], ['R2', 1], ['D3', 1]], hot: true },
+  { id: 'e10', a: 'c1', b: 'F-02', reason: 'A unique skill inside a named team.', refs: [['D3', 2], ['R1', 1]] },
+  { id: 'e11', a: 'c2', b: 'F-03', reason: 'The exact date links the draft to the cohort.', refs: [['D3', 4], ['R2', 1]] },
+  { id: 'e12', a: 'c4', b: 'F-05', reason: 'Health detail not needed for the finding.', refs: [['D3', 6]] },
+];
+
+function mapInspector() {
+  const sel = D.mapSel;
+  const steps = groupSteps(S.applied);
+  const st = Math.min(D.mapStage, steps.length - 1);
+  let top = '';
+  if (sel.type === 'edge') {
+    const e = G_EDGES.find((x) => x.id === sel.id);
+    top = `<div class="insp-card"><span class="small muted">Connection</span><div class="insp-title" style="font-size:16px;margin-top:4px">${esc(DG.nodes[e.a].t)} → ${esc(DG.nodes[e.b].t)}</div><p style="margin-top:8px;font-size:13.5px;color:var(--ink-2)">${esc(e.reason)}</p></div>
+      <div class="insp-label">Passages</div><div class="ev-list">${e.refs.map(([d, p]) => `<button type="button" class="ev-card" data-act="goto" data-doc="${d}" data-para="${p}"><span class="ev-src">${ic(DOCS[d].kind === 'draft' ? 'file-pen' : 'file-check', 12)} ${DOCS[d].title} · ¶${p + 1}</span><span class="ev-q">${markPara(d, p, (d === 'D3' ? draftParas() : DOCS[d].paras)[p])}</span></button>`).join('')}</div>
+      <p class="small muted" style="margin:10px 4px 0">A connection is a hypothesis for review, not an identity match.</p>`;
+  } else if (sel.type === 'finding') {
+    const f = findingById(sel.id);
+    top = f ? `<div class="insp-card"><div class="hstack" style="justify-content:space-between">${riskChip(f.band, { small: true })}${sourceBadge(f.source)}</div><div class="insp-title" style="font-size:16px;margin-top:8px">${esc(f.title)}</div><p style="margin-top:8px;font-size:13.5px;color:var(--ink-2)">${esc(f.rationale)}</p><div class="insp-actions"><button type="button" class="btn btn-tinted btn-sm" data-act="select" data-id="${f.id}" data-then="findings">Open in Findings</button></div></div>` : '';
+  } else if (sel.type === 'doc') {
+    const d = DOCS[sel.id];
+    top = `<div class="insp-card"><span class="small muted">${d.kind === 'draft' ? 'Draft' : 'Approved release'}</span><div class="insp-title" style="font-size:16px;margin-top:4px">${d.title}</div><p class="small muted" style="margin-top:6px">${d.meta}</p><div class="insp-actions"><button type="button" class="btn btn-tinted btn-sm" data-act="goto" data-doc="${sel.id}" data-para="0">Open document</button></div></div>`;
+  } else {
+    const n = DG.nodes[sel.id];
+    top = `<div class="insp-card"><span class="small muted">Generic disclosure category</span><div class="insp-title" style="font-size:16px;margin-top:4px">${n.t}</div><p class="small muted" style="margin-top:6px">A category groups passages that disclose the same kind of context. It never stands for a person.</p></div>`;
+  }
+  return `${top}
+    <div class="insp-label">Fictional group size</div>
+    <div class="insp-card">
+      <div style="max-width:200px;margin:0 auto 12px">${mosaicGrid(steps, st)}</div>
+      <div class="steps">${steps.map((s, k) => `<button type="button" class="step" aria-pressed="${k === st}" data-act="map-stage" data-v="${k}"><span><span class="st-l">${k === 0 ? 'Start' : '+ ' + esc(s.label)}</span><span class="st-s">${esc(s.from)}</span></span><span class="st-n">${s.count}</span></button>`).join('')}</div>
+      <p class="small muted" style="margin-top:10px"><span class="illustrative">${ic('flask-conical', 12)} Educational illustration</span><br>Computed from 100 seeded fictional records. Not a measure of real-world anonymity.</p>
+    </div>`;
+}
+
+SCREENS.map = () => ({
+  wide: true,
+  body: `
+    <div class="page-h"><div><h1>Disclosure map</h1><p>How the draft connects to what’s already published. Click a line for its reason and the passages behind it.</p></div><div class="seg" role="tablist"><button type="button" role="tab" aria-selected="${D.mapMode === 'map'}" data-act="map-mode" data-v="map">Map</button><button type="button" role="tab" aria-selected="${D.mapMode === 'list'}" data-act="map-mode" data-v="list">List</button></div></div>
+    ${D.mapMode === 'map' ? `<div class="graph-wrap">${dGraph()}</div><div class="g-legend"><span><i style="background:var(--surface)"></i>Release / category</span><span><i style="background:var(--accent-soft)"></i>Draft</span><span><i style="background:var(--risk-high-bg)"></i>Finding</span><span><i style="background:var(--ok-bg)"></i>Resolved</span><span>Dashed line: removed by an edit</span><span>No node represents a person</span></div>` : `
+    <table class="tbl"><thead><tr><th>From</th><th>To</th><th>Reason</th><th>Passages</th></tr></thead><tbody>${G_EDGES.filter((e) => ![e.a, e.b].some((n) => n.startsWith('F-') && !findings().some((f) => f.id === n))).map((e) => `<tr class="clickable ${D.mapSel.id === e.id ? 'sel' : ''}" data-act="map-sel" data-type="edge" data-id="${e.id}"><td class="t-title">${esc(DG.nodes[e.a].t)}</td><td class="t-title">${esc(DG.nodes[e.b].t)}</td><td class="small">${esc(e.reason)}</td><td class="small mono">${e.refs.map(([d, p]) => `${DOCS[d].short} ¶${p + 1}`).join(', ')}</td></tr>`).join('')}</tbody></table>`}
+    <div class="grid-3" style="margin-top:20px">
+      <div class="panel"><span class="small muted">Documents linked</span><div style="font-size:26px;font-weight:700">3</div></div>
+      <div class="panel"><span class="small muted">Cross-release findings</span><div style="font-size:26px;font-weight:700">${findings().filter((f) => f.anchors.some((a) => a.doc !== 'D3') && !['RESOLVED', 'DISMISSED'].includes(f.status)).length}</div></div>
+      <div class="panel"><span class="small muted">Fictional group now</span><div style="font-size:26px;font-weight:700">${groupSteps(S.applied).slice(-1)[0].count} <span class="small muted">of 100</span></div></div>
+    </div>`,
+  inspectorTitle: 'Details',
+  inspector: mapInspector(),
+});
+
+SCREENS.tests = () => {
+  const off = isOffline();
+  const allCats = [['ROLE_RARITY', 'Role rarity'], ['TENURE_WINDOWS', 'Start-date windows'], ['SHIFT_PATTERNS', 'Shift patterns'], ['RARE_EVENTS', 'Rare events'], ['SMALL_SITES', 'Small sites']];
+  const body = { ...PACK_REQUEST, domain: D.genDomain, categories: [...D.genCats] };
+  const json = JSON.stringify(body, null, 2).replace(/"(\w+)":/g, '<span class="k">"$1"</span>:').replace(/: "([^"]+)"/g, ': <span class="s">"$1"</span>');
+  return {
+    body: `
+      <div class="page-h"><div><h1>Stress tests</h1><p>Reusable, declarative checks applied to your documents on this device. Packs are validated before use and never run as code.</p></div></div>
+      <div style="display:grid;gap:10px">${PACKS.map((p) => { const open = D.expandedPack === p.id; return `<div class="pack-d"><div class="ph"><button type="button" style="text-align:left" data-act="pack-expand" data-v="${p.id}" aria-expanded="${open}"><h3>${p.name} ${ic(open ? 'chevron-up' : 'chevron-down', 15)}</h3><span class="hstack" style="margin-top:6px">${packBadge(p.source)}${p.source === 'cloud' && off ? packBadge('cached') : ''}<span class="small muted">${p.version} · ${p.count} tests</span></span></button><label class="switch sm"><input type="checkbox" data-act="pack-toggle" data-v="${p.id}" ${S.packsEnabled[p.id] ? 'checked' : ''} aria-label="Use ${p.name}"><span></span></label></div>${open ? `<div class="pt">${p.tests.map(([, n, q]) => `<div><b>${n}</b><span>${q}</span></div>`).join('')}${p.count > p.tests.length ? `<div><span class="muted">+ ${p.count - p.tests.length} more</span><span></span></div>` : ''}</div>` : ''}</div>`; }).join('')}</div>
+      <div class="h2">Generate a pack</div>
+      <div class="panel line" style="display:grid;gap:14px">
+        ${off ? `<div class="banner banner-neutral">${ic('wifi-off', 18)}<div class="banner-body"><strong>Unavailable offline</strong>Cached packs still work. Generation resumes when you reconnect.</div></div>` : ''}
+        <div><span class="small muted">Domain</span><div class="seg" style="margin-top:6px;display:flex;width:max-content"><button type="button" aria-pressed="${D.genDomain === 'QUALITATIVE_RESEARCH'}" data-act="gen-domain" data-v="QUALITATIVE_RESEARCH">Qualitative research</button><button type="button" aria-pressed="${D.genDomain === 'EDITORIAL'}" data-act="gen-domain" data-v="EDITORIAL">Editorial</button></div></div>
+        <div><span class="small muted">Categories (fixed list)</span><div class="filters-d" style="margin:6px 0 0">${allCats.map(([k, l]) => `<button type="button" class="fchip" aria-pressed="${D.genCats.has(k)}" data-act="gen-cat" data-v="${k}">${D.genCats.has(k) ? ic('check', 13) : ''}${l}</button>`).join('')}</div></div>
+        <p class="small muted">There is no free-text field. The request is built only from these choices.</p>
+      </div>`,
+    inspectorTitle: 'Outbound request',
+    inspector: `
+      <div class="insp-card"><div class="hstack" style="justify-content:space-between"><span class="pack-src pack-cloud">${ic('cloud', 12)} Generic · enum only</span>${policyTag('ONLY_IN_CLOUD')}</div><p class="small" style="margin-top:10px;color:var(--ink-2)">This is the complete body that would leave the device. It updates as you change the choices.</p></div>
+      <div class="insp-label">Exact payload</div>
+      <div class="payload">${json}</div>
+      <div class="insp-label">Never included</div>
+      <div class="insp-card small" style="color:var(--ink-2)">Document text, excerpts, file names, workspace names, findings and anything derived from them.</div>
+      <div class="insp-actions"><button type="button" class="btn btn-primary" data-modal="consent" ${off || !D.genCats.size ? 'disabled' : ''}>${ic('eye', 15)} Review and send…</button></div>
+      ${S.consent === 'sent' ? `<p class="small muted" style="margin:10px 4px 0">${ic('check', 13)} Last request approved this session (preview: nothing was sent).</p>` : ''}`,
+  };
+};
+
+SCREENS.rewrite = () => {
+  const cands = findings().filter((f) => f.rewrite && f.status !== 'DISMISSED');
+  const applied = cands.filter((f) => S.applied.has(f.id));
+  const orig = DOCS.D3.paras;
+  const rev = draftParas();
+  const markApplied = (i, text, side) => {
+    let html = esc(text);
+    for (const f of FINDINGS) {
+      if (!S.applied.has(f.id) || !f.rewrite || f.rewrite.para !== i) continue;
+      if (side === 'L') html = html.replace(esc(f.rewrite.from), `<del class="diff">${esc(f.rewrite.from)}</del>`);
+      else if (f.rewrite.to) html = html.replace(esc(f.rewrite.to), `<ins class="diff">${esc(f.rewrite.to)}</ins>`);
+    }
+    return html;
+  };
+  const before = groupSteps(new Set());
+  const after = groupSteps(S.applied);
+  return {
+    wide: true,
+    body: `
+      <div class="page-h"><div><h1>Rewrite studio</h1><p>Suggestions are written on this device. The original stays untouched; applying an edit creates a new version you can undo.</p></div><span class="hstack"><span class="pack-src">v3 → ${S.applied.size ? 'v4' : 'v4 (empty)'}</span></span></div>
+      <div class="diff-cols">
+        <div><h3>${ic('file-text', 14)} Draft v3 · original</h3>${orig.map((t, i) => `<p><span class="para-anchor">¶${i + 1}</span><span>${S.applied.size ? markApplied(i, t, 'L') : markPara('D3', i, t)}</span></p>`).join('')}</div>
+        <div><h3>${ic('file-pen', 14)} Draft v4 · proposed</h3>${S.applied.size ? rev.map((t, i) => `<p><span class="para-anchor">¶${i + 1}</span><span>${markApplied(i, t, 'R')}</span></p>`).join('') : `<p class="muted" style="display:block">Apply a suggested edit from the panel on the right to start version 4.</p>`}</div>
+      </div>
+      ${S.rescanned && applied.length ? `<div class="panel" style="margin-top:16px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center"><div><b>Reassessed on this device</b><p class="small muted" style="margin-top:4px">Fictional group: ${before.slice(-1)[0].count} → ${after.slice(-1)[0].count} of 100 records.</p></div><button type="button" class="btn btn-primary btn-sm" ${go('release')}>Continue to release review</button></div>` : ''}`,
+    inspectorTitle: 'Suggested edits',
+    inspectorHead: `<span class="small muted">${applied.length}/${cands.length} applied</span>`,
+    inspector: `
+      ${S.rescanned && applied.length ? `<div class="insp-card" style="margin-bottom:10px"><div class="hstack" style="justify-content:space-between;margin-bottom:8px"><b style="font-size:13.5px">Reassessment</b>${sourceBadge(S.scenario === 'unsupported' ? 'FIXTURE' : 'DEVICE')}</div><div class="reassess"><div><strong>${applied.length}</strong><span>Resolved</span></div><div><strong>${openFindings().length}</strong><span>Unchanged</span></div><div><strong>0</strong><span>New</span></div><div><strong>${counts().un}</strong><span>Not assessed</span></div></div></div>` : ''}
+      ${cands.map((f) => { const on = S.applied.has(f.id); const r = f.rewrite; return `<div class="edit-d ${on ? 'applied' : ''}"><div class="top"><span class="hstack">${riskChip(f.band, { small: true })}<span class="small muted">${f.id} · ¶${r.para + 1}</span></span>${on ? `<span class="chip chip-ok chip-sm">${ic('check', 12)}<span>Applied</span></span>` : ''}</div><b style="font-size:13.5px">${f.action}</b><div class="diffbox"><del class="diff">${esc(r.from)}</del>${r.to ? ` <ins class="diff">${esc(r.to)}</ins>` : ''}</div><div class="keeps">${ic('circle-check', 14)}<span><b>Still true:</b> ${esc(f.keeps)}</span></div>${on ? `<button type="button" class="btn btn-quiet btn-sm" data-act="undo" data-id="${f.id}">${ic('undo-2', 14)} Undo</button>` : `<div class="insp-actions" style="margin-top:2px"><div class="two"><button type="button" class="btn btn-quiet btn-sm" data-act="toast" data-msg="Opens ¶${r.para + 1} for manual editing">Edit myself</button><button type="button" class="btn btn-primary btn-sm" data-act="apply" data-id="${f.id}">Apply</button></div></div>`}</div>`; }).join('')}
+      <div class="insp-actions"><button type="button" class="btn btn-primary" data-act="rescan" ${applied.length ? '' : 'disabled'}>${ic('scan-search', 15)} Review v4 again</button></div>`,
+  };
+};
+
+SCREENS.release = () => {
+  const before = groupSteps(new Set());
+  const after = groupSteps(S.applied);
+  const fsBefore = FINDINGS.filter((f) => bandOf(f) === 'HIGH').length;
+  const c = counts();
+  const stale = S.applied.size && !S.rescanned;
+  const blocked = c.un > 0;
+  const residual = openFindings().filter((f) => !f.unassessed);
+  const items = ['I’ve read every remaining finding.', 'The remaining details are needed for the analysis.', 'I understand this review is advisory and doesn’t certify anonymity.'];
+  return {
+    body: `
+      <div class="page-h"><div><h1>Release review</h1><p>P-07 transcript · draft ${draftVersion()} compared with the version you started from.</p></div></div>
+      ${S.approved ? `<div class="banner" style="background:var(--ok-bg);color:var(--ok-fg);margin-bottom:16px">${ic('circle-check', 18)}<div class="banner-body"><strong>Approved in this browser</strong>Draft ${draftVersion()} is in release history. Future drafts are checked against it.</div></div>` : ''}
+      ${stale ? `<div class="banner banner-info" style="margin-bottom:16px">${ic('scan-search', 18)}<div class="banner-body"><strong>Review v4 before approving</strong>Edits invalidate the last scan. Nothing is marked resolved until it runs again. <button type="button" class="btn btn-sm btn-primary" data-act="rescan" style="margin-left:8px">Review again</button></div></div>` : ''}
+      <div class="compare-d">
+        <div class="col"><h3>Draft v3</h3><div><div class="big" style="color:var(--risk-high-fg)">${fsBefore}</div><div class="lbl">High-priority findings</div></div><div><div class="big">${before.slice(-1)[0].count}</div><div class="lbl">Fictional group size (of 100)</div></div></div>
+        <span class="arrow">${ic('arrow-right', 22)}</span>
+        <div class="col"><h3>Draft ${draftVersion()}</h3><div><div class="big" style="color:${c.high && !stale ? 'var(--risk-high-fg)' : 'var(--ink)'}">${stale ? '—' : c.high}</div><div class="lbl">High-priority findings</div></div><div><div class="big">${stale ? '—' : after.slice(-1)[0].count}</div><div class="lbl">Fictional group size (of 100)</div></div></div>
+      </div>
+      <div class="h2">Coverage</div>
+      <div class="panel">${covBars()}${blocked ? `<p class="small" style="color:var(--unassessed-fg);margin-top:10px">${ic('circle-dashed', 13)} ¶6–8 not assessed. Approval waits until they are, or until you review them by hand.</p>` : ''}</div>
+      <div class="h2">Remaining findings (${residual.length})</div>
+      ${residual.length ? `<table class="tbl"><tbody>${residual.map((f) => `<tr class="clickable" data-act="select" data-id="${f.id}" data-then="findings"><td style="width:150px">${riskChip(f.band, { small: true })}</td><td class="t-title">${esc(f.title)}</td><td>${statusChip(f.status)}</td></tr>`).join('')}</tbody></table>` : `<div class="panel small muted">None open. Outside knowledge can still identify people, so keep human review in the loop.</div>`}`,
+    inspectorTitle: 'Approval',
+    inspector: `
+      <div class="insp-card">
+        <b style="font-size:14px">Before you approve</b>
+        <div role="group" aria-label="Approval checklist" style="margin-top:6px">${items.map((t, i) => `<button type="button" class="check" role="checkbox" aria-checked="${S.checklist[i]}" data-act="check" data-v="${i}" ${S.approved ? 'disabled' : ''}><span class="box">${ic('check', 13)}</span><span>${t}</span></button>`).join('')}</div>
+      </div>
+      <div class="insp-actions">${S.approved ? `<button type="button" class="btn btn-tinted" ${go('export')}>${ic('file-output', 15)} Export clean draft</button><button type="button" class="btn btn-quiet" data-act="revoke">Revoke approval</button>` : `<button type="button" class="btn btn-primary" data-act="approve" ${S.checklist.every(Boolean) && !blocked && !stale ? '' : 'disabled'}>${ic('stamp', 15)} Approve release in this browser</button>`}</div>
+      <p class="small muted" style="margin:12px 4px 0">Approval is a local record for your team. It isn’t a legal or compliance sign-off, and it never publishes anything.</p>`,
+  };
+};
+
+SCREENS.history = () => {
+  const items = [
+    S.approved ? { id: 'current', t: 'P-07 transcript · v4', d: 'Approved today', cls: 'approved', st: `<span class="chip chip-ok chip-sm">${ic('circle-check', 13)}<span>Approved</span></span>` } : { id: 'current', t: `P-07 transcript · ${draftVersion()}`, d: 'Draft · under review', cls: 'current', st: statusChip('UNDER_REVIEW') },
+    { id: 'R2', t: 'Onboarding case study · v1', d: 'Approved 3 Jun 2026', cls: 'approved', st: `<span class="small muted">Imported release</span>` },
+    { id: 'R1', t: 'Interim findings report · v2', d: 'Approved 12 Mar 2026', cls: 'approved', st: `<span class="small muted">Imported release</span>` },
+  ];
+  const sel = D.historySel;
+  const insp = sel === 'current'
+    ? `<div class="insp-card"><b>${items[0].t}</b><p class="small muted" style="margin-top:4px">${items[0].d}</p><dl class="kv" style="margin-top:12px"><dt>Edits applied</dt><dd>${S.applied.size}</dd><dt>Open findings</dt><dd>${openFindings().length}</dd><dt>Coverage</dt><dd>${coverage().ctx}/8 ¶ context</dd><dt>Packs</dt><dd>Core v1.3, QR 2026.11.18-a</dd></dl></div><div class="insp-actions">${S.approved ? `<button type="button" class="btn btn-quiet" data-act="revoke">Revoke approval marker</button>` : `<button type="button" class="btn btn-tinted" ${go('release')}>Open release review</button>`}</div>`
+    : `<div class="insp-card"><b>${DOCS[sel].title}</b><p class="small muted" style="margin-top:4px">${DOCS[sel].meta}</p><p class="small" style="margin-top:10px;color:var(--ink-2)">Imported as already published. Mosaic uses it as context for later drafts but has no review record for it.</p></div><div class="insp-actions"><button type="button" class="btn btn-tinted" data-act="goto" data-doc="${sel}" data-para="0">View document</button><button type="button" class="btn btn-quiet" data-act="toast" data-msg="Shows a diff against the current draft">Compare with current draft</button></div>`;
+  return {
+    body: `
+      <div class="page-h"><div><h1>Release history</h1><p>Approved snapshots in this browser. Every new draft is compared against them.</p></div></div>
+      <div class="timeline">${items.map((x) => `<button type="button" class="tl-item ${x.cls} ${sel === x.id ? 'sel' : ''}" data-act="hist-sel" data-v="${x.id}"><b>${x.t}</b>${x.st}<span class="small muted">${x.d}</span></button>`).join('')}</div>`,
+    inspectorTitle: 'Snapshot',
+    inspector: insp,
+  };
+};
+
+SCREENS.export = () => {
+  const fmts = D.exportKind === 'clean' ? ['TXT', 'Markdown', 'PDF', 'DOCX'] : ['Markdown', 'PDF'];
+  if (!fmts.includes(D.exportFmt)) D.exportFmt = fmts[0];
+  const paras = draftParas();
+  return {
+    body: `
+      <div class="page-h"><div><h1>Reports & export</h1><p>Exports are new files built from clean text. Nothing hidden from the original comes along.</p></div></div>
+      <div class="panel line" style="padding:28px 34px;font-size:14.5px;line-height:1.65;max-width:68ch">
+        ${D.exportKind === 'clean' ? `<p class="small muted" style="margin-bottom:14px">Interview P-07 transcript · edited for publication</p>${paras.map((t) => `<p style="margin-bottom:12px">${esc(t)}</p>`).join('')}` : `<h3 style="font-size:18px;margin-bottom:6px">Review report · P-07 transcript ${draftVersion()}</h3><p class="small muted" style="margin-bottom:14px">${WORKSPACE.title} · generated in this browser</p><p style="margin-bottom:8px"><b>Coverage.</b> Context ${coverage().ctx}/8 paragraphs on device; rules 8/8.</p><p style="margin-bottom:8px"><b>Findings.</b> ${findings().length} raised, ${S.rescanned ? S.applied.size : 0} resolved by edits, ${openFindings().length} open or residual.</p><p style="margin-bottom:8px"><b>Releases compared.</b> Interim findings report v2; Onboarding case study v1.</p><p class="small muted">Advisory review. Not a certification of anonymity.</p>`}
+      </div>`,
+    inspectorTitle: 'Export',
+    inspector: `
+      <div class="insp-card">
+        <button type="button" class="radio-d" role="radio" aria-checked="${D.exportKind === 'clean'}" data-act="export-kind" data-v="clean"><span class="dot"></span><div><b>Clean draft</b><span>The reviewed text only</span></div></button>
+        <button type="button" class="radio-d" role="radio" aria-checked="${D.exportKind === 'report'}" data-act="export-kind" data-v="report"><span class="dot"></span><div><b>Review report</b><span>Findings, decisions and coverage, kept separate from the draft</span></div></button>
+      </div>
+      <div class="insp-label">Format</div>
+      <div class="seg" style="display:flex">${fmts.map((f) => `<button type="button" style="flex:1" aria-pressed="${f === D.exportFmt}" data-act="export-fmt" data-v="${f}">${f}</button>`).join('')}</div>
+      <div class="insp-label">Left out</div>
+      <div class="insp-card small" style="color:var(--ink-2)">Original passages, comments, revision history, tracked changes and source-file metadata.</div>
+      <div class="banner banner-warn" style="margin-top:12px">${ic('triangle-alert', 16)}<div class="banner-body">The export can still contain sensitive details. The review is advisory and doesn’t certify anonymity.</div></div>
+      <div class="insp-actions"><button type="button" class="btn btn-primary" data-act="toast" data-msg="Preview only: no file was created">${ic('download', 15)} Export ${D.exportFmt}</button></div>`,
+  };
+};
+
+SCREENS.journal = () => {
+  const j = journal();
+  const e = j[Math.min(D.journalSel, j.length - 1)];
+  const n = (s) => j.filter((x) => x.src === s).length;
+  return {
+    wide: true,
+    body: `
+      <div class="page-h"><div><h1>Inference journal</h1><p>Where each task actually ran, from the SDK’s own metadata, next to the policy that was requested.</p></div></div>
+      <div class="hstack" style="margin-bottom:14px">${sourceBadge('DEVICE')}<span class="small muted tnum">${n('DEVICE')}</span>${sourceBadge('CLOUD')}<span class="small muted tnum">${n('CLOUD')}</span>${sourceBadge('RULES')}<span class="small muted tnum">${n('RULES')}</span>${n('UNAVAILABLE') ? `${sourceBadge('UNAVAILABLE')}<span class="small muted tnum">${n('UNAVAILABLE')}</span>` : ''}</div>
+      <table class="tbl"><thead><tr><th>Time</th><th>Task</th><th>Scope</th><th>Requested</th><th>Actual source</th><th class="num">Duration</th><th>Outcome</th></tr></thead><tbody>
+        ${j.map((x, i) => `<tr class="clickable ${i === D.journalSel ? 'sel' : ''}" data-act="j-sel" data-v="${i}"><td class="mono">${x.t}</td><td class="t-title">${x.task}</td><td class="small">${esc(x.scope)}</td><td>${x.policy === 'NO_MODEL' ? '<span class="small muted">No model</span>' : policyTag(x.policy)}</td><td>${sourceBadge(x.src)}</td><td class="num mono">${fmtMs(x.ms)}</td><td class="small">${x.outcome === 'ok' ? 'Completed' : `<span style="color:var(--unassessed-fg)">${x.outcome}</span>`}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="small muted" style="margin-top:14px">Sample entries for the design preview. The real journal never stores prompts, replies, file names or excerpts.</p>`,
+    inspectorTitle: 'Event',
+    inspector: `
+      <div class="insp-card"><div class="hstack" style="justify-content:space-between"><b style="font-size:15px">${e.task}</b>${sourceBadge(e.src)}</div>
+        <dl class="kv" style="margin-top:12px"><dt>Requested policy</dt><dd><code>${e.policy}</code></dd><dt>Actual source</dt><dd>${SOURCE[e.src].label}${e.src === 'DEVICE' || e.src === 'CLOUD' ? ' (SDK metadata)' : ''}</dd><dt>Scope</dt><dd>${esc(e.scope)}</dd><dt>Duration</dt><dd class="tnum">${fmtMs(e.ms)}</dd><dt>Operation</dt><dd class="mono">op_${(7919 * (D.journalSel + 3)).toString(16)}</dd></dl></div>
+      ${e.note ? `<div class="banner banner-neutral" style="margin-top:10px">${ic('info', 16)}<div class="banner-body">${esc(e.note)}</div></div>` : ''}
+      ${e.cloud ? `<div class="insp-label">Exactly what was sent</div><div class="payload">${esc(JSON.stringify(PACK_REQUEST, null, 2))}</div><dl class="kv" style="margin-top:10px"><dt>Digest</dt><dd class="mono">sha256:9f3c…7a1e</dd><dt>App Check</dt><dd>Passed</dd></dl>` : `<p class="small muted" style="margin:12px 4px 0">Prompts and replies for private tasks are never stored.</p>`}`,
+  };
+};
+
+SCREENS.benchmark = () => {
+  const steps = groupSteps(S.applied);
+  const st = Math.min(D.mapStage, steps.length - 1);
+  return {
+    wide: true,
+    body: `
+      <div class="page-h"><div><h1>Benchmark lab</h1><p>Synthetic, seeded test sets with fictional people only. Results are shown exactly as the runner produces them.</p></div></div>
+      <div class="grid-2" style="grid-template-columns:320px 1fr;align-items:start">
+        <div class="panel"><div class="hstack" style="justify-content:space-between;margin-bottom:12px"><b>Fictional population</b><span class="illustrative">${ic('flask-conical', 12)} Fixture</span></div>${mosaicGrid(steps, st)}<div class="steps" style="margin-top:12px">${steps.map((s, k) => `<button type="button" class="step" aria-pressed="${k === st}" data-act="map-stage" data-v="${k}"><span class="st-l">${k === 0 ? 'Start' : esc(s.label)}</span><span class="st-n">${s.count}</span></button>`).join('')}</div></div>
+        <div class="panel line">
+          <div class="banner banner-neutral" style="margin-bottom:14px">${ic('hourglass', 18)}<div class="banner-body"><strong>Not run yet</strong>Results appear after the runner finishes the held-out set. Nothing here is estimated.</div></div>
+          <table class="bench-table"><thead><tr><th>Configuration</th><th>Precision</th><th>Recall</th><th>F1</th><th>False positives (clean)</th><th>Median latency</th></tr></thead><tbody>
+            <tr><td>Rules baseline</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Rules + local single-document review</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Full Mosaic, cross-release + packs</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody></table>
+          <dl class="kv" style="margin-top:14px;max-width:420px"><dt>Dataset</dt><dd>Synthetic set v0 · seed 20261119</dd><dt>Held-out cases</dt><dd>0 of 48 run</dd><dt>Matching rule</dt><dd>Span overlap, category exact</dd></dl>
+          <div class="hstack" style="margin-top:14px"><button type="button" class="btn btn-primary btn-sm" data-act="toast" data-msg="Preview only: the runner is not part of this page" ${S.scenario === 'unsupported' ? 'disabled' : ''}>${ic('play', 14)} Run in this browser</button><span class="small muted">Needs the on-device model</span></div>
+        </div>
+      </div>`,
+  };
+};
+
+SCREENS.settings = () => ({
+  body: `
+    <div class="page-h"><div><h1>Settings</h1></div></div>
+    <div class="grid-2" style="align-items:start">
+      <div>
+        <div class="h2" style="margin-top:0">Appearance</div>
+        <div class="set-group">
+          <div class="set-row"><span class="sr-main">Theme</span><div class="seg"><button type="button" aria-pressed="${S.appearance === 'light'}" data-act="theme" data-v="light">Light</button><button type="button" aria-pressed="${S.appearance === 'dark'}" data-act="theme" data-v="dark">Dark</button></div></div>
+          <label class="set-row"><span class="sr-main">Reduce transparency<span>Solid bars and panels, same layout</span></span><span class="switch sm"><input type="checkbox" data-act="pref-reduced" ${S.reduced ? 'checked' : ''}><span></span></span></label>
+          <label class="set-row"><span class="sr-main">Glass effects<span>Refraction on bars and controls</span></span><span class="switch sm"><input type="checkbox" data-act="pref-refraction" ${S.refraction ? 'checked' : ''}><span></span></span></label>
+        </div>
+        <div class="h2">Model</div>
+        <div class="set-group">
+          <button type="button" class="set-row" ${go('setup')}><span class="sr-main">On-device model</span><span class="end">${MODEL_STATES[modelState()].label} ${ic('chevron-right', 15)}</span></button>
+          <button type="button" class="set-row" ${go('tests')}><span class="sr-main">Test packs<span>Bundled and cached packs</span></span><span class="end">${PACKS.length} ${ic('chevron-right', 15)}</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="h2" style="margin-top:0">Privacy</div>
+        <div class="set-group">
+          <label class="set-row"><span class="sr-main">Session-only mode<span>Delete workspaces when closed</span></span><span class="switch sm"><input type="checkbox" data-act="session-only" ${D.sessionOnly ? 'checked' : ''}><span></span></span></label>
+          <button type="button" class="set-row" data-act="toast" data-msg="Approvals expire after 5 minutes and can be revoked here"><span class="sr-main">Cloud request approvals</span><span class="end">${S.consent === 'sent' ? '1 used' : 'None active'} ${ic('chevron-right', 15)}</span></button>
+          <button type="button" class="set-row" data-act="toast" data-msg="Warns that a raw bundle contains private text"><span class="sr-main">Export workspace bundle<span>Contains private text. Handle with care.</span></span><span class="end">${ic('chevron-right', 15)}</span></button>
+          <button type="button" class="set-row danger" data-modal="delete" data-id="all"><span class="sr-main">Delete all local data</span></button>
+        </div>
+        <p class="small muted" style="margin:8px 4px 0">Deleting removes Mosaic’s copies in this browser. It can’t reach files you exported, and it isn’t forensic erasure.</p>
+        <div class="h2">About</div>
+        <div class="set-group">
+          <button type="button" class="set-row" data-act="toast" data-msg="Links to the privacy model"><span class="sr-main">How Mosaic handles your data</span><span class="end">${ic('chevron-right', 15)}</span></button>
+          <button type="button" class="set-row" data-act="toast" data-msg="Apache-2.0 and third-party notices"><span class="sr-main">Licences</span><span class="end">${ic('chevron-right', 15)}</span></button>
+          <div class="set-row"><span class="sr-main">Version</span><span class="end">Design preview</span></div>
+        </div>
+      </div>
+    </div>`,
+});
+
+/* ---------- modals ---------- */
+function openModal(kind, id) {
+  closeModal(true);
+  let html = '';
+  if (kind === 'consent') {
+    const body = { ...PACK_REQUEST, domain: D.genDomain, categories: [...D.genCats] };
+    html = `<div class="hstack" style="margin-bottom:10px"><span class="pack-src pack-cloud">${ic('cloud', 12)} Generic request</span>${policyTag('ONLY_IN_CLOUD')}</div>
+      <h2>Send this request to the cloud?</h2>
+      <p style="color:var(--ink-2);font-size:14px">Gemini, through Firebase AI Logic, will write new generic test definitions with fictional examples. This is the complete request:</p>
+      <div class="payload" style="margin-top:12px">${esc(JSON.stringify(body, null, 2))}</div>
+      <div class="msurf small" style="color:var(--ink-2)"><b style="color:var(--ink)">Not included:</b> document text, excerpts, file names, workspace names, findings and anything derived from them.</div>
+      <div class="msurf"><dl class="kv"><dt>Payload digest</dt><dd class="mono">sha256:9f3c…7a1e</dd><dt>Valid for</dt><dd>5 minutes, this exact request</dd><dt>App Check</dt><dd>Required</dd></dl></div>
+      <div class="m-actions"><button type="button" class="btn btn-quiet" data-mclose>Cancel</button><button type="button" class="btn btn-primary" data-act="consent-send">${ic('send', 15)} Send this request</button></div>`;
+  } else if (kind === 'delete') {
+    const all = id === 'all';
+    const w = PRIVATE_WORKSPACES.find((x) => x.id === id);
+    html = `<h2>${all ? 'Delete all local data?' : `Delete “${esc(w.title)}”?`}</h2>
+      <p style="color:var(--ink-2);font-size:14px">${all ? 'This removes every workspace, document, finding, release record and cached pack Mosaic stored in this browser.' : `This removes the workspace and its ${w.docs} documents from this browser.`}</p>
+      <div class="msurf small" style="color:var(--ink-2)">It can’t undo exports or copies made elsewhere, and it isn’t forensic erasure.</div>
+      <div class="m-actions"><button type="button" class="btn btn-quiet" data-mclose>Cancel</button><button type="button" class="btn btn-danger" data-mclose data-act="toast" data-msg="Preview only: nothing was deleted">${ic('trash-2', 15)} Delete</button></div>`;
+  }
+  modalsEl.innerHTML = `<div class="modal-scrim" data-mclose></div><div class="modal glass glass-strong" role="dialog" aria-modal="true">${html}</div>`;
+  requestAnimationFrame(() => { $('.modal-scrim', modalsEl).classList.add('in'); $('.modal', modalsEl).classList.add('in'); });
+}
+function closeModal(instant) {
+  const m = $('.modal', modalsEl), s = $('.modal-scrim', modalsEl);
+  if (!m) return;
+  if (instant) { modalsEl.innerHTML = ''; return; }
+  m.classList.remove('in'); s.classList.remove('in');
+  setTimeout(() => { modalsEl.innerHTML = ''; }, 300);
+}
+
+/* ---------- actions ---------- */
+function navTo(screen) { D.screen = screen; if (screen !== 'overview') D.blank = false; D.dismissing = null; render(); if (screen === 'landing') playLanding(); }
+
+function act(name, el) {
+  const id = el.dataset.id, v = el.dataset.v;
+  switch (name) {
+    case 'start-sample': D.blank = false; navTo('overview'); break;
+    case 'create-ws': D.screen = 'overview'; D.blank = true; render(); break;
+    case 'replay': playLanding(); break;
+    case 'model-state': setState({ modelPreview: v }); break;
+    case 'storage': D.storageMode = v; render(); break;
+    case 'rescan': setState({ rescanned: true }); toast(S.applied.size ? 'Reviewed again on this device (preview)' : 'Review ran on this device (preview)', 'scan-search'); break;
+    case 'run-chunk': setState({ scenario: 'normal' }); toast('¶6–8 ran again on this device (preview)', 'rotate-cw'); break;
+    case 'select': S.selected = id; D.dismissing = null; if (el.dataset.then) { D.screen = el.dataset.then; } render(); break;
+    case 'goto': { D.doc = el.dataset.doc; D.gotoPara = Number(el.dataset.para); const f = findings().find((x) => x.anchors.some((a) => a.doc === D.doc && a.para === D.gotoPara && a.quote)); if (f) S.selected = f.id; D.screen = 'document'; render(); break; }
+    case 'doc': D.doc = v; render(); break;
+    case 'apply': { const a = new Set(S.applied); a.add(id); setState({ applied: a, rescanned: false, approved: false }); toast(`Applied ${id} · draft v4 created`, 'pen-line'); break; }
+    case 'undo': { const a = new Set(S.applied); a.delete(id); setState({ applied: a, rescanned: false, approved: false }); toast(`Undid ${id}`, 'undo-2'); break; }
+    case 'dismiss-start': D.dismissing = id; render(); setTimeout(() => $('#dismiss-note')?.focus(), 30); break;
+    case 'dismiss-cancel': D.dismissing = null; render(); break;
+    case 'dismiss': D.dismissing = null; setState({ statusOverride: { ...S.statusOverride, [id]: 'DISMISSED' } }); toast(`${id} dismissed`, 'circle-slash'); break;
+    case 'residual': setState({ statusOverride: { ...S.statusOverride, [id]: 'ACCEPTED_RESIDUAL' } }); toast(`${id} accepted as residual`, 'circle-check-big'); break;
+    case 'reopen': { const o = { ...S.statusOverride }; delete o[id]; const a = new Set(S.applied); a.delete(id); setState({ statusOverride: o, applied: a }); toast(`${id} reopened`, 'undo-2'); break; }
+    case 'filter': D.filter = v; render(); break;
+    case 'map-mode': D.mapMode = v; render(); break;
+    case 'map-stage': D.mapStage = Number(v); render(); break;
+    case 'map-sel': D.mapSel = { type: el.dataset.type, id }; render(); break;
+    case 'check': { const c = [...S.checklist]; c[Number(v)] = !c[Number(v)]; setState({ checklist: c }); break; }
+    case 'approve': setState({ approved: true }); toast('Approved in this browser', 'stamp'); break;
+    case 'revoke': setState({ approved: false, checklist: [false, false, false] }); toast('Approval revoked', 'undo-2'); break;
+    case 'pack-expand': D.expandedPack = D.expandedPack === v ? null : v; render(); break;
+    case 'pack-toggle': setState({ packsEnabled: { ...S.packsEnabled, [v]: el.checked } }); break;
+    case 'gen-domain': D.genDomain = v; render(); break;
+    case 'gen-cat': D.genCats.has(v) ? D.genCats.delete(v) : D.genCats.add(v); render(); break;
+    case 'consent-send': closeModal(); setState({ consent: 'sent' }); toast('Design preview: no request was sent', 'cloud'); break;
+    case 'export-kind': D.exportKind = v; render(); break;
+    case 'export-fmt': D.exportFmt = v; render(); break;
+    case 'j-sel': D.journalSel = Number(v); render(); break;
+    case 'hist-sel': D.historySel = v; render(); break;
+    case 'theme': setState({ appearance: v }); break;
+    case 'pref-reduced': setState({ reduced: el.checked }); break;
+    case 'pref-refraction': setState({ refraction: el.checked }); break;
+    case 'session-only': D.sessionOnly = el.checked; break;
+    case 'toast': toast(el.dataset.msg || 'Preview only', 'info'); break;
+    default: break;
+  }
+}
+
+$('#win').addEventListener('click', (e) => {
+  const t = e.target;
+  if (t.closest('[data-mclose]')) { closeModal(); }
+  const modal = t.closest('[data-modal]');
+  const actEl = t.closest('[data-act]');
+  const goEl = t.closest('[data-go]');
+  const mark = t.closest('mark.ev[data-f]');
+  if (actEl && actEl.tagName === 'INPUT') return;
+  if (t.closest('a[href="#"]')) e.preventDefault();
+  if (modal && !modal.disabled) return openModal(modal.dataset.modal, modal.dataset.id);
+  if (mark && !t.closest('.ev-card')) { S.selected = mark.dataset.f; D.dismissing = null; render(); return; }
+  if (actEl) return act(actEl.dataset.act, actEl);
+  if (goEl) {
+    if (goEl.dataset.filter) D.filter = goEl.dataset.filter;
+    if (goEl.dataset.doc) D.doc = goEl.dataset.doc;
+    navTo(goEl.dataset.go);
+  }
+});
+$('#win').addEventListener('change', (e) => { const a = e.target.closest('[data-act]'); if (a && a.tagName === 'INPUT') act(a.dataset.act, a); });
+$('#win').addEventListener('dragover', (e) => { if (D.screen === 'import') { e.preventDefault(); if (!D.dragOver) { D.dragOver = true; $('#drop')?.classList.add('over'); } } });
+$('#win').addEventListener('dragleave', () => { D.dragOver = false; $('#drop')?.classList.remove('over'); });
+$('#win').addEventListener('drop', (e) => { if (D.screen === 'import') { e.preventDefault(); D.dragOver = false; $('#drop')?.classList.remove('over'); toast('Preview: files are not read on this page', 'info'); } });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  if (e.target.matches('input, textarea, select')) return;
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('mark.ev[data-f], g[role="button"], path[role="button"], tr[data-act]')) { e.preventDefault(); e.target.dispatchEvent(new MouseEvent('click', { bubbles: true })); return; }
+  if (D.screen === 'document' && (e.key === 'j' || e.key === 'k')) {
+    const fl = findings().filter((f) => f.anchors.some((a) => a.doc === D.doc && a.quote));
+    if (!fl.length) return;
+    let i = fl.findIndex((f) => f.id === S.selected);
+    i = (i + (e.key === 'j' ? 1 : fl.length - 1)) % fl.length;
+    S.selected = fl[i].id;
+    render();
+    const mk = $(`mark[data-f="${S.selected}"]`);
+    if (mk) { mk.scrollIntoView({ block: 'center', behavior: reduceMotion() ? 'auto' : 'smooth' }); mk.classList.add('flash'); }
+  }
+});
+
+/* ---------- landing animation ---------- */
+let landingTimer = null;
+const CAPS = ['A fictional population of 100 people.', 'The March report narrows it to one team.', 'The June case study narrows it again.', 'The new draft leaves one person.'];
+function playLanding() {
+  clearInterval(landingTimer);
+  const steps = groupSteps(new Set());
+  const paint = () => {
+    const grid = $('.l-reveal .mosaic'); if (!grid) return false;
+    grid.outerHTML = mosaicGrid(steps, D.landingStage);
+    $('#l-count').innerHTML = `${steps[D.landingStage].count}<small> of 100</small>`;
+    $('#l-cap').textContent = CAPS[D.landingStage];
+    $$('.l-doc').forEach((d, i) => d.classList.toggle('lit', i < D.landingStage));
+    return true;
+  };
+  if (reduceMotion()) { D.landingStage = 3; paint(); return; }
+  D.landingStage = 0; paint();
+  landingTimer = setInterval(() => {
+    if (D.screen !== 'landing') return clearInterval(landingTimer);
+    D.landingStage++;
+    paint();
+    if (D.landingStage >= 3) clearInterval(landingTimer);
+  }, 1300);
+}
+
+/* ---------- backdrop tesserae (gives the glass something to bend) ---------- */
+function paintBackdrop() {
+  let seed = 7;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  const W = 1800, H = 1200, cell = 120;
+  let out = '';
+  for (let y = 0; y < H; y += cell) for (let x = 0; x < W; x += cell) {
+    if (rnd() < 0.45) continue;
+    const s = cell * (0.55 + rnd() * 0.4);
+    const ox = x + rnd() * (cell - s), oy = y + rnd() * (cell - s);
+    out += `<rect x="${ox.toFixed(1)}" y="${oy.toFixed(1)}" width="${s.toFixed(1)}" height="${s.toFixed(1)}" rx="${(s * 0.18).toFixed(1)}" class="t${1 + Math.floor(rnd() * 3)}" transform="rotate(${((rnd() - 0.5) * 8).toFixed(1)} ${(ox + s / 2).toFixed(1)} ${(oy + s / 2).toFixed(1)})"/>`;
+  }
+  const svg = $('#backdrop');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+  svg.innerHTML = out;
+}
+
+/* ---------- fit the window to the viewport ---------- */
+const MIN_W = 1180;
+function fit() {
+  const vp = $('#viewport'), win = $('#win');
+  const w = vp.clientWidth, h = vp.clientHeight;
+  if (w >= MIN_W) { win.style.width = w + 'px'; win.style.height = h + 'px'; win.style.transform = ''; }
+  else { const s = w / MIN_W; win.style.width = MIN_W + 'px'; win.style.height = h / s + 'px'; win.style.transform = `scale(${s})`; }
+  Refraction.refresh();
+}
+window.addEventListener('resize', fit);
+
+/* ---------- boot ---------- */
+function renderPreview() { $('#pv').innerHTML = previewControls(D.screen); }
+onState(() => { renderPreview(); render(); });
+bindPreviewControls($('#pv'), (screen) => { closeModal(true); if (screen === 'overview') D.blank = false; navTo(screen); });
+applyAppearance();
+renderPreview();
+paintBackdrop();
+fit();
+render();
+playLanding();
+</script>

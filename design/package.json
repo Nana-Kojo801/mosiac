@@ -1,0 +1,12 @@
+{
+  "name": "mosaic-design-previews",
+  "private": true,
+  "type": "module",
+  "description": "Phase 0 design previews for Mosaic (mobile and desktop). Not the working product.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "lucide-static": "1.66.0"
+  }
+}
