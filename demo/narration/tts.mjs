@@ -12,7 +12,7 @@ const env = existsSync(join(root, '.env.local')) ? readFileSync(join(root, '.env
 const KEY = process.env.ELEVENLABS_API_KEY || (env.match(/^ELEVENLABS_API_KEY=(.+)$/m) || [])[1]?.trim();
 if (!KEY) { console.error('ELEVENLABS_API_KEY is not set (.env.local). Narration was not generated; no other voice is substituted.'); process.exit(1); }
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-export const VOICE = { id: arg('--voice') || 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah (ElevenLabs premade)', model: 'eleven_multilingual_v2', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.42, use_speaker_boost: true, speed: 1.06 } };
+export const VOICE = { id: arg('--voice') || 'cgSgspJ2msm6clMCkdW9', name: 'Jessica (ElevenLabs premade)', model: 'eleven_multilingual_v2', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.42, use_speaker_boost: true, speed: 1.06 } };
 const cacheDir = join(root, 'demo/narration/cache');
 mkdirSync(cacheDir, { recursive: true });
 

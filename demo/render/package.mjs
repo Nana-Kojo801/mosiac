@@ -59,7 +59,7 @@ What's verified and what isn't
 - All app footage was captured automatically from the production build. All people and documents are fictional.
 
 Credits
-- Voice: ElevenLabs (premade voice "Sarah")
+- Voice: ElevenLabs (elevenlabs.io), premade voice "Jessica"
 - Music: original, generated in code for this video
 - Made with Remotion
 
@@ -100,7 +100,7 @@ With no built-in model, we found the SDK's \`ONLY_ON_DEVICE\` mode sent requests
 - More test-pack domains.
 
 ## Built with
-Firebase AI Logic, Gemini (cloud), Gemini Nano (Chrome built-in AI, implemented and not yet verified), Firebase App Check, Firebase Hosting, React, TypeScript, Vite, Dexie, Zod, Tesseract.js, Remotion, ElevenLabs.
+Firebase AI Logic, Gemini (cloud), Gemini Nano (Chrome built-in AI, implemented and not yet verified), Firebase App Check, Firebase Hosting, React, TypeScript, Vite, Dexie, Zod, Tesseract.js, Remotion, ElevenLabs (narration voice; elevenlabs.io).
 
 ## Links
 - Live: https://mosaic-4a9d2.web.app

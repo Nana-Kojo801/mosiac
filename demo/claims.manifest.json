@@ -1,0 +1,275 @@
+{
+  "kind": "mosaic-claims-manifest",
+  "generatedAt": "2026-11-19T16:36:45.919Z",
+  "claims": [
+    {
+      "id": "hook-group-steps",
+      "scene": "hook",
+      "claim": "Fictional illustration: three details narrow 100 people to 24, 8, then 1",
+      "evidence": "demo/evidence/group-steps.json",
+      "check": {
+        "type": "json",
+        "pointer": "original.*.count",
+        "value": [
+          100,
+          24,
+          8,
+          1
+        ]
+      }
+    },
+    {
+      "id": "map-group-steps",
+      "scene": "map",
+      "claim": "In the fictional sample, three details narrow a hundred people down to one",
+      "evidence": "demo/evidence/group-steps.json",
+      "check": {
+        "type": "json",
+        "pointer": "original.*.count",
+        "value": [
+          100,
+          24,
+          8,
+          1
+        ]
+      }
+    },
+    {
+      "id": "rewrite-group-after",
+      "scene": "rewrite",
+      "claim": "After the rewrite, the group grows from one to twenty-one",
+      "evidence": "demo/evidence/group-steps.json",
+      "check": {
+        "type": "json",
+        "pointer": "afterEdits.*.count",
+        "value": [
+          100,
+          24,
+          21
+        ]
+      }
+    },
+    {
+      "id": "hybrid-routing",
+      "scene": "hybrid",
+      "claim": "Extract, review and rewrite run ONLY_ON_DEVICE; generic test packs run ONLY_IN_CLOUD (diagram generated from the routing table)",
+      "evidence": "demo/evidence/routing.json",
+      "check": {
+        "type": "json",
+        "pointer": "routes.*.policy",
+        "value": [
+          "ONLY_ON_DEVICE",
+          "ONLY_ON_DEVICE",
+          "ONLY_ON_DEVICE",
+          "ONLY_IN_CLOUD",
+          "PREFER_ON_DEVICE",
+          "NO_MODEL"
+        ]
+      }
+    },
+    {
+      "id": "hybrid-no-egress",
+      "scene": "hybrid",
+      "claim": "Private documents never leave the browser: 0 external requests during a full private review",
+      "evidence": "demo/evidence/network-audit.json",
+      "check": {
+        "type": "json",
+        "pointer": "externalRequests",
+        "value": 0
+      }
+    },
+    {
+      "id": "hybrid-no-canary",
+      "scene": "hybrid",
+      "claim": "No request carried a private canary string",
+      "evidence": "demo/evidence/network-audit.json",
+      "check": {
+        "type": "json",
+        "pointer": "canaryLeaks",
+        "value": 0
+      }
+    },
+    {
+      "id": "hybrid-no-gemini",
+      "scene": "hybrid",
+      "claim": "No Gemini request during a private review",
+      "evidence": "demo/evidence/network-audit.json",
+      "check": {
+        "type": "json",
+        "pointer": "geminiRequests",
+        "value": 0
+      }
+    },
+    {
+      "id": "hybrid-payload",
+      "scene": "hybrid",
+      "claim": "The only cloud request is a generatePack request with a domain and enum categories",
+      "evidence": "packages/schemas/src/contracts.ts",
+      "check": {
+        "type": "contains",
+        "text": "task: z.literal('generatePack')"
+      }
+    },
+    {
+      "id": "consent-exact",
+      "scene": "consent",
+      "claim": "The exact request is shown and must be approved before sending",
+      "evidence": "apps/web/src/app/screens/Tests.tsx",
+      "check": {
+        "type": "contains",
+        "text": "Send this request to the cloud?"
+      }
+    },
+    {
+      "id": "guard-raw",
+      "scene": "guard",
+      "claim": "SDK alone, ONLY_ON_DEVICE with no built-in model: private canary requests that reached the cloud",
+      "evidence": "demo/evidence/sdk-probe-no-local-model-online.json",
+      "check": {
+        "type": "json",
+        "pointer": "network.rawSdkCanaryRequests",
+        "value": 1
+      }
+    },
+    {
+      "id": "guard-guarded",
+      "scene": "guard",
+      "claim": "With Mosaic's guard: private canary requests that reached the cloud",
+      "evidence": "demo/evidence/sdk-probe-no-local-model-online.json",
+      "check": {
+        "type": "json",
+        "pointer": "network.guardedPrivateCanaryRequests",
+        "value": 0
+      }
+    },
+    {
+      "id": "guard-env",
+      "scene": "guard",
+      "claim": "Measured in Chromium with no built-in model",
+      "evidence": "demo/evidence/sdk-probe-no-local-model-online.json",
+      "check": {
+        "type": "json",
+        "pointer": "environment.browser",
+        "value": "Chromium (Playwright)"
+      }
+    },
+    {
+      "id": "ocr-local",
+      "scene": "ocr",
+      "claim": "OCR runs on the device: 0 external requests while reading an image and a scanned PDF",
+      "evidence": "demo/evidence/network-audit.json",
+      "check": {
+        "type": "json",
+        "pointer": "ocr.externalRequests",
+        "value": 0
+      }
+    },
+    {
+      "id": "review-sample-label",
+      "scene": "review",
+      "claim": "Without a built-in model, the sample shows results labelled \"Sample result\"",
+      "evidence": "apps/web/src/ui/components.tsx",
+      "check": {
+        "type": "contains",
+        "text": "label: 'Sample result'"
+      }
+    },
+    {
+      "id": "footage-source",
+      "scene": "review,map,rewrite,consent,ocr,release,phone",
+      "claim": "Real app footage from the production build",
+      "evidence": "demo/footage/track.json",
+      "check": {
+        "type": "json",
+        "pointer": "source",
+        "value": "apps/web production build (vite preview with Firebase Hosting headers)"
+      }
+    },
+    {
+      "id": "bench-dataset",
+      "scene": "bench",
+      "claim": "Open synthetic benchmark, dataset version",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "datasetVersion",
+        "value": "synthetic-v1"
+      }
+    },
+    {
+      "id": "bench-cases",
+      "scene": "bench",
+      "claim": "Number of test cases",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "cases",
+        "value": 28
+      }
+    },
+    {
+      "id": "bench-precision",
+      "scene": "bench",
+      "claim": "Rules baseline precision (shown as a percentage)",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "configurations.rules.metrics.findings.precision",
+        "value": 1
+      }
+    },
+    {
+      "id": "bench-recall",
+      "scene": "bench",
+      "claim": "Rules baseline recall (shown as a percentage)",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "configurations.rules.metrics.findings.recall",
+        "value": 0.4444444444444444
+      }
+    },
+    {
+      "id": "bench-f1",
+      "scene": "bench",
+      "claim": "Rules baseline F1 (shown as a percentage)",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "configurations.rules.metrics.findings.f1",
+        "value": 0.6153846153846153
+      }
+    },
+    {
+      "id": "bench-next",
+      "scene": "bench",
+      "claim": "On-device model runs are not measured yet",
+      "evidence": "packages/benchmark/results/results.json",
+      "check": {
+        "type": "json",
+        "pointer": "configurations.rulesPlusLocal.status",
+        "value": "not_run"
+      }
+    },
+    {
+      "id": "close-url",
+      "scene": "close",
+      "claim": "Hosted at mosaic-4a9d2.web.app",
+      "evidence": "docs/deploy.md",
+      "check": {
+        "type": "contains",
+        "text": "https://mosaic-4a9d2.web.app"
+      }
+    },
+    {
+      "id": "close-license",
+      "scene": "close",
+      "claim": "Open source under Apache-2.0",
+      "evidence": "LICENSE",
+      "check": {
+        "type": "contains",
+        "text": "Apache License"
+      }
+    }
+  ]
+}
