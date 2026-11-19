@@ -2,6 +2,18 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · First live deploy
+
+- Owner added `FIREBASE_SERVICE_ACCOUNT`. The first manual deploy failed on our own bundle check, which matched the Firebase SDK's reference to `FIREBASE_APPCHECK_DEBUG_TOKEN`. That grep is replaced by `scripts/check-bundle.mjs`, which checks for canaries, a UUID assigned to the debug token, and the local token value. GitHub actions moved to v5.
+- **Live at https://mosaic-4a9d2.web.app** (deploy run 44550935565, commit `1c9bad1`). CI run 44550935637 passed, including end-to-end checks on GitHub's runner.
+- **Verified on the live site (2026-11-19):**
+  - root, deep links, manifest, service worker and icon all return 200;
+  - CSP, nosniff, no-referrer, Permissions-Policy and COOP headers are present;
+  - the deployed JS passes the bundle check;
+  - in a browser, the sample review completed (2 high-priority findings), the map loaded, the service worker registered, and there were **zero requests to other hosts**.
+- One CSP violation was found live: Vite had inlined a small font subset as a `data:` URI, which `font-src 'self'` blocks. Fixed by never inlining fonts. The CSP stays strict.
+- Not yet verified live: cloud test-pack generation, which needs App Check with reCAPTCHA v3 on the live domain. It will be checked next.
+
 ## 2026-11-19 · Native apps out of scope; deploy workflow ready
 
 - **Owner decision:** the native Android and iOS apps are set aside. The submission targets Web/Chrome only, and Android or iOS are not claimed (spec 13.4, 21.5).

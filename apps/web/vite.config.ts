@@ -30,7 +30,8 @@ export default defineConfig(({ command, mode }) => {
       },
     })],
     server: { port: 5173, host: '127.0.0.1', fs: { allow: [repoRoot] } },
-    build: { sourcemap: false, target: 'es2022' },
+    // Fonts always ship as files: the CSP allows fonts from 'self' only, not data: URIs.
+    build: { sourcemap: false, target: 'es2022', assetsInlineLimit: (file: string) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined) },
     define: {
       // App Check debug token: local dev server only. Production builds get ''.
       __APPCHECK_DEBUG_TOKEN__: JSON.stringify(command === 'serve' ? env.APPCHECK_DEBUG_TOKEN || '' : ''),

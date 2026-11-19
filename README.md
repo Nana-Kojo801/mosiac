@@ -8,6 +8,8 @@ Mosaic is a privacy-first publication review workspace, built for the Google #Bu
 
 **In development.** The design is approved (`design/`). The core app is partly built; `docs/decision-log.md` lists exactly what exists, what has been verified, and what has not been built. Nothing here is a claim about features beyond that list.
 
+Live: **https://mosaic-4a9d2.web.app** (in development).
+
 ## Run locally
 
 ```sh
