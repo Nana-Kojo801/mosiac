@@ -1,6 +1,6 @@
 import type { DocumentRecord, DocumentRole, DocumentVersion, Workspace } from '@mosaic/schemas';
 import { normalizeText, paragraphSpans, sha256Hex } from '@mosaic/privacy-core';
-import { SAMPLE_DOCS, SAMPLE_WORKSPACE } from '@mosaic/fixtures';
+import { BUNDLED_PACKS, SAMPLE_DOCS, SAMPLE_WORKSPACE } from '@mosaic/fixtures';
 import { db } from './db';
 import { newId, nowIso } from './ids';
 
@@ -77,3 +77,11 @@ export async function resetSampleWorkspace() { await workspaces.remove(SAMPLE_WO
 
 /** Deletes every Mosaic record in this browser (spec F22). */
 export async function deleteAllLocalData() { const d = db(); await d.delete(); await d.open(); }
+
+/** Installs bundled packs (or newer versions of them). Keeps the user's on/off choice. */
+export async function ensureBundledPacks() {
+  for (const p of BUNDLED_PACKS) {
+    const cur = await db().packs.get(p.id);
+    if (!cur || cur.version !== p.version) await db().packs.put({ ...p, cachedAt: nowIso(), enabled: cur?.enabled ?? p.id === 'core' });
+  }
+}

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { NavLink, Link, useParams } from 'react-router';
-import { Activity, ChevronRight, ChevronsUpDown, FileText, FileUp, LayoutDashboard, Layers, ListChecks, PenLine, ScanSearch, Settings, X } from 'lucide-react';
+import { Activity, ChevronRight, ChevronsUpDown, ClipboardCheck, FileOutput, FileText, FileUp, FlaskConical, History, LayoutDashboard, Layers, ListChecks, PenLine, ScanSearch, Settings, Waypoints, X, ChartColumn } from 'lucide-react';
 import { useApp } from './store';
 import { Logo } from '../ui/components';
 import { readinessText } from '../ai/gateway';
@@ -22,7 +22,13 @@ export function Shell({ title, data, inspector, inspectorTitle = 'Inspector', wi
     [`/w/${ws.id}`, 'Overview', LayoutDashboard, undefined],
     [`/w/${ws.id}/document`, 'Documents', FileText, data!.docs.length],
     [`/w/${ws.id}/findings`, 'Findings', ListChecks, open],
+    [`/w/${ws.id}/map`, 'Disclosure map', Waypoints, undefined],
     [`/w/${ws.id}/rewrite`, 'Rewrite studio', PenLine, data!.findings.filter((f) => f.suggestion && !isClosed(f.status)).length],
+  ] as const : [];
+  const relNav = ws ? [
+    [`/w/${ws.id}/release`, 'Release review', ClipboardCheck],
+    [`/w/${ws.id}/history`, 'Release history', History],
+    [`/w/${ws.id}/export`, 'Reports & export', FileOutput],
   ] as const : [];
   return (
     <div className="shell" style={inspector ? undefined : { gridTemplateColumns: '264px minmax(0, 1fr)' }}>
@@ -31,9 +37,12 @@ export function Shell({ title, data, inspector, inspectorTitle = 'Inspector', wi
         {ws && <Link to="/workspaces" className="ws-switch" style={{ color: 'inherit', textDecoration: 'none' }}><Logo size={18} /><span><span className="ws-t">{ws.title}</span><span className="ws-s">{ws.kind === 'sample' ? 'Sample · fictional' : 'Private · this browser'}</span></span><ChevronsUpDown size={15} /></Link>}
         <nav className="nav">
           {ws && <><div className="nav-h">Review</div>{nav.map(([to, label, Icon, n]) => <NavLink key={to} to={to} end className="nav-i"><Icon size={16} /><span>{label}</span>{n ? <span className="n">{n}</span> : null}</NavLink>)}</>}
-          <div className="nav-h">Mosaic</div>
+          {ws && <><div className="nav-h">Release</div>{relNav.map(([to, label, Icon]) => <NavLink key={to} to={to} className="nav-i"><Icon size={16} /><span>{label}</span></NavLink>)}</>}
+          <div className="nav-h">Tools</div>
           <NavLink to="/workspaces" end className="nav-i"><Layers size={16} /><span>Workspaces</span></NavLink>
+          <NavLink to="/tests" className="nav-i"><FlaskConical size={16} /><span>Stress tests</span></NavLink>
           <NavLink to="/journal" className="nav-i"><Activity size={16} /><span>Inference journal</span></NavLink>
+          <NavLink to="/benchmark" className="nav-i"><ChartColumn size={16} /><span>Benchmark lab</span></NavLink>
         </nav>
         <div className="sb-foot">
           <NavLink to="/device" className="dev-chip" style={{ color: 'inherit', textDecoration: 'none' }}><span className={`dot ${r?.ok ? 'ok' : 'warn'}`} /><span><b>On-device model</b><span>{r === null ? 'Checking' : r.ok ? 'Ready' : r.reason === 'MODEL_NOT_AVAILABLE' && r.detail === 'downloadable' ? 'Download needed' : 'Unavailable here'}{app.online ? '' : ' · offline'}</span></span></NavLink>

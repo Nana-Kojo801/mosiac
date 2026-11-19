@@ -2,6 +2,44 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Core app build, second increment
+
+**Built**
+- **Disclosure map:** generated from the latest review. Documents, generic categories and findings, with no person nodes. Each line carries its reason and passages. Includes a keyboard-operable SVG, a list alternative, and the fictional group panel for the sample.
+- **Stress tests:** bundled packs (Core 1.3.0, Editorial 1.0.0) seeded locally and switchable. Cloud generation from enums only, through an approval dialog that shows the exact body and digest. Generated packs are validated and cached. Enabled pack questions are applied **locally**, in the on-device extraction prompt (prompt `extract-2026.11.19-2`).
+- **Release review:** first versus latest review, coverage, remaining findings, and a three-item checklist. Approval is blocked while the review is stale, any paragraph is not assessed, or the checklist is incomplete. Approval makes the draft part of release history.
+- **Release history:** imported releases, approvals and revocations, with a word diff against the current draft. The approval marker can be revoked.
+- **Reports & export:** a clean draft as TXT, Markdown, PDF or DOCX, generated fresh from plain text with blank document metadata. A review report as Markdown or PDF, with quotes excluded by default.
+- **Import:** PDF (pdf.js, local worker, no network, 100-page cap, scanned-PDF detection) and DOCX (Mammoth raw text) alongside TXT, Markdown and paste.
+- **Benchmark** (`packages/benchmark`):
+  - seeded synthetic dataset `synthetic-v1`: 48 cases, 20 dev and 28 held-out, stratified by kind;
+  - kinds: direct, context, cross-release, clean, conflicting, long, OCR noise and prompt injection;
+  - scorer: same document, same category, overlapping span, with cross-release scored per document set;
+  - rules-baseline runner, and a browser Benchmark lab that runs the two model configurations only where the on-device model is available.
+- **Offline (PWA):** precached app shell, with no runtime caching of any request. Private data stays in IndexedDB.
+- **Hosting and security:** `firebase.json` with an SPA rewrite and headers (CSP, nosniff, no-referrer, Permissions-Policy, COOP).
+- **Fonts and licensing:** Inter and JetBrains Mono bundled locally, so there are no external font calls. Apache-2.0 `LICENSE` and `NOTICE` added.
+- **CI:** a GitHub Actions workflow runs tests, typecheck, build, a bundle scan for secrets and canaries, end-to-end checks, and the baseline.
+
+**Verified (2026-11-19, this container)**
+- 70 unit and integration tests pass. TypeScript strict passes.
+- End-to-end: 26/26 on two consecutive runs against the production build. New checks cover the map (keyboard), the enum-only approval dialog (cancel sends nothing), approval gating, the history entry, export contents (edited text present, removed passages absent), DOCX export, PDF and DOCX import, service-worker control and offline navigation. A private review still makes 0 external requests.
+- **Benchmark (real measurement, rules configuration only):** dataset `synthetic-v1`, held-out split of 28 cases. Precision 1.000, recall 0.444, F1 0.615 (24 TP, 0 FP, 30 FN). Clean-document false-positive rate 0. Cross-release set recall 0. Rules catch direct identifiers and day-level dates and nothing contextual, which is expected. File: `packages/benchmark/results/results.json`, copied to `demo/evidence/benchmark-results.json`. The two model configurations are recorded as **not run**.
+
+**Dataset fixes before results were recorded (not tuning):**
+- The first split lined up with the case-type rotation, so most direct-identifier cases fell into dev. It is now stratified by kind.
+- A fictional US number had too few digits to be a phone number.
+- The OCR-noise generator could alter the reserved domain.
+
+The rules were not changed in response to held-out results.
+
+**Still not built**
+- The separate iOS-style mobile layout (only a responsive fallback).
+- Native Android and iOS apps.
+- OCR for scanned files.
+- The demo video pipeline.
+- Deployment (blocked on the deploy credential; the owner asked to pause the checklist).
+
 ## 2026-11-19 · Core app build, first increment
 
 **Built**

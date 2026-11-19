@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - name: Build (no Firebase config in CI; model features report unavailable)
+        run: npm run build
+      - name: Check the bundle for secrets and canaries
+        run: |
+          ! grep -rE "CANARY-MOSAIC|APPCHECK_DEBUG_TOKEN" apps/web/dist
+      - name: Install Playwright Chromium (CI only)
+        run: npm install -g playwright@1.63.0 && npx -y playwright@1.63.0 install --with-deps chromium
+      - name: End-to-end checks
+        run: cd apps/web && node --experimental-strip-types e2e/flows.mjs
+      - name: Rules baseline is reproducible
+        run: node scripts/run-ts.mjs packages/benchmark/src/run-baseline.ts

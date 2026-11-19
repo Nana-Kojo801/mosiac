@@ -4,6 +4,7 @@ import type { DeviceReadiness } from '@mosaic/privacy-core';
 import { runReview, type ReviewResult } from '../features/review/engine';
 import { getGateway, ensureModelPort } from './services';
 import { db } from '../storage/db';
+import { ensureBundledPacks } from '../storage/repositories';
 
 export type Appearance = 'light' | 'dark' | 'system';
 type Prefs = { appearance: Appearance; reducedTransparency: boolean };
@@ -26,6 +27,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<{ id: number; msg: string }[]>([]);
   const controllers = useRef(new Map<string, AbortController>());
 
+  useEffect(() => { void ensureBundledPacks(); }, []);
   useEffect(() => { void db().settings.get('prefs').then((s) => { if (s) setPrefsState(s.value as Prefs); }); }, []);
   const setPrefs = useCallback((p: Partial<Prefs>) => setPrefsState((cur) => { const next = { ...cur, ...p }; void db().settings.put({ key: 'prefs', value: next }); return next; }), []);
   useEffect(() => {
@@ -46,7 +48,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
   useEffect(() => { void refreshReadiness(); }, [refreshReadiness]);
 
-  const toast = useCallback((msg: string) => { const id = Date.now() + Math.random(); setToasts((t) => [...t, { id, msg }]); setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 2600); }, []);
+  const toast = useCallback((msg: string) => { const id = Date.now() + Math.random(); setToasts((t) => [...t.slice(-1), { id, msg }]); setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 2600); }, []);
 
   const startReview = useCallback(async (workspaceId: string) => {
     const ctrl = new AbortController();

@@ -1,7 +1,7 @@
 import { ExtractionOutput, type ActualSource, type ExtractionFinding, type GenericPackRequest, type ConsentRecord, type InferenceEvent, type TestPack } from '@mosaic/schemas';
 import { assertPolicy, checkConsent, checkDeviceReadiness, NetworkFence, parseGeneratedPack, packPrompt, PrivateEgressBlocked, PrivateInferenceRefused, runPrivateInference, validateAnchor, type DeviceReadiness } from '@mosaic/privacy-core';
 import type { ModelPort } from './models';
-import { EXTRACTION_SCHEMA, extractionPrompt, explainPrompt, SAMPLE_FIXTURES } from './prompts';
+import { EXTRACTION_SCHEMA, extractionPrompt, explainPrompt, SAMPLE_FIXTURES, type PromptTest } from './prompts';
 import { logEvent } from './journal';
 
 /**
@@ -38,11 +38,11 @@ export class AIGateway {
     await this.port().initializeDevice(onProgress);
   }
 
-  extractPrivate(passage: string, role: 'draft' | 'release', signal?: AbortSignal): Promise<PrivateExtraction> {
+  extractPrivate(passage: string, role: 'draft' | 'release', signal?: AbortSignal, tests: PromptTest[] = []): Promise<PrivateExtraction> {
     return this.serial(async () => {
       assertPolicy('extract', 'ONLY_ON_DEVICE');
       const t0 = performance.now();
-      const prompt = extractionPrompt(passage, role);
+      const prompt = extractionPrompt(passage, role, tests);
       for (let attempt = 0; attempt < 2; attempt++) {
         if (signal?.aborted) return this.failPrivate('cancelled', 'Cancelled', t0);
         let text: string;

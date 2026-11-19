@@ -56,7 +56,10 @@ export async function runReview(workspaceId: string, input: ReviewInput): Promis
   const edges: DisclosureEdge[] = [];
   const dv = draft.version;
   const coverage: Coverage = { paragraphsTotal: dv.paragraphs.length, contextAssessed: 0, rulesAssessed: dv.paragraphs.length, unassessedChunks: [] };
-  const packIds = (await db().packs.toArray()).filter((p) => p.enabled).map((p) => `${p.id}@${p.version}`);
+  const enabledPacks = (await db().packs.toArray()).filter((p) => p.enabled);
+  const packIds = enabledPacks.map((p) => `${p.id}@${p.version}`);
+  // Generic pack tests are applied locally: they go into the on-device prompt, never anywhere else.
+  const tests = enabledPacks.flatMap((p) => p.tests.map((t) => ({ question: t.question, category: t.category })));
 
   // 1. Deterministic rules on the draft.
   for (const m of runRules(dv.normalizedText)) {
@@ -82,7 +85,7 @@ export async function runReview(workspaceId: string, input: ReviewInput): Promis
       if (input.signal?.aborted) { if (l === draft) coverage.unassessedChunks.push({ paragraphs: c.paragraphs, reason: 'Cancelled' }); continue; }
       input.onProgress?.({ done, total: plan.length, label: `${l.doc.title} ¶${c.paragraphs[0] + 1}–${c.paragraphs[1] + 1}` });
       const passage = l.version.normalizedText.slice(c.start, c.end);
-      const r = await input.gateway.extractPrivate(passage, l.doc.role, input.signal);
+      const r = await input.gateway.extractPrivate(passage, l.doc.role, input.signal, tests);
       done++;
       if (r.ok) {
         if (l === draft) coverage.contextAssessed += c.paragraphs[1] - c.paragraphs[0] + 1;

@@ -4,6 +4,11 @@
 import { createRequire } from 'node:module';
 import { execSync, spawn } from 'node:child_process';
 import { CANARY_DRAFT, CANARY_RELEASE, CANARIES } from '../../../packages/fixtures/src/canaries.ts';
+import { writeFileSync, readFileSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { jsPDF } from 'jspdf';
+import { Document, Packer, Paragraph } from 'docx';
 
 const require = createRequire(import.meta.url);
 let chromium; try { ({ chromium } = require('playwright')); } catch { ({ chromium } = require(execSync('npm root -g').toString().trim() + '/playwright')); }
@@ -60,6 +65,76 @@ try {
   const reassess = await page.locator('.reassess').innerText().catch(() => '');
   check('reassessment reports resolved findings', /\b2\b[\s\S]*Resolved/.test(reassess), reassess.replace(/\s+/g, ' '));
   await shot('rewrite');
+
+  // Disclosure map
+  await page.getByRole('link', { name: /^Disclosure map/ }).first().click();
+  await page.getByRole('heading', { name: 'Disclosure map' }).waitFor();
+  await page.locator('.g-hit').first().focus(); await page.keyboard.press('Enter');
+  check('map lines open their reason and passages (keyboard)', await page.locator('.ev-card').count() > 0);
+  await page.getByRole('tab', { name: 'List' }).click();
+  check('map has an accessible list view', await page.locator('table.tbl tbody tr').count() > 0);
+  await shot('map');
+
+  // Stress tests: the approval dialog shows the exact enum-only body. Nothing is sent here.
+  await page.getByRole('link', { name: /^Stress tests/ }).click();
+  await page.getByRole('heading', { name: 'Stress tests' }).waitFor();
+  check('bundled packs are listed', await page.getByText('Core disclosure checks').count() > 0);
+  await page.getByRole('button', { name: /Review and send/ }).click();
+  const body = await page.locator('.modal .payload').innerText();
+  const parsed = JSON.parse(body);
+  check('approval dialog shows an enum-only request', parsed.task === 'generatePack' && Object.keys(parsed).sort().join() === 'categories,domain,packSchemaVersion,task', body.replace(/\s+/g, ' '));
+  await shot('consent');
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  check('cancelling sends nothing to Gemini', !requests.some((r) => /firebasevertexai|generativelanguage/.test(r.host)));
+
+  // Release review and history (sample workspace, already re-reviewed)
+  await page.goBack(); await page.goBack();
+  const wsUrl = page.url().replace(/\/(map|findings|rewrite|document).*$/, '');
+  await page.goto(wsUrl.replace(/\/w\/([^/]+).*/, '/w/$1/release'));
+  await page.getByRole('heading', { name: 'Release review' }).waitFor();
+  const approveBtn = page.getByRole('button', { name: /Approve release/ });
+  check('approval is blocked until the checklist is done', await approveBtn.isDisabled());
+  for (const c of await page.locator('[role="checkbox"]').all()) await c.click();
+  const enabled = await page.waitForFunction(() => { const b = [...document.querySelectorAll('button')].find((x) => /Approve release/.test(x.textContent || '')); return b && !b.disabled; }, null, { timeout: 5000 }).then(() => true, () => false);
+  check('approval enabled after checklist on a current, fully assessed review', enabled);
+  await shot('release');
+  await approveBtn.click();
+  await page.waitForURL(/\/history/);
+  const approved = await page.getByText('Approved here').first().waitFor({ timeout: 5000 }).then(() => true, () => false);
+  check('approved release appears in history', approved);
+  await shot('history');
+
+  // Export: clean text contains the reviewed text and nothing else
+  await page.goto(page.url().replace('/history', '/export'));
+  await page.getByRole('heading', { name: 'Reports & export' }).waitFor();
+  await page.getByRole('button', { name: 'TXT' }).click();
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export TXT' }).click()]);
+  const txt = readFileSync(await dl.path(), 'utf8');
+  check('clean export contains the edited text and not the removed passages', txt.includes('moving from another site') && !txt.includes('coastal satellite clinic') && !txt.includes('14 January'));
+  await page.getByRole('button', { name: 'DOCX' }).click();
+  const [dl2] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export DOCX' }).click()]);
+  check('DOCX export is generated', (await dl2.suggestedFilename()).endsWith('.docx'));
+
+  // PDF and DOCX import, parsed locally
+  const dir = mkdtempSync(join(tmpdir(), 'mosaic-e2e-'));
+  const pdf = new jsPDF(); pdf.text('Fictional PDF line: I was the only night porter at the depot.', 10, 20); writeFileSync(join(dir, 'fictional.pdf'), Buffer.from(pdf.output('arraybuffer')));
+  writeFileSync(join(dir, 'fictional.docx'), await Packer.toBuffer(new Document({ sections: [{ children: [new Paragraph('Fictional DOCX line: contact r.lind@example.net.')] }] })));
+  await page.goto(page.url().replace('/export', '/import'));
+  await page.locator('input[type=file]').setInputFiles([join(dir, 'fictional.pdf'), join(dir, 'fictional.docx')]);
+  await page.getByText(/words ·/).nth(1).waitFor({ timeout: 15000 });
+  check('PDF and DOCX import extracts text locally', (await page.locator('table.tbl').innerText()).match(/words ·/g)?.length === 2);
+  await page.getByRole('button', { name: 'Cancel' }).click();
+
+  // Offline: the app keeps working for local tasks
+  const swReady = await page.evaluate(async () => { const r = await Promise.race([navigator.serviceWorker.ready.then(() => true), new Promise((res) => setTimeout(() => res(false), 8000))]); return r && !!navigator.serviceWorker.controller; });
+  check('service worker controls the page', swReady);
+  await page.context().setOffline(true);
+  await page.goto(wsUrl.replace(/\/w\/([^/]+).*/, '/w/$1/findings')).catch((e) => console.log('offline goto:', e.message.split('\n')[0]));
+  await page.getByRole('link', { name: /^Documents/ }).first().click().catch(() => {});
+  await page.locator('.reader-d').first().waitFor({ timeout: 5000 }).catch(() => {});
+  await shot('offline');
+  check('navigation works offline (service worker / SPA)', await page.locator('.reader-d').count() > 0);
+  await page.context().setOffline(false);
 
   // Private workspace with canaries: nothing derived from it may leave the page.
   await page.goto(base + '/workspaces');

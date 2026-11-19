@@ -110,8 +110,8 @@ export const glass = {
 };
 
 export const type = {
-  'font-ui': '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  'font-mono': 'ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace',
+  'font-ui': '-apple-system, BlinkMacSystemFont, "Inter Variable", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  'font-mono': 'ui-monospace, "SF Mono", "JetBrains Mono Variable", "JetBrains Mono", Menlo, Consolas, monospace',
   // iOS-flavoured scale (pt == px on web)
   'fs-large-title': '34px',
   'fs-title-1': '28px',

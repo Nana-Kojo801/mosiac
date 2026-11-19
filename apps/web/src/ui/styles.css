@@ -39,3 +39,5 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 
 .crumbs { white-space: nowrap; overflow: hidden; }
 .crumbs a { overflow: hidden; text-overflow: ellipsis; }
+.modal-layer[style*="fixed"] { z-index: 300; }
+#toast-host { z-index: 250; }

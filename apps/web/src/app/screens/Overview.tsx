@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router';
-import { AlertCircle, AlertTriangle, CircleDashed, ClipboardPaste, FileCheck, FilePen, FileUp, FlaskConical, Info, Lock, MonitorX, PenLine, RotateCw, ScanSearch, WifiOff } from 'lucide-react';
+import { ClipboardCheck, Waypoints, AlertCircle, AlertTriangle, CircleDashed, ClipboardPaste, FileCheck, FilePen, FileUp, FlaskConical, Info, Lock, MonitorX, PenLine, RotateCw, ScanSearch, WifiOff } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
 import { Shell } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
@@ -70,6 +70,12 @@ export function Overview() {
           <tr key={doc.id}><td style={{ width: 40 }}><span className={`doc-ic ${doc.role === 'draft' ? 'draft' : ''}`}>{doc.role === 'draft' ? <FilePen size={15} /> : <FileCheck size={15} />}</span></td><td className="t-title"><Link to={`/w/${ws.id}/document?doc=${doc.id}`} style={{ color: 'inherit' }}>{doc.title}</Link></td><td>{doc.role === 'draft' ? 'Draft to review' : `Published ${fmtDate(doc.approvedAt)}`}</td><td className="mono">{version.label}</td><td><span className="pack-src"><Lock size={11} /> Private</span></td></tr>
         ))}
       </tbody></table>
+      <div className="h2">Tools</div>
+      <div className="grid-3">
+        <Link to={`/w/${ws.id}/map`} className="tool-tile" style={{ textDecoration: 'none', color: 'inherit' }}><Waypoints size={20} /><b>Disclosure map</b><span>How the documents connect</span></Link>
+        <Link to="/tests" className="tool-tile" style={{ textDecoration: 'none', color: 'inherit' }}><FlaskConical size={20} /><b>Stress tests</b><span>Packs applied during review</span></Link>
+        <Link to={`/w/${ws.id}/release`} className="tool-tile" style={{ textDecoration: 'none', color: 'inherit' }}><ClipboardCheck size={20} /><b>Release review</b><span>Checklist and approval</span></Link>
+      </div>
       {steps && (
         <>
           <div className="h2">Fictional group size</div>

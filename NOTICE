@@ -1,0 +1,20 @@
+Mosaic
+Copyright 2026 The Mosaic authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It includes third-party software under their own licences, including:
+- Firebase JavaScript SDK (Apache-2.0)
+- React and React DOM (MIT)
+- React Router (MIT)
+- Dexie.js (Apache-2.0)
+- Zod (MIT)
+- Lucide icons (ISC)
+- PDF.js (Apache-2.0)
+- Mammoth (BSD-2-Clause)
+- jsPDF (MIT)
+- docx (MIT)
+- Inter and JetBrains Mono fonts via Fontsource (SIL Open Font License 1.1)
+- Tailwind CSS (MIT), Vite (MIT), vite-plugin-pwa (MIT), Workbox (MIT)
+
+All sample and benchmark content is fictional. No real people or records are included.

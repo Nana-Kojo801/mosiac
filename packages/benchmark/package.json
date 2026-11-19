@@ -1,0 +1,11 @@
+{
+  "name": "@mosaic/benchmark",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Seeded synthetic benchmark for Mosaic: fictional document sets with ground-truth labels, a scorer and a rules-baseline runner.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "baseline": "node ../../scripts/run-ts.mjs src/run-baseline.ts" },
+  "dependencies": { "@mosaic/schemas": "0.1.0", "@mosaic/privacy-core": "0.1.0" }
+}
