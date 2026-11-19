@@ -1,0 +1,48 @@
+{
+  "kind": "mosaic-routing-table",
+  "source": "packages/schemas/src/routing.ts",
+  "routes": [
+    {
+      "task": "extract",
+      "label": "Extract context from private documents",
+      "data": "PRIVATE",
+      "policy": "ONLY_ON_DEVICE",
+      "onFailure": "Marked not assessed; rules and manual review stay available"
+    },
+    {
+      "task": "review",
+      "label": "Review connections across releases",
+      "data": "PRIVATE",
+      "policy": "ONLY_ON_DEVICE",
+      "onFailure": "Partial results kept; no cloud retry"
+    },
+    {
+      "task": "rewrite",
+      "label": "Rewrite a private passage",
+      "data": "PRIVATE",
+      "policy": "ONLY_ON_DEVICE",
+      "onFailure": "Manual editing"
+    },
+    {
+      "task": "generatePack",
+      "label": "Generate generic test packs",
+      "data": "GENERIC",
+      "policy": "ONLY_IN_CLOUD",
+      "onFailure": "Bundled or cached pack"
+    },
+    {
+      "task": "explainSample",
+      "label": "Explain a sample test",
+      "data": "SYNTHETIC",
+      "policy": "PREFER_ON_DEVICE",
+      "onFailure": "SDK may use the cloud; actual source shown"
+    },
+    {
+      "task": "rules",
+      "label": "Direct-identifier checks, scoring, export",
+      "data": "LOCAL_DATA",
+      "policy": "NO_MODEL",
+      "onFailure": "Works offline"
+    }
+  ]
+}

@@ -6,7 +6,8 @@
     "packages/*",
     "apps/*",
     "scripts/local-verify",
-    "design"
+    "design",
+    "demo"
   ],
   "engines": {
     "node": ">=22"

@@ -1,0 +1,9 @@
+{
+  "kind": "mosaic-network-audit",
+  "generatedAt": "2026-11-19T16:30:03.701Z",
+  "method": "Playwright request log during a full review of a private workspace seeded with canary strings (production build, production CSP).",
+  "externalRequests": 0,
+  "hosts": [],
+  "canaryLeaks": 0,
+  "geminiRequests": 0
+}

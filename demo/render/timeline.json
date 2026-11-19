@@ -1,0 +1,1781 @@
+{
+  "bpm": 122,
+  "fps": 30,
+  "total": 140.1639344262295,
+  "voice": {
+    "id": "EXAVITQu4vr4xnSDxMaL",
+    "name": "Sarah (ElevenLabs premade)",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.4,
+      "similarity_boost": 0.8,
+      "style": 0.42,
+      "use_speaker_boost": true,
+      "speed": 1.06
+    }
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "text": "Three documents. Each one looks anonymous. But put them side by side, and they point to just one person.",
+      "evidence": [
+        "packages/fixtures/src/population.ts"
+      ],
+      "label": "Fictional illustration",
+      "start": 0,
+      "voiceAt": 1.4,
+      "voiceDuration": 7.012,
+      "audio": "narration/cache/hook-f288aa4fc752384d.mp3",
+      "words": [
+        {
+          "text": "Three",
+          "start": 1.4,
+          "end": 1.783
+        },
+        {
+          "text": "documents.",
+          "start": 1.841,
+          "end": 2.607
+        },
+        {
+          "text": "Each",
+          "start": 2.8049999999999997,
+          "end": 3.037
+        },
+        {
+          "text": "one",
+          "start": 3.118,
+          "end": 3.3499999999999996
+        },
+        {
+          "text": "looks",
+          "start": 3.409,
+          "end": 3.641
+        },
+        {
+          "text": "anonymous.",
+          "start": 3.687,
+          "end": 4.361
+        },
+        {
+          "text": "But",
+          "start": 4.558,
+          "end": 4.7669999999999995
+        },
+        {
+          "text": "put",
+          "start": 4.824999999999999,
+          "end": 4.9990000000000006
+        },
+        {
+          "text": "them",
+          "start": 5.034,
+          "end": 5.1850000000000005
+        },
+        {
+          "text": "side",
+          "start": 5.2780000000000005,
+          "end": 5.5329999999999995
+        },
+        {
+          "text": "by",
+          "start": 5.568,
+          "end": 5.683999999999999
+        },
+        {
+          "text": "side,",
+          "start": 5.754,
+          "end": 6.102
+        },
+        {
+          "text": "and",
+          "start": 6.125,
+          "end": 6.218
+        },
+        {
+          "text": "they",
+          "start": 6.276,
+          "end": 6.404
+        },
+        {
+          "text": "point",
+          "start": 6.474,
+          "end": 6.7170000000000005
+        },
+        {
+          "text": "to",
+          "start": 6.763999999999999,
+          "end": 6.821999999999999
+        },
+        {
+          "text": "just",
+          "start": 6.9030000000000005,
+          "end": 7.112
+        },
+        {
+          "text": "one",
+          "start": 7.2170000000000005,
+          "end": 7.484
+        },
+        {
+          "text": "person.",
+          "start": 7.529999999999999,
+          "end": 8.411999999999999
+        }
+      ],
+      "end": 11.803278688524589
+    },
+    {
+      "id": "title",
+      "kind": "title",
+      "text": "This is Mosaic. It catches what you never realized you were revealing.",
+      "evidence": [],
+      "start": 11.803278688524589,
+      "voiceAt": 12.10327868852459,
+      "voiceDuration": 4.458,
+      "audio": "narration/cache/title-9eb40f38916601c4.mp3",
+      "words": [
+        {
+          "text": "This",
+          "start": 12.10327868852459,
+          "end": 12.335278688524589
+        },
+        {
+          "text": "is",
+          "start": 12.38227868852459,
+          "end": 12.45127868852459
+        },
+        {
+          "text": "Mosaic.",
+          "start": 12.50927868852459,
+          "end": 13.17127868852459
+        },
+        {
+          "text": "It",
+          "start": 13.43827868852459,
+          "end": 13.58927868852459
+        },
+        {
+          "text": "catches",
+          "start": 13.64727868852459,
+          "end": 14.03027868852459
+        },
+        {
+          "text": "what",
+          "start": 14.08827868852459,
+          "end": 14.22827868852459
+        },
+        {
+          "text": "you",
+          "start": 14.27427868852459,
+          "end": 14.34427868852459
+        },
+        {
+          "text": "never",
+          "start": 14.425278688524589,
+          "end": 14.62227868852459
+        },
+        {
+          "text": "realized",
+          "start": 14.69227868852459,
+          "end": 15.18027868852459
+        },
+        {
+          "text": "you",
+          "start": 15.21427868852459,
+          "end": 15.29627868852459
+        },
+        {
+          "text": "were",
+          "start": 15.35427868852459,
+          "end": 15.51627868852459
+        },
+        {
+          "text": "revealing.",
+          "start": 15.57427868852459,
+          "end": 16.56127868852459
+        }
+      ],
+      "end": 18.688524590163933
+    },
+    {
+      "id": "problem",
+      "kind": "problem",
+      "text": "Redaction tools hunt for names and emails. Mosaic checks how your next draft combines with everything you’ve already published.",
+      "evidence": [],
+      "start": 18.688524590163933,
+      "voiceAt": 18.988524590163934,
+      "voiceDuration": 6.92,
+      "audio": "narration/cache/problem-3c1133e5cddef018.mp3",
+      "words": [
+        {
+          "text": "Redaction",
+          "start": 18.988524590163934,
+          "end": 19.499524590163933
+        },
+        {
+          "text": "tools",
+          "start": 19.557524590163933,
+          "end": 19.905524590163935
+        },
+        {
+          "text": "hunt",
+          "start": 19.963524590163935,
+          "end": 20.161524590163932
+        },
+        {
+          "text": "for",
+          "start": 20.219524590163935,
+          "end": 20.346524590163934
+        },
+        {
+          "text": "names",
+          "start": 20.428524590163935,
+          "end": 20.834524590163934
+        },
+        {
+          "text": "and",
+          "start": 20.880524590163933,
+          "end": 20.985524590163934
+        },
+        {
+          "text": "emails.",
+          "start": 21.066524590163933,
+          "end": 21.647524590163933
+        },
+        {
+          "text": "Mosaic",
+          "start": 21.949524590163932,
+          "end": 22.448524590163935
+        },
+        {
+          "text": "checks",
+          "start": 22.506524590163934,
+          "end": 22.819524590163933
+        },
+        {
+          "text": "how",
+          "start": 22.866524590163934,
+          "end": 22.959524590163934
+        },
+        {
+          "text": "your",
+          "start": 23.005524590163933,
+          "end": 23.110524590163934
+        },
+        {
+          "text": "next",
+          "start": 23.156524590163933,
+          "end": 23.342524590163933
+        },
+        {
+          "text": "draft",
+          "start": 23.365524590163933,
+          "end": 23.644524590163932
+        },
+        {
+          "text": "combines",
+          "start": 23.690524590163935,
+          "end": 24.050524590163935
+        },
+        {
+          "text": "with",
+          "start": 24.073524590163935,
+          "end": 24.178524590163935
+        },
+        {
+          "text": "everything",
+          "start": 24.236524590163935,
+          "end": 24.607524590163933
+        },
+        {
+          "text": "you’ve",
+          "start": 24.642524590163934,
+          "end": 24.805524590163934
+        },
+        {
+          "text": "already",
+          "start": 24.839524590163933,
+          "end": 25.083524590163933
+        },
+        {
+          "text": "published.",
+          "start": 25.141524590163932,
+          "end": 25.908524590163932
+        }
+      ],
+      "end": 26.557377049180328
+    },
+    {
+      "id": "hybrid",
+      "kind": "hybrid",
+      "text": "Your private documents never leave your browser. The cloud only writes generic test packs, from a fixed list of categories, and only after you approve the exact request.",
+      "evidence": [
+        "packages/schemas/src/routing.ts",
+        "demo/evidence/network-audit.json"
+      ],
+      "start": 26.557377049180328,
+      "voiceAt": 26.85737704918033,
+      "voiceDuration": 10.542,
+      "audio": "narration/cache/hybrid-95d152061e70e568.mp3",
+      "words": [
+        {
+          "text": "Your",
+          "start": 26.85737704918033,
+          "end": 27.10137704918033
+        },
+        {
+          "text": "private",
+          "start": 27.15937704918033,
+          "end": 27.507377049180327
+        },
+        {
+          "text": "documents",
+          "start": 27.530377049180327,
+          "end": 28.07637704918033
+        },
+        {
+          "text": "never",
+          "start": 28.18137704918033,
+          "end": 28.47137704918033
+        },
+        {
+          "text": "leave",
+          "start": 28.55237704918033,
+          "end": 28.76137704918033
+        },
+        {
+          "text": "your",
+          "start": 28.79637704918033,
+          "end": 28.900377049180328
+        },
+        {
+          "text": "browser.",
+          "start": 28.94737704918033,
+          "end": 29.539377049180327
+        },
+        {
+          "text": "The",
+          "start": 29.73637704918033,
+          "end": 29.85237704918033
+        },
+        {
+          "text": "cloud",
+          "start": 29.88737704918033,
+          "end": 30.21237704918033
+        },
+        {
+          "text": "only",
+          "start": 30.29437704918033,
+          "end": 30.56137704918033
+        },
+        {
+          "text": "writes",
+          "start": 30.60737704918033,
+          "end": 30.88637704918033
+        },
+        {
+          "text": "generic",
+          "start": 30.967377049180328,
+          "end": 31.524377049180327
+        },
+        {
+          "text": "test",
+          "start": 31.582377049180327,
+          "end": 31.84937704918033
+        },
+        {
+          "text": "packs,",
+          "start": 31.91937704918033,
+          "end": 32.37237704918032
+        },
+        {
+          "text": "from",
+          "start": 32.47637704918033,
+          "end": 32.65037704918033
+        },
+        {
+          "text": "a",
+          "start": 32.70837704918033,
+          "end": 32.73237704918033
+        },
+        {
+          "text": "fixed",
+          "start": 32.813377049180325,
+          "end": 33.115377049180324
+        },
+        {
+          "text": "list",
+          "start": 33.18437704918033,
+          "end": 33.39337704918032
+        },
+        {
+          "text": "of",
+          "start": 33.44037704918033,
+          "end": 33.48637704918033
+        },
+        {
+          "text": "categories,",
+          "start": 33.533377049180324,
+          "end": 34.29937704918032
+        },
+        {
+          "text": "and",
+          "start": 34.392377049180325,
+          "end": 34.554377049180324
+        },
+        {
+          "text": "only",
+          "start": 34.624377049180325,
+          "end": 34.810377049180325
+        },
+        {
+          "text": "after",
+          "start": 34.868377049180324,
+          "end": 35.06537704918033
+        },
+        {
+          "text": "you",
+          "start": 35.112377049180324,
+          "end": 35.18137704918033
+        },
+        {
+          "text": "approve",
+          "start": 35.23937704918033,
+          "end": 35.58837704918032
+        },
+        {
+          "text": "the",
+          "start": 35.62337704918033,
+          "end": 35.715377049180326
+        },
+        {
+          "text": "exact",
+          "start": 35.785377049180326,
+          "end": 36.273377049180326
+        },
+        {
+          "text": "request.",
+          "start": 36.377377049180325,
+          "end": 37.39937704918032
+        }
+      ],
+      "end": 37.868852459016395
+    },
+    {
+      "id": "review",
+      "kind": "shots",
+      "shots": [
+        "overview-start",
+        "overview-reviewed",
+        "findings",
+        "document"
+      ],
+      "text": "Open a workspace, hit review, and Mosaic lights up the passages that matter, with evidence from every release side by side. Every result says where it ran. With no built-in model on this machine, the sample shows clearly labelled sample results.",
+      "evidence": [
+        "demo/footage/track.json"
+      ],
+      "start": 37.868852459016395,
+      "voiceAt": 38.16885245901639,
+      "voiceDuration": 15.789,
+      "audio": "narration/cache/review-44e562f2a0884be9.mp3",
+      "words": [
+        {
+          "text": "Open",
+          "start": 38.16885245901639,
+          "end": 38.481852459016395
+        },
+        {
+          "text": "a",
+          "start": 38.52885245901639,
+          "end": 38.551852459016395
+        },
+        {
+          "text": "workspace,",
+          "start": 38.609852459016395,
+          "end": 39.283852459016394
+        },
+        {
+          "text": "hit",
+          "start": 39.42285245901639,
+          "end": 39.60885245901639
+        },
+        {
+          "text": "review,",
+          "start": 39.67785245901639,
+          "end": 40.08485245901639
+        },
+        {
+          "text": "and",
+          "start": 40.130852459016396,
+          "end": 40.26985245901639
+        },
+        {
+          "text": "Mosaic",
+          "start": 40.35185245901639,
+          "end": 40.838852459016394
+        },
+        {
+          "text": "lights",
+          "start": 40.920852459016395,
+          "end": 41.17585245901639
+        },
+        {
+          "text": "up",
+          "start": 41.210852459016394,
+          "end": 41.29185245901639
+        },
+        {
+          "text": "the",
+          "start": 41.338852459016394,
+          "end": 41.40785245901639
+        },
+        {
+          "text": "passages",
+          "start": 41.44285245901639,
+          "end": 41.941852459016395
+        },
+        {
+          "text": "that",
+          "start": 41.98885245901639,
+          "end": 42.115852459016395
+        },
+        {
+          "text": "matter,",
+          "start": 42.173852459016395,
+          "end": 42.69685245901639
+        },
+        {
+          "text": "with",
+          "start": 42.835852459016394,
+          "end": 42.99885245901639
+        },
+        {
+          "text": "evidence",
+          "start": 43.04485245901639,
+          "end": 43.38185245901639
+        },
+        {
+          "text": "from",
+          "start": 43.40485245901639,
+          "end": 43.55585245901639
+        },
+        {
+          "text": "every",
+          "start": 43.648852459016396,
+          "end": 43.96185245901639
+        },
+        {
+          "text": "release",
+          "start": 44.04385245901639,
+          "end": 44.46185245901639
+        },
+        {
+          "text": "side",
+          "start": 44.542852459016395,
+          "end": 44.832852459016394
+        },
+        {
+          "text": "by",
+          "start": 44.86785245901639,
+          "end": 44.98385245901639
+        },
+        {
+          "text": "side.",
+          "start": 45.05385245901639,
+          "end": 45.52985245901639
+        },
+        {
+          "text": "Every",
+          "start": 45.79685245901639,
+          "end": 46.13285245901639
+        },
+        {
+          "text": "result",
+          "start": 46.21485245901639,
+          "end": 46.63285245901639
+        },
+        {
+          "text": "says",
+          "start": 46.70185245901639,
+          "end": 46.98085245901639
+        },
+        {
+          "text": "where",
+          "start": 47.05085245901639,
+          "end": 47.270852459016396
+        },
+        {
+          "text": "it",
+          "start": 47.31785245901639,
+          "end": 47.37585245901639
+        },
+        {
+          "text": "ran.",
+          "start": 47.44485245901639,
+          "end": 47.93285245901639
+        },
+        {
+          "text": "With",
+          "start": 48.234852459016395,
+          "end": 48.408852459016394
+        },
+        {
+          "text": "no",
+          "start": 48.466852459016394,
+          "end": 48.594852459016394
+        },
+        {
+          "text": "built-in",
+          "start": 48.66385245901639,
+          "end": 49.0358524590164
+        },
+        {
+          "text": "model",
+          "start": 49.10585245901639,
+          "end": 49.44185245901639
+        },
+        {
+          "text": "on",
+          "start": 49.511852459016396,
+          "end": 49.60485245901639
+        },
+        {
+          "text": "this",
+          "start": 49.66285245901639,
+          "end": 49.81285245901639
+        },
+        {
+          "text": "machine,",
+          "start": 49.88285245901639,
+          "end": 50.47485245901639
+        },
+        {
+          "text": "the",
+          "start": 50.61485245901639,
+          "end": 50.71885245901639
+        },
+        {
+          "text": "sample",
+          "start": 50.764852459016396,
+          "end": 51.136852459016396
+        },
+        {
+          "text": "shows",
+          "start": 51.17185245901639,
+          "end": 51.47385245901639
+        },
+        {
+          "text": "clearly",
+          "start": 51.57785245901639,
+          "end": 51.99585245901639
+        },
+        {
+          "text": "labelled",
+          "start": 52.06585245901639,
+          "end": 52.48385245901639
+        },
+        {
+          "text": "sample",
+          "start": 52.58785245901639,
+          "end": 52.98285245901639
+        },
+        {
+          "text": "results.",
+          "start": 53.02885245901639,
+          "end": 53.957852459016394
+        }
+      ],
+      "end": 54.59016393442623
+    },
+    {
+      "id": "map",
+      "kind": "shots",
+      "shots": [
+        "map",
+        "map-edge"
+      ],
+      "text": "The disclosure map shows exactly how the draft connects to earlier releases. In this fictional sample, three small details narrow a hundred people down to one.",
+      "evidence": [
+        "demo/footage/track.json",
+        "packages/fixtures/src/population.ts"
+      ],
+      "start": 54.59016393442623,
+      "voiceAt": 54.890163934426226,
+      "voiceDuration": 10.263,
+      "audio": "narration/cache/map-f20adc32902e716f.mp3",
+      "words": [
+        {
+          "text": "The",
+          "start": 54.890163934426226,
+          "end": 55.04116393442623
+        },
+        {
+          "text": "disclosure",
+          "start": 55.08716393442623,
+          "end": 55.62116393442623
+        },
+        {
+          "text": "map",
+          "start": 55.668163934426225,
+          "end": 55.888163934426224
+        },
+        {
+          "text": "shows",
+          "start": 55.93516393442623,
+          "end": 56.16716393442623
+        },
+        {
+          "text": "exactly",
+          "start": 56.23716393442623,
+          "end": 56.77116393442623
+        },
+        {
+          "text": "how",
+          "start": 56.82916393442623,
+          "end": 56.96816393442623
+        },
+        {
+          "text": "the",
+          "start": 57.03816393442623,
+          "end": 57.10816393442623
+        },
+        {
+          "text": "draft",
+          "start": 57.15416393442623,
+          "end": 57.491163934426226
+        },
+        {
+          "text": "connects",
+          "start": 57.549163934426225,
+          "end": 57.885163934426224
+        },
+        {
+          "text": "to",
+          "start": 57.92016393442623,
+          "end": 57.97816393442623
+        },
+        {
+          "text": "earlier",
+          "start": 58.04816393442623,
+          "end": 58.39616393442623
+        },
+        {
+          "text": "releases.",
+          "start": 58.45416393442623,
+          "end": 59.174163934426225
+        },
+        {
+          "text": "In",
+          "start": 59.476163934426225,
+          "end": 59.604163934426225
+        },
+        {
+          "text": "this",
+          "start": 59.650163934426224,
+          "end": 59.80116393442623
+        },
+        {
+          "text": "fictional",
+          "start": 59.85916393442623,
+          "end": 60.265163934426226
+        },
+        {
+          "text": "sample,",
+          "start": 60.323163934426226,
+          "end": 60.89216393442623
+        },
+        {
+          "text": "three",
+          "start": 61.03216393442623,
+          "end": 61.36816393442623
+        },
+        {
+          "text": "small",
+          "start": 61.43816393442623,
+          "end": 61.763163934426224
+        },
+        {
+          "text": "details",
+          "start": 61.84416393442623,
+          "end": 62.41316393442622
+        },
+        {
+          "text": "narrow",
+          "start": 62.51816393442623,
+          "end": 62.88916393442623
+        },
+        {
+          "text": "a",
+          "start": 62.97116393442623,
+          "end": 63.00516393442623
+        },
+        {
+          "text": "hundred",
+          "start": 63.110163934426225,
+          "end": 63.458163934426224
+        },
+        {
+          "text": "people",
+          "start": 63.50516393442623,
+          "end": 63.80616393442622
+        },
+        {
+          "text": "down",
+          "start": 63.85316393442623,
+          "end": 64.05016393442622
+        },
+        {
+          "text": "to",
+          "start": 64.09716393442623,
+          "end": 64.16616393442622
+        },
+        {
+          "text": "one.",
+          "start": 64.27116393442623,
+          "end": 65.15316393442623
+        }
+      ],
+      "end": 65.90163934426229
+    },
+    {
+      "id": "rewrite",
+      "kind": "shots",
+      "shots": [
+        "rewrite-suggest",
+        "rewrite-applied",
+        "rewrite-reassessed",
+        "map-after"
+      ],
+      "text": "Mosaic suggests safer wording that keeps your point. Apply it, review again, and that group grows from one to twenty-one.",
+      "evidence": [
+        "demo/footage/track.json",
+        "packages/fixtures/src/population.ts"
+      ],
+      "start": 65.90163934426229,
+      "voiceAt": 66.20163934426229,
+      "voiceDuration": 8.081,
+      "audio": "narration/cache/rewrite-eaa428b23675e2eb.mp3",
+      "words": [
+        {
+          "text": "Mosaic",
+          "start": 66.20163934426229,
+          "end": 66.71263934426229
+        },
+        {
+          "text": "suggests",
+          "start": 66.75863934426229,
+          "end": 67.30463934426228
+        },
+        {
+          "text": "safer",
+          "start": 67.40863934426228,
+          "end": 67.8036393442623
+        },
+        {
+          "text": "wording",
+          "start": 67.87363934426229,
+          "end": 68.22163934426229
+        },
+        {
+          "text": "that",
+          "start": 68.27963934426229,
+          "end": 68.4076393442623
+        },
+        {
+          "text": "keeps",
+          "start": 68.45363934426229,
+          "end": 68.68663934426229
+        },
+        {
+          "text": "your",
+          "start": 68.7206393442623,
+          "end": 68.8366393442623
+        },
+        {
+          "text": "point.",
+          "start": 68.89563934426229,
+          "end": 69.37163934426229
+        },
+        {
+          "text": "Apply",
+          "start": 69.63863934426229,
+          "end": 70.0326393442623
+        },
+        {
+          "text": "it,",
+          "start": 70.11463934426229,
+          "end": 70.34663934426229
+        },
+        {
+          "text": "review",
+          "start": 70.45063934426229,
+          "end": 70.77563934426229
+        },
+        {
+          "text": "again,",
+          "start": 70.8336393442623,
+          "end": 71.3216393442623
+        },
+        {
+          "text": "and",
+          "start": 71.46063934426229,
+          "end": 71.58863934426229
+        },
+        {
+          "text": "that",
+          "start": 71.64663934426228,
+          "end": 71.83263934426229
+        },
+        {
+          "text": "group",
+          "start": 71.89063934426228,
+          "end": 72.09963934426229
+        },
+        {
+          "text": "grows",
+          "start": 72.1576393442623,
+          "end": 72.43663934426229
+        },
+        {
+          "text": "from",
+          "start": 72.4946393442623,
+          "end": 72.65663934426229
+        },
+        {
+          "text": "one",
+          "start": 72.74963934426229,
+          "end": 73.03963934426228
+        },
+        {
+          "text": "to",
+          "start": 73.0866393442623,
+          "end": 73.1906393442623
+        },
+        {
+          "text": "twenty-one.",
+          "start": 73.26063934426229,
+          "end": 74.2826393442623
+        }
+      ],
+      "end": 74.75409836065573
+    },
+    {
+      "id": "consent",
+      "kind": "shots",
+      "shots": [
+        "tests",
+        "consent"
+      ],
+      "text": "Need new tests? You see the exact request before anything leaves your device. Just categories. No text. No names.",
+      "evidence": [
+        "demo/footage/track.json"
+      ],
+      "start": 74.75409836065573,
+      "voiceAt": 75.05409836065573,
+      "voiceDuration": 8.081,
+      "audio": "narration/cache/consent-b65410e85fffce4a.mp3",
+      "words": [
+        {
+          "text": "Need",
+          "start": 75.05409836065573,
+          "end": 75.29809836065573
+        },
+        {
+          "text": "new",
+          "start": 75.34409836065574,
+          "end": 75.44909836065573
+        },
+        {
+          "text": "tests?",
+          "start": 75.48409836065574,
+          "end": 76.05209836065573
+        },
+        {
+          "text": "You",
+          "start": 76.31909836065573,
+          "end": 76.44709836065573
+        },
+        {
+          "text": "see",
+          "start": 76.50509836065572,
+          "end": 76.64509836065572
+        },
+        {
+          "text": "the",
+          "start": 76.67909836065573,
+          "end": 76.76109836065572
+        },
+        {
+          "text": "exact",
+          "start": 76.84209836065573,
+          "end": 77.24809836065573
+        },
+        {
+          "text": "request",
+          "start": 77.31809836065572,
+          "end": 77.71309836065574
+        },
+        {
+          "text": "before",
+          "start": 77.77109836065573,
+          "end": 78.04909836065573
+        },
+        {
+          "text": "anything",
+          "start": 78.11909836065573,
+          "end": 78.53709836065573
+        },
+        {
+          "text": "leaves",
+          "start": 78.59509836065573,
+          "end": 78.82709836065573
+        },
+        {
+          "text": "your",
+          "start": 78.86209836065574,
+          "end": 78.97809836065574
+        },
+        {
+          "text": "device.",
+          "start": 79.02509836065573,
+          "end": 79.59409836065574
+        },
+        {
+          "text": "Just",
+          "start": 79.86109836065573,
+          "end": 80.07009836065573
+        },
+        {
+          "text": "categories.",
+          "start": 80.11609836065573,
+          "end": 80.95209836065573
+        },
+        {
+          "text": "No",
+          "start": 81.05609836065572,
+          "end": 81.20709836065573
+        },
+        {
+          "text": "text.",
+          "start": 81.27709836065573,
+          "end": 81.82309836065573
+        },
+        {
+          "text": "No",
+          "start": 82.02009836065572,
+          "end": 82.20609836065573
+        },
+        {
+          "text": "names.",
+          "start": 82.28709836065573,
+          "end": 83.13509836065573
+        }
+      ],
+      "end": 83.60655737704919
+    },
+    {
+      "id": "guard",
+      "kind": "guard",
+      "text": "While building Mosaic, we found a real gap. In browsers without the built-in model, the SDK’s on-device-only mode quietly sends requests to the cloud. Mosaic’s guard blocks that. Zero private requests got through.",
+      "evidence": [
+        "demo/evidence/sdk-probe-no-local-model-online.json"
+      ],
+      "data": {
+        "raw": 1,
+        "guarded": 0
+      },
+      "start": 83.60655737704919,
+      "voiceAt": 83.90655737704918,
+      "voiceDuration": 14.025,
+      "audio": "narration/cache/guard-37b2956ea289c57c.mp3",
+      "words": [
+        {
+          "text": "While",
+          "start": 83.90655737704918,
+          "end": 84.19655737704919
+        },
+        {
+          "text": "building",
+          "start": 84.21955737704918,
+          "end": 84.53355737704918
+        },
+        {
+          "text": "Mosaic,",
+          "start": 84.57955737704918,
+          "end": 85.09055737704918
+        },
+        {
+          "text": "we",
+          "start": 85.12555737704918,
+          "end": 85.21855737704918
+        },
+        {
+          "text": "found",
+          "start": 85.27655737704919,
+          "end": 85.47355737704918
+        },
+        {
+          "text": "a",
+          "start": 85.52055737704919,
+          "end": 85.54355737704918
+        },
+        {
+          "text": "real",
+          "start": 85.61355737704918,
+          "end": 85.83355737704919
+        },
+        {
+          "text": "gap.",
+          "start": 85.90355737704918,
+          "end": 86.33255737704918
+        },
+        {
+          "text": "In",
+          "start": 86.47255737704918,
+          "end": 86.62355737704918
+        },
+        {
+          "text": "browsers",
+          "start": 86.68155737704919,
+          "end": 87.20355737704918
+        },
+        {
+          "text": "without",
+          "start": 87.26155737704919,
+          "end": 87.56355737704918
+        },
+        {
+          "text": "the",
+          "start": 87.59855737704918,
+          "end": 87.66855737704918
+        },
+        {
+          "text": "built-in",
+          "start": 87.70255737704919,
+          "end": 88.06255737704919
+        },
+        {
+          "text": "model,",
+          "start": 88.13255737704918,
+          "end": 88.65455737704919
+        },
+        {
+          "text": "the",
+          "start": 88.75955737704918,
+          "end": 88.88755737704918
+        },
+        {
+          "text": "SDK’s",
+          "start": 88.96855737704918,
+          "end": 89.63055737704919
+        },
+        {
+          "text": "on-device-only",
+          "start": 89.72355737704918,
+          "end": 90.79155737704919
+        },
+        {
+          "text": "mode",
+          "start": 90.86055737704918,
+          "end": 91.15155737704919
+        },
+        {
+          "text": "quietly",
+          "start": 91.19755737704918,
+          "end": 91.68555737704918
+        },
+        {
+          "text": "sends",
+          "start": 91.74355737704919,
+          "end": 92.02155737704918
+        },
+        {
+          "text": "requests",
+          "start": 92.09155737704918,
+          "end": 92.63755737704918
+        },
+        {
+          "text": "to",
+          "start": 92.69555737704918,
+          "end": 92.77655737704919
+        },
+        {
+          "text": "the",
+          "start": 92.84655737704918,
+          "end": 92.91555737704918
+        },
+        {
+          "text": "cloud.",
+          "start": 92.95055737704918,
+          "end": 93.50755737704918
+        },
+        {
+          "text": "Mosaic’s",
+          "start": 93.67055737704918,
+          "end": 94.14655737704918
+        },
+        {
+          "text": "guard",
+          "start": 94.20455737704918,
+          "end": 94.54155737704919
+        },
+        {
+          "text": "blocks",
+          "start": 94.62255737704918,
+          "end": 94.97055737704919
+        },
+        {
+          "text": "that.",
+          "start": 95.00555737704919,
+          "end": 95.52855737704918
+        },
+        {
+          "text": "Zero",
+          "start": 95.72555737704918,
+          "end": 96.09655737704918
+        },
+        {
+          "text": "private",
+          "start": 96.16655737704919,
+          "end": 96.49155737704918
+        },
+        {
+          "text": "requests",
+          "start": 96.51455737704919,
+          "end": 96.96755737704918
+        },
+        {
+          "text": "got",
+          "start": 97.02555737704918,
+          "end": 97.19955737704917
+        },
+        {
+          "text": "through.",
+          "start": 97.24655737704919,
+          "end": 97.93155737704919
+        }
+      ],
+      "end": 99.34426229508196
+    },
+    {
+      "id": "ocr",
+      "kind": "shots",
+      "shots": [
+        "ocr"
+      ],
+      "text": "Got a scan or a photo? Mosaic reads it with OCR, right on your device, and flags any words it isn’t sure about.",
+      "evidence": [
+        "demo/footage/track.json"
+      ],
+      "start": 99.34426229508196,
+      "voiceAt": 99.64426229508196,
+      "voiceDuration": 7.895,
+      "audio": "narration/cache/ocr-b61042149e0ff7be.mp3",
+      "words": [
+        {
+          "text": "Got",
+          "start": 99.64426229508196,
+          "end": 99.87626229508196
+        },
+        {
+          "text": "a",
+          "start": 99.91126229508195,
+          "end": 99.93426229508196
+        },
+        {
+          "text": "scan",
+          "start": 99.98126229508196,
+          "end": 100.38726229508195
+        },
+        {
+          "text": "or",
+          "start": 100.49226229508196,
+          "end": 100.68926229508196
+        },
+        {
+          "text": "a",
+          "start": 100.77026229508196,
+          "end": 100.80526229508196
+        },
+        {
+          "text": "photo?",
+          "start": 100.85126229508195,
+          "end": 101.42026229508195
+        },
+        {
+          "text": "Mosaic",
+          "start": 101.72226229508196,
+          "end": 102.22126229508196
+        },
+        {
+          "text": "reads",
+          "start": 102.30326229508196,
+          "end": 102.52326229508196
+        },
+        {
+          "text": "it",
+          "start": 102.55826229508196,
+          "end": 102.62826229508195
+        },
+        {
+          "text": "with",
+          "start": 102.66326229508196,
+          "end": 102.79026229508196
+        },
+        {
+          "text": "OCR,",
+          "start": 102.87226229508195,
+          "end": 103.55726229508196
+        },
+        {
+          "text": "right",
+          "start": 103.63826229508196,
+          "end": 103.85826229508196
+        },
+        {
+          "text": "on",
+          "start": 103.90526229508195,
+          "end": 103.96326229508196
+        },
+        {
+          "text": "your",
+          "start": 104.00926229508195,
+          "end": 104.12526229508195
+        },
+        {
+          "text": "device,",
+          "start": 104.17226229508196,
+          "end": 104.61326229508195
+        },
+        {
+          "text": "and",
+          "start": 104.77626229508196,
+          "end": 104.92726229508196
+        },
+        {
+          "text": "flags",
+          "start": 104.99626229508196,
+          "end": 105.34426229508196
+        },
+        {
+          "text": "any",
+          "start": 105.40326229508196,
+          "end": 105.62326229508196
+        },
+        {
+          "text": "words",
+          "start": 105.68126229508196,
+          "end": 106.01826229508195
+        },
+        {
+          "text": "it",
+          "start": 106.08826229508196,
+          "end": 106.19226229508196
+        },
+        {
+          "text": "isn’t",
+          "start": 106.26226229508195,
+          "end": 106.54026229508196
+        },
+        {
+          "text": "sure",
+          "start": 106.59826229508195,
+          "end": 106.81926229508196
+        },
+        {
+          "text": "about.",
+          "start": 106.85426229508195,
+          "end": 107.53926229508195
+        }
+      ],
+      "end": 108.19672131147541
+    },
+    {
+      "id": "release",
+      "kind": "shots",
+      "shots": [
+        "release",
+        "history",
+        "export"
+      ],
+      "text": "Approve the release on your device, export a clean copy, and you’re done.",
+      "evidence": [
+        "demo/footage/track.json"
+      ],
+      "start": 108.19672131147541,
+      "voiceAt": 108.49672131147541,
+      "voiceDuration": 4.272,
+      "audio": "narration/cache/release-90f01eb6970bef5b.mp3",
+      "words": [
+        {
+          "text": "Approve",
+          "start": 108.49672131147541,
+          "end": 108.91472131147542
+        },
+        {
+          "text": "the",
+          "start": 108.93772131147541,
+          "end": 109.00772131147541
+        },
+        {
+          "text": "release",
+          "start": 109.05372131147541,
+          "end": 109.33272131147541
+        },
+        {
+          "text": "on",
+          "start": 109.3677213114754,
+          "end": 109.43672131147541
+        },
+        {
+          "text": "your",
+          "start": 109.4717213114754,
+          "end": 109.57672131147541
+        },
+        {
+          "text": "device,",
+          "start": 109.6117213114754,
+          "end": 110.0877213114754
+        },
+        {
+          "text": "export",
+          "start": 110.28472131147541,
+          "end": 110.71472131147542
+        },
+        {
+          "text": "a",
+          "start": 110.7487213114754,
+          "end": 110.77272131147541
+        },
+        {
+          "text": "clean",
+          "start": 110.80672131147541,
+          "end": 111.01572131147542
+        },
+        {
+          "text": "copy,",
+          "start": 111.07372131147541,
+          "end": 111.57372131147541
+        },
+        {
+          "text": "and",
+          "start": 111.73572131147542,
+          "end": 111.89872131147541
+        },
+        {
+          "text": "you’re",
+          "start": 111.9447213114754,
+          "end": 112.11872131147541
+        },
+        {
+          "text": "done.",
+          "start": 112.14272131147541,
+          "end": 112.76872131147542
+        }
+      ],
+      "end": 113.60655737704919
+    },
+    {
+      "id": "phone",
+      "kind": "phone",
+      "shots": [
+        "phone-overview",
+        "phone-findings",
+        "phone-sheet",
+        "phone-map"
+      ],
+      "text": "And it feels right at home on your phone.",
+      "evidence": [
+        "demo/footage/track.json"
+      ],
+      "start": 113.60655737704919,
+      "voiceAt": 113.90655737704918,
+      "voiceDuration": 2.229,
+      "audio": "narration/cache/phone-54d0b9b684320ae2.mp3",
+      "words": [
+        {
+          "text": "And",
+          "start": 113.90655737704918,
+          "end": 114.15055737704918
+        },
+        {
+          "text": "it",
+          "start": 114.20855737704919,
+          "end": 114.26655737704918
+        },
+        {
+          "text": "feels",
+          "start": 114.30155737704918,
+          "end": 114.53355737704918
+        },
+        {
+          "text": "right",
+          "start": 114.60355737704919,
+          "end": 114.78855737704919
+        },
+        {
+          "text": "at",
+          "start": 114.81255737704919,
+          "end": 114.87055737704918
+        },
+        {
+          "text": "home",
+          "start": 114.91655737704919,
+          "end": 115.10255737704918
+        },
+        {
+          "text": "on",
+          "start": 115.14855737704919,
+          "end": 115.21855737704918
+        },
+        {
+          "text": "your",
+          "start": 115.26455737704919,
+          "end": 115.36955737704918
+        },
+        {
+          "text": "phone.",
+          "start": 115.40455737704919,
+          "end": 116.13555737704918
+        }
+      ],
+      "end": 117.54098360655738
+    },
+    {
+      "id": "bench",
+      "kind": "bench",
+      "text": "It’s measured, too. On our open synthetic benchmark, the rules baseline alone scores one hundred percent precision and forty-four percent recall. On-device model runs are next.",
+      "evidence": [
+        "packages/benchmark/results/results.json"
+      ],
+      "data": {
+        "precision": 100,
+        "recall": 44,
+        "cases": 28,
+        "dataset": "synthetic-v1"
+      },
+      "start": 117.54098360655738,
+      "voiceAt": 117.84098360655737,
+      "voiceDuration": 11.378,
+      "audio": "narration/cache/bench-aaf5fac130267108.mp3",
+      "words": [
+        {
+          "text": "It’s",
+          "start": 117.84098360655737,
+          "end": 118.04998360655738
+        },
+        {
+          "text": "measured,",
+          "start": 118.09598360655737,
+          "end": 118.46798360655737
+        },
+        {
+          "text": "too.",
+          "start": 118.49098360655738,
+          "end": 118.93198360655737
+        },
+        {
+          "text": "On",
+          "start": 119.19898360655738,
+          "end": 119.36198360655737
+        },
+        {
+          "text": "our",
+          "start": 119.41998360655737,
+          "end": 119.55898360655738
+        },
+        {
+          "text": "open",
+          "start": 119.62898360655737,
+          "end": 119.96598360655737
+        },
+        {
+          "text": "synthetic",
+          "start": 120.04698360655738,
+          "end": 120.51098360655737
+        },
+        {
+          "text": "benchmark,",
+          "start": 120.56898360655737,
+          "end": 121.14998360655737
+        },
+        {
+          "text": "the",
+          "start": 121.18498360655737,
+          "end": 121.28898360655737
+        },
+        {
+          "text": "rules",
+          "start": 121.35898360655737,
+          "end": 121.64898360655737
+        },
+        {
+          "text": "baseline",
+          "start": 121.71898360655737,
+          "end": 122.20598360655737
+        },
+        {
+          "text": "alone",
+          "start": 122.25298360655738,
+          "end": 122.68198360655737
+        },
+        {
+          "text": "scores",
+          "start": 122.72898360655738,
+          "end": 123.06498360655738
+        },
+        {
+          "text": "one",
+          "start": 123.13498360655737,
+          "end": 123.35598360655737
+        },
+        {
+          "text": "hundred",
+          "start": 123.42498360655738,
+          "end": 123.80898360655738
+        },
+        {
+          "text": "percent",
+          "start": 123.86698360655737,
+          "end": 124.22598360655738
+        },
+        {
+          "text": "precision",
+          "start": 124.28498360655738,
+          "end": 124.76098360655737
+        },
+        {
+          "text": "and",
+          "start": 124.82998360655738,
+          "end": 124.95798360655738
+        },
+        {
+          "text": "forty-four",
+          "start": 125.03898360655738,
+          "end": 125.54998360655738
+        },
+        {
+          "text": "percent",
+          "start": 125.60798360655737,
+          "end": 125.93298360655737
+        },
+        {
+          "text": "recall.",
+          "start": 126.00298360655738,
+          "end": 126.67598360655738
+        },
+        {
+          "text": "On-device",
+          "start": 126.97798360655737,
+          "end": 127.63998360655738
+        },
+        {
+          "text": "model",
+          "start": 127.68598360655737,
+          "end": 127.97698360655737
+        },
+        {
+          "text": "runs",
+          "start": 128.04598360655737,
+          "end": 128.3129836065574
+        },
+        {
+          "text": "are",
+          "start": 128.3599836065574,
+          "end": 128.48698360655737
+        },
+        {
+          "text": "next.",
+          "start": 128.5339836065574,
+          "end": 129.2189836065574
+        }
+      ],
+      "end": 130.81967213114754
+    },
+    {
+      "id": "close",
+      "kind": "close",
+      "text": "Mosaic. Protect the information you never realized you were revealing. Try it free today.",
+      "evidence": [],
+      "start": 130.81967213114754,
+      "voiceAt": 131.11967213114755,
+      "voiceDuration": 4.923,
+      "audio": "narration/cache/close-e024ba5b7def063e.mp3",
+      "words": [
+        {
+          "text": "Mosaic.",
+          "start": 131.11967213114755,
+          "end": 131.75867213114756
+        },
+        {
+          "text": "Protect",
+          "start": 131.89767213114754,
+          "end": 132.26867213114755
+        },
+        {
+          "text": "the",
+          "start": 132.30367213114755,
+          "end": 132.37367213114754
+        },
+        {
+          "text": "information",
+          "start": 132.44367213114757,
+          "end": 132.96567213114756
+        },
+        {
+          "text": "you",
+          "start": 133.02367213114755,
+          "end": 133.10467213114757
+        },
+        {
+          "text": "never",
+          "start": 133.20967213114756,
+          "end": 133.45367213114756
+        },
+        {
+          "text": "realized",
+          "start": 133.52267213114754,
+          "end": 133.96367213114755
+        },
+        {
+          "text": "you",
+          "start": 133.99867213114754,
+          "end": 134.06867213114757
+        },
+        {
+          "text": "were",
+          "start": 134.10367213114756,
+          "end": 134.23067213114754
+        },
+        {
+          "text": "revealing.",
+          "start": 134.27767213114754,
+          "end": 134.78867213114756
+        },
+        {
+          "text": "Try",
+          "start": 134.82367213114756,
+          "end": 135.03267213114756
+        },
+        {
+          "text": "it",
+          "start": 135.09067213114756,
+          "end": 135.15967213114754
+        },
+        {
+          "text": "free",
+          "start": 135.20667213114754,
+          "end": 135.39167213114754
+        },
+        {
+          "text": "today.",
+          "start": 135.43867213114754,
+          "end": 136.04267213114755
+        }
+      ],
+      "end": 140.1639344262295
+    }
+  ]
+}

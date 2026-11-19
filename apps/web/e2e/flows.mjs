@@ -22,6 +22,7 @@ const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); c
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = []; page.on('pageerror', (e) => errors.push(e.message)); page.on('console', (m) => { if (m.type() === 'error' && !/favicon|recaptcha|Failed to load resource/i.test(m.text())) errors.push(m.text()); });
+let ocrAudit = null;
 const requests = []; page.on('request', (r) => { const u = new URL(r.url()); if (u.protocol !== 'blob:' && u.protocol !== 'data:' && u.hostname !== '127.0.0.1') requests.push({ host: u.hostname, url: r.url(), body: r.postData() || '' }); });
 const settle = async (pg = page) => { await pg.waitForFunction(() => document.querySelectorAll('.page-slot').length === 1, null, { timeout: 5000 }).catch(() => {}); };
 const shot = async (n) => { if (shots) await page.screenshot({ path: `${shots}/${n}.png` }); };
@@ -154,6 +155,7 @@ try {
     check('OCR reads an image and a scanned PDF on this device', texts.length === 2 && texts.every((t) => /night porter/i.test(t) && /Fernhill/i.test(t)), texts.map((t) => t.replace(/\s+/g, ' ').slice(0, 140)).join(' | '));
     check('OCR shows the page image and a confidence score', (await page.locator('.ocr-page img').count()) === 2 && (await page.getByText(/Mean confidence \d+%/).count()) === 2);
     await shot('ocr-review');
+    ocrAudit = { files: texts.length, externalRequests: requests.slice(before).length };
     check('OCR makes no requests outside this site', requests.slice(before).length === 0, requests.slice(before).map((r) => r.url.slice(0, 90)).join(' , '));
     for (let n = 0; n < 2; n++) await page.getByRole('button', { name: 'Accept text' }).first().click();
     await page.getByRole('button', { name: /Add 2 to workspace/ }).click();
@@ -198,6 +200,7 @@ try {
   await page.waitForTimeout(500);
   await shot('journal');
   const leaks = requests.filter((r) => CANARIES.some((c) => r.url.includes(c) || r.body.includes(c)));
+  writeFileSync(new URL('../../../demo/evidence/network-audit.json', import.meta.url), JSON.stringify({ kind: 'mosaic-network-audit', generatedAt: new Date().toISOString(), method: 'Playwright request log during a full review of a private workspace seeded with canary strings (production build, production CSP).', externalRequests: requests.length, hosts: [...new Set(requests.map((r) => r.host))], canaryLeaks: leaks.length, geminiRequests: requests.filter((r) => /firebasevertexai|generativelanguage/.test(r.host)).length, ocr: ocrAudit }, null, 2) + '\n');
   check('no request carries a private canary', leaks.length === 0, `${requests.length} external requests to ${[...new Set(requests.map((r) => r.host))].join(', ') || 'none'}`);
   check('no request to Gemini endpoints during private review', !requests.some((r) => /firebasevertexai|generativelanguage/.test(r.host)));
 

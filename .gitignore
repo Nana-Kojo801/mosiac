@@ -8,3 +8,8 @@ demo/out/
 apps/web/src/ui/tokens.css
 apps/web/public/ocr/
 apps/web/dist/
+demo/footage/
+demo/out/
+demo/narration/cache/
+demo/audio/*.wav
+demo/.render-public/

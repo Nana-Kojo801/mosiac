@@ -1,0 +1,239 @@
+1
+00:00:01,400 --> 00:00:02,725
+Three documents.
+
+2
+00:00:02,805 --> 00:00:04,478
+Each one looks anonymous.
+
+3
+00:00:04,558 --> 00:00:06,045
+But put them side by side,
+
+4
+00:00:06,125 --> 00:00:09,112
+and they point to just one person.
+
+5
+00:00:12,103 --> 00:00:13,358
+This is Mosaic.
+
+6
+00:00:13,438 --> 00:00:15,274
+It catches what you never realized you
+
+7
+00:00:15,354 --> 00:00:17,261
+were revealing.
+
+8
+00:00:18,989 --> 00:00:21,870
+Redaction tools hunt for names and emails.
+
+9
+00:00:21,950 --> 00:00:23,994
+Mosaic checks how your next draft combines
+
+10
+00:00:24,074 --> 00:00:26,609
+with everything you’ve already published.
+
+11
+00:00:26,857 --> 00:00:29,656
+Your private documents never leave your browser.
+
+12
+00:00:29,736 --> 00:00:32,396
+The cloud only writes generic test packs,
+
+13
+00:00:32,476 --> 00:00:34,312
+from a fixed list of categories,
+
+14
+00:00:34,392 --> 00:00:38,089
+and only after you approve the exact request.
+
+15
+00:00:38,169 --> 00:00:39,343
+Open a workspace,
+
+16
+00:00:39,423 --> 00:00:41,363
+hit review, and Mosaic lights up the
+
+17
+00:00:41,443 --> 00:00:42,756
+passages that matter,
+
+18
+00:00:42,836 --> 00:00:45,717
+with evidence from every release side by side.
+
+19
+00:00:45,797 --> 00:00:48,155
+Every result says where it ran.
+
+20
+00:00:48,235 --> 00:00:50,535
+With no built-in model on this machine,
+
+21
+00:00:50,615 --> 00:00:54,658
+the sample shows clearly labelled sample results.
+
+22
+00:00:54,890 --> 00:00:57,074
+The disclosure map shows exactly how the
+
+23
+00:00:57,154 --> 00:00:59,396
+draft connects to earlier releases.
+
+24
+00:00:59,476 --> 00:01:00,952
+In this fictional sample,
+
+25
+00:01:01,032 --> 00:01:03,773
+three small details narrow a hundred people
+
+26
+00:01:03,853 --> 00:01:05,853
+down to one.
+
+27
+00:01:06,202 --> 00:01:09,559
+Mosaic suggests safer wording that keeps your point.
+
+28
+00:01:09,639 --> 00:01:11,381
+Apply it, review again,
+
+29
+00:01:11,461 --> 00:01:14,974
+and that group grows from one to twenty-one.
+
+30
+00:01:15,054 --> 00:01:16,239
+Need new tests?
+
+31
+00:01:16,319 --> 00:01:18,515
+You see the exact request before anything
+
+32
+00:01:18,595 --> 00:01:19,781
+leaves your device.
+
+33
+00:01:19,861 --> 00:01:20,976
+Just categories.
+
+34
+00:01:21,056 --> 00:01:21,940
+No text.
+
+35
+00:01:22,020 --> 00:01:23,827
+No names.
+
+36
+00:01:23,907 --> 00:01:25,046
+While building Mosaic,
+
+37
+00:01:25,126 --> 00:01:26,393
+we found a real gap.
+
+38
+00:01:26,473 --> 00:01:28,680
+In browsers without the built-in model,
+
+39
+00:01:28,760 --> 00:01:32,616
+the SDK’s on-device-only mode quietly sends requests
+
+40
+00:01:32,696 --> 00:01:33,591
+to the cloud.
+
+41
+00:01:33,671 --> 00:01:35,646
+Mosaic’s guard blocks that.
+
+42
+00:01:35,726 --> 00:01:38,632
+Zero private requests got through.
+
+43
+00:01:39,644 --> 00:01:41,642
+Got a scan or a photo?
+
+44
+00:01:41,722 --> 00:01:43,558
+Mosaic reads it with OCR,
+
+45
+00:01:43,638 --> 00:01:44,696
+right on your device,
+
+46
+00:01:44,776 --> 00:01:48,239
+and flags any words it isn’t sure about.
+
+47
+00:01:48,497 --> 00:01:50,205
+Approve the release on your device,
+
+48
+00:01:50,285 --> 00:01:51,656
+export a clean copy,
+
+49
+00:01:51,736 --> 00:01:53,469
+and you’re done.
+
+50
+00:01:53,907 --> 00:01:55,185
+And it feels right at home on
+
+51
+00:01:55,265 --> 00:01:56,836
+your phone.
+
+52
+00:01:57,841 --> 00:01:59,119
+It’s measured, too.
+
+53
+00:01:59,199 --> 00:02:01,105
+On our open synthetic benchmark,
+
+54
+00:02:01,185 --> 00:02:03,787
+the rules baseline alone scores one hundred
+
+55
+00:02:03,867 --> 00:02:06,898
+percent precision and forty-four percent recall.
+
+56
+00:02:06,978 --> 00:02:09,919
+On-device model runs are next.
+
+57
+00:02:11,120 --> 00:02:11,818
+Mosaic.
+
+58
+00:02:11,898 --> 00:02:14,024
+Protect the information you never realized you
+
+59
+00:02:14,104 --> 00:02:14,744
+were revealing.
+
+60
+00:02:14,824 --> 00:02:16,743
+Try it free today.

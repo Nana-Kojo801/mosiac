@@ -1,0 +1,25 @@
+{
+  "name": "@mosaic/demo",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible pipeline for the Mosaic demonstration video (spec section 22).",
+  "scripts": {
+    "capture": "node capture/capture.mjs",
+    "narrate": "node narration/tts.mjs",
+    "music": "node audio/music.mjs",
+    "render": "node render/render.mjs",
+    "validate": "node render/validate.mjs",
+    "all": "npm run capture && npm run narrate && npm run music && npm run render && npm run validate"
+  },
+  "dependencies": {
+    "@mosaic/benchmark": "0.1.0",
+    "@mosaic/fixtures": "0.1.0",
+    "@mosaic/schemas": "0.1.0",
+    "@remotion/bundler": "4.0.540",
+    "@remotion/cli": "4.0.540",
+    "@remotion/renderer": "4.0.540",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.540"
+  }
+}
