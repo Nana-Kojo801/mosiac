@@ -1,0 +1,9 @@
+{
+  "name": "@mosaic/design-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Approved Mosaic colour, Liquid Glass, type and motion tokens (Gate 1, 2026-11-19).",
+  "exports": { ".": "./tokens.mjs" },
+  "license": "Apache-2.0"
+}

@@ -2,14 +2,27 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Gate 1 approved: indigo accent
+
+- **Decision:** the owner approved both design previews and chose the **indigo** accent (teal rejected).
+- **Approved versions:** mobile https://claude.ai/artifact/FJMEwR2CK7Aodv9SDBXqsX version 1 (`1795050877-5f70`); desktop https://claude.ai/artifact/7JrMvVo3dC5nYhtbgRUuaB version 1 (`1795050878-21a2`). Source at commit `7d6a43a`.
+- **Follow-up:** tokens extracted to `packages/design-tokens` with the indigo accent only. The approved previews are now the visual source of truth; later deviations get logged here.
+- **Next:** Gate 2 setup checklist sent (`docs/setup-checklist.md`). The build starts once the owner supplies the inputs.
+
+### Defaults chosen for Gate 2 (owner may override)
+
+- Cloud provider: Gemini Developer API through Firebase AI Logic, on the no-cost Spark plan. No billing.
+- App Check web provider: reCAPTCHA v3, which needs no billing account. reCAPTCHA Enterprise remains an option.
+- Deploy: GitHub Actions to Firebase Hosting, with the service-account key held only as a GitHub secret.
+- ElevenLabs key: held by the session's network proxy, never written to files or chat.
+
 ## 2026-11-19 · Phase 0 design previews published (Gate 1 pending)
 
-- **Status:** waiting for the owner's approval (spec 16.0, Gate 1). No application code has been written.
+- **Status:** approved (see the entry above).
 - **Artifacts:**
   - Mobile: https://claude.ai/artifact/FJMEwR2CK7Aodv9SDBXqsX (version 1, `1795050877-5f70`)
   - Desktop: https://claude.ai/artifact/7JrMvVo3dC5nYhtbgRUuaB (version 1, `1795050878-21a2`)
   - Source: `design/` in this repository.
-- **Approval:** _not yet given_. Record the date, the approved artifact versions and any requested changes here.
 
 ### Proposed defaults in the previews (for the owner to confirm or change)
 

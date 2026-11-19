@@ -6,4 +6,4 @@ Mosaic is a privacy-first publication review workspace for the Google #BuildHybr
 
 ## Status
 
-**Phase 0: design approval.** The repository currently holds only the design previews (`design/`) and the decision log (`docs/decision-log.md`). The application has not been built yet, and nothing here should be read as a claim about working software.
+**Gate 2: setup.** The designs are approved (`design/`, tokens in `packages/design-tokens`). The repository is waiting on the inputs in `docs/setup-checklist.md`. The application has not been built yet, and nothing here should be read as a claim about working software.
