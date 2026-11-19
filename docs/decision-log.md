@@ -2,6 +2,14 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · First real SDK results (debug token registered by owner)
+
+- **Cloud path verified.** `ONLY_IN_CLOUD` through Firebase AI Logic with the Gemini Developer API (`gemini-3.5-flash-lite`) returned valid JSON with `inferenceSource: in_cloud`. App Check works with the debug provider.
+- **21.2 step 6 passed:** with no local model, `PREFER_ON_DEVICE` on a bundled fixture ran in the cloud and the SDK reported `in_cloud`.
+- **21.2 step 7 passed in this environment:** guarded private tasks were refused with 0 AI requests in both runs.
+- **The SDK finding is now confirmed end to end:** with no Prompt API, a raw `ONLY_ON_DEVICE` call was answered by the cloud. Details are in `docs/local-verification.md`.
+- Genuine on-device inference is still `IMPLEMENTED_UNVERIFIED` until step A runs on an eligible machine.
+
 ## 2026-11-19 · SDK finding: ONLY_ON_DEVICE requests go to the cloud when the Prompt API is absent
 
 **What we observed** (container, headless Chromium 157, `firebase@13.2.0` / `@firebase/ai@3.0.0`, evidence `demo/evidence/sdk-probe-no-local-model-online.json`): with the browser's `LanguageModel` global absent, a `generateContent()` call on a model created with `InferenceMode.ONLY_ON_DEVICE` sent a `POST …/models/gemini-3.5-flash-lite:generateContent` request carrying the fictional private canary text. App Check rejected it only because the debug token was not yet registered; with a valid token it would have been answered by the cloud.
