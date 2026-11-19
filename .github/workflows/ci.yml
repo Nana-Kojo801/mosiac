@@ -24,6 +24,6 @@ jobs:
       - name: Install Playwright Chromium (CI only)
         run: npm install -g playwright@1.63.0 && npx -y playwright@1.63.0 install --with-deps chromium
       - name: End-to-end checks
-        run: cd apps/web && node --experimental-strip-types e2e/flows.mjs
+        run: cd apps/web && node --experimental-strip-types e2e/flows.mjs && node e2e/motion-check.mjs
       - name: Rules baseline is reproducible
         run: node scripts/run-ts.mjs packages/benchmark/src/run-baseline.ts

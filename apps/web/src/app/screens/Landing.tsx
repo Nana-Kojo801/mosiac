@@ -27,7 +27,7 @@ export function Landing() {
   ] as const;
   const lit = (k: number) => (stage >= k ? ' lit' : '');
   return (
-    <div className="landing-d" style={{ position: 'relative', zIndex: 1, minHeight: '100%' }}>
+    <div className="landing-d">
       <nav className="lnav glass" aria-label="Site">
         <span className="brand"><Logo /> Mosaic</span>
         <Link to="/device" className="lk">Device support</Link>

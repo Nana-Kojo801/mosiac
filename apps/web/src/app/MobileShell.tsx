@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router';
-import { Activity, ChevronLeft, FlaskConical, Layers, ListChecks, PanelBottomOpen, ScanSearch, Settings, Waypoints, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'motion/react';
+import { ChevronLeft, PanelBottomOpen, ScanSearch, X } from 'lucide-react';
 import { useApp } from './store';
 import type { WorkspaceData } from './useWorkspace';
-import { isClosed } from '../ui/components';
 
 /** Screens call this when the user selects an item; on phones it opens the details sheet, on desktop nothing happens. */
 const OPEN_EVENT = 'mosaic:open-details';
@@ -11,59 +12,57 @@ const detailsSheet = { open: () => window.dispatchEvent(new Event(OPEN_EVENT)) }
 export const useDetailsSheet = () => detailsSheet;
 
 type Props = { title: string; data?: WorkspaceData | null; inspector?: ReactNode; inspectorTitle?: string; children: ReactNode };
+const ROOTS = new Set(['/workspaces', '/journal', '/settings', '/tests', '/benchmark']);
 
-/** iOS-style mobile layout (approved mobile design): collapsing title, floating glass tab bar, bottom sheet for details. */
-export function MobileShell({ title, data, inspector, inspectorTitle = 'Details', children }: Props) {
+/** iOS-style phone page: its own scroll view, a large title that collapses into a glass bar, and a spring bottom sheet. */
+export function MobilePage({ title, data, inspector, inspectorTitle = 'Details', children }: Props) {
   const { id } = useParams();
   const app = useApp();
   const nav = useNavigate();
   const loc = useLocation();
+  const reduce = useReducedMotion();
+  const scroller = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [sheet, setSheet] = useState(false);
-  const [drag, setDrag] = useState(0);
-  const start = useRef<number | null>(null);
+  const drag = useDragControls();
   const ws = data?.ws;
   const st = id ? app.review[id] : undefined;
-  const high = data ? data.findings.filter((f) => !isClosed(f.status) && f.status !== 'UNASSESSED' && (f.band === 'HIGH' || f.band === 'CRITICAL')).length : 0;
-  useEffect(() => { const on = () => setCollapsed(window.scrollY > 30); on(); window.addEventListener('scroll', on, { passive: true }); return () => window.removeEventListener('scroll', on); }, []);
-  useEffect(() => { setSheet(false); }, [loc.pathname]);
   const hasInspector = Boolean(inspector);
   useEffect(() => { const on = () => { if (hasInspector) setSheet(true); }; window.addEventListener(OPEN_EVENT, on); return () => window.removeEventListener(OPEN_EVENT, on); }, [hasInspector]);
-  useEffect(() => { document.body.style.overflow = sheet ? 'hidden' : ''; return () => { document.body.style.overflow = ''; }; }, [sheet]);
-  const root = loc.pathname === '/workspaces' || loc.pathname === '/journal' || loc.pathname === '/settings' || loc.pathname === '/tests';
+  const root = ROOTS.has(loc.pathname) || /^\/w\/[^/]+\/(findings|map)$/.test(loc.pathname);
   return (
-    <div className={`m-shell ${collapsed ? 'collapsed' : ''}`}>
+    <div className={`m-page ${collapsed ? 'collapsed' : ''}`}>
       <header className="m-top">
         <div className="m-edge" />
-        <div className="m-left">{!root && <button type="button" className="gbtn round glass" aria-label="Back" onClick={() => (window.history.length > 1 ? nav(-1) : nav('/workspaces'))}><ChevronLeft size={22} /></button>}</div>
+        <div className="m-left">{!root && <motion.button whileTap={{ scale: 0.9 }} type="button" className="gbtn round glass" aria-label="Back" onClick={() => (window.history.length > 1 ? nav(-1) : nav('/workspaces'))}><ChevronLeft size={22} /></motion.button>}</div>
         <div className="m-title">{title}{ws && <span className="m-sub">{ws.title}</span>}</div>
-        <div className="m-right">{ws && <button type="button" className="gbtn round glass" aria-label={st?.running ? 'Reviewing' : 'Run review'} disabled={st?.running || !data?.draft} onClick={() => app.startReview(ws.id)}><ScanSearch size={20} className={st?.running ? 'spin' : ''} /></button>}</div>
+        <div className="m-right">{ws && <motion.button whileTap={{ scale: 0.9 }} type="button" className="gbtn round glass" aria-label={st?.running ? 'Reviewing' : 'Run review'} disabled={st?.running || !data?.draft} onClick={() => app.startReview(ws.id)}><ScanSearch size={20} className={st?.running ? 'spin' : ''} /></motion.button>}</div>
       </header>
-      <main className="m-content">
-        {ws && st?.running && st.progress && <div style={{ marginBottom: 12 }}><div className="small muted" style={{ marginBottom: 6 }}>Reviewing on this device ({st.progress.done}/{st.progress.total})</div><div className="progress-line"><i style={{ width: `${(st.progress.done / Math.max(1, st.progress.total)) * 100}%` }} /></div></div>}
-        {children}
-      </main>
-      {inspector && !sheet && <button type="button" className="m-details glass" onClick={() => setSheet(true)}><PanelBottomOpen size={17} /> {inspectorTitle}</button>}
-      {inspector && (
-        <div className={`m-sheet-layer ${sheet ? 'open' : ''}`} aria-hidden={!sheet}>
-          <div className="m-scrim" onClick={() => setSheet(false)} />
-          <div className="m-sheet glass glass-strong" role="dialog" aria-modal="true" aria-label={inspectorTitle} style={drag ? { transform: `translateY(${drag}px)`, transition: 'none' } : undefined}
-            onPointerDown={(e) => { if ((e.target as HTMLElement).closest('.m-grab')) { start.current = e.clientY; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } }}
-            onPointerMove={(e) => { if (start.current !== null) setDrag(Math.max(0, e.clientY - start.current)); }}
-            onPointerUp={() => { if (start.current !== null) { if (drag > 110) setSheet(false); setDrag(0); start.current = null; } }}>
-            <div className="m-grab"><span /></div>
-            <div className="m-sheet-head"><b>{inspectorTitle}</b><button type="button" className="gbtn round glass" aria-label="Close" onClick={() => setSheet(false)}><X size={18} /></button></div>
-            <div className="m-sheet-body">{inspector}</div>
+      <div className="m-scroll" ref={scroller} onScroll={(e) => setCollapsed((e.target as HTMLDivElement).scrollTop > 30)}>
+        <main className="m-content">
+          <AnimatePresence initial={false}>{ws && st?.running && st.progress && (
+            <motion.div key="p" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }}><div style={{ marginBottom: 12 }}><div className="small muted" style={{ marginBottom: 6 }}>Reviewing on this device ({st.progress.done}/{st.progress.total})</div><div className="progress-line"><i style={{ width: `${(st.progress.done / Math.max(1, st.progress.total)) * 100}%` }} /></div></div></motion.div>
+          )}</AnimatePresence>
+          {children}
+        </main>
+      </div>
+      <AnimatePresence>{inspector && !sheet && (
+        <motion.button key="details" type="button" className="m-details glass" onClick={() => setSheet(true)} initial={{ opacity: 0, scale: 0.8, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.85, y: 10 }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 500, damping: 32 }}><PanelBottomOpen size={17} /> {inspectorTitle}</motion.button>
+      )}</AnimatePresence>
+      {inspector && createPortal(
+        <AnimatePresence>{sheet && (
+          <div className="m-sheet-layer open" key="layer">
+            <motion.div className="m-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(false)} />
+            <motion.div className="m-sheet glass glass-strong" role="dialog" aria-modal="true" aria-label={inspectorTitle}
+              initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={reduce ? { duration: 0.15 } : { type: 'spring', stiffness: 420, damping: 40 }}
+              drag="y" dragControls={drag} dragListener={false} dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0.05, bottom: 0.9 }}
+              onDragEnd={(_, info) => { if (info.offset.y > 120 || info.velocity.y > 700) setSheet(false); }}>
+              <div className="m-grab" onPointerDown={(e) => drag.start(e)}><span /></div>
+              <div className="m-sheet-head" onPointerDown={(e) => { if (!(e.target as HTMLElement).closest('button')) drag.start(e); }}><b>{inspectorTitle}</b><button type="button" className="gbtn round glass" aria-label="Close" onClick={() => setSheet(false)}><X size={18} /></button></div>
+              <div className="m-sheet-body">{inspector}</div>
+            </motion.div>
           </div>
-        </div>
-      )}
-      <nav className="m-tabbar glass" aria-label="Main">
-        <NavLink to="/workspaces" className="m-tab"><Layers size={22} /><span>Workspaces</span></NavLink>
-        {ws ? <NavLink to={`/w/${ws.id}/findings`} className="m-tab"><ListChecks size={22} /><span>Findings</span>{high > 0 && <span className="m-badge">{high}</span>}</NavLink> : <NavLink to="/tests" className="m-tab"><FlaskConical size={22} /><span>Tests</span></NavLink>}
-        {ws ? <NavLink to={`/w/${ws.id}/map`} className="m-tab"><Waypoints size={22} /><span>Map</span></NavLink> : <span className="m-tab" aria-hidden />}
-        <NavLink to="/journal" className="m-tab"><Activity size={22} /><span>Journal</span></NavLink>
-        <NavLink to="/settings" className="m-tab"><Settings size={22} /><span>Settings</span></NavLink>
-      </nav>
+        )}</AnimatePresence>, document.body)}
     </div>
   );
 }

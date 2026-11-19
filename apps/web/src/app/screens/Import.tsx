@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { FileText, FileUp, Lock } from 'lucide-react';
 import { normalizeText, paragraphSpans, wordCount } from '@mosaic/privacy-core';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { parseFile } from '../../features/importers/parse';
 import { useWorkspace } from '../useWorkspace';
 import { documents } from '../../storage/repositories';
@@ -24,7 +24,7 @@ export function Import() {
   const [role, setRole] = useState<'draft' | 'release'>('draft');
   const [over, setOver] = useState(false);
   const [busy, setBusy] = useState(false);
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const onFiles = async (files: FileList | File[]) => {
     for (const f of [...files]) {

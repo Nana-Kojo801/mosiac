@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { CircleCheck, FilePen, FileText, Pencil, ScanSearch, Undo2 } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { useApp } from '../store';
 import { RiskChip, SourceBadge, isClosed } from '../../ui/components';
@@ -32,7 +32,7 @@ export function Rewrite() {
     const list = (data?.findings ?? []).filter((f) => f.suggestion && !isClosed(f.status) && f.status !== 'UNASSESSED');
     return focus ? [...list].sort((a, b) => (a.id === focus ? -1 : b.id === focus ? 1 : 0)) : list;
   }, [data, focus]);
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const draft = data.draft;
   if (!draft) return <Shell title="Rewrite studio" data={data}><div className="empty-d"><h3>No draft yet</h3><p>Add a draft to rewrite.</p></div></Shell>;

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown, ChevronUp, Cloud, Eye, HardDrive, Package, Send, Trash2, WifiOff } from 'lucide-react';
 import type { ConsentRecord, Domain, GeneratorCategory } from '@mosaic/schemas';
 import type { BuiltRequest } from '@mosaic/privacy-core';
@@ -75,10 +77,10 @@ export function Tests() {
         <div><span className="small muted">Categories (fixed list)</span><div className="filters-d" style={{ margin: '6px 0 0' }}>{ALL_CATEGORIES.map((c) => <button key={c} type="button" className="fchip" aria-pressed={cats.includes(c)} onClick={() => setCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]))}>{CATEGORY_LABEL[c]}</button>)}</div></div>
         <p className="small muted">There is no free-text field. The request is built only from these choices, and each request needs your approval.</p>
       </div>
-      {modal && req && (
-        <div className="modal-layer" style={{ position: 'fixed' }}>
-          <div className="modal-scrim in" onClick={() => !busy && setModal(false)} />
-          <div className="modal glass glass-strong in" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+      {createPortal(<AnimatePresence>{modal && req && (
+        <div className="modal-layer" style={{ position: 'fixed', zIndex: 300 }} key="consent">
+          <motion.div className="modal-scrim in" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => !busy && setModal(false)} />
+          <motion.div className="modal glass glass-strong in" role="dialog" aria-modal="true" aria-labelledby="consent-title" style={{ x: '-50%', y: '-50%' }} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ type: 'spring', stiffness: 460, damping: 34 }}>
             <div className="hstack" style={{ marginBottom: 10 }}><span className="pack-src pack-cloud"><Cloud size={12} /> Generic request</span><PolicyTag policy="ONLY_IN_CLOUD" /></div>
             <h2 id="consent-title">Send this request to the cloud?</h2>
             <p style={{ color: 'var(--ink-2)', fontSize: 14 }}>Gemini, through Firebase AI Logic, will write new generic test definitions with fictional examples. This is the complete request:</p>
@@ -86,9 +88,10 @@ export function Tests() {
             <div className="msurf small" style={{ color: 'var(--ink-2)' }}><b style={{ color: 'var(--ink)' }}>Not included:</b> document text, excerpts, file names, workspace names, findings and anything derived from them.</div>
             <div className="msurf"><dl className="kv"><dt>Payload digest</dt><dd className="mono">sha256:{req.digest.slice(0, 8)}…{req.digest.slice(-4)}</dd><dt>Approval valid for</dt><dd>5 minutes, this exact request</dd><dt>App Check</dt><dd>Required</dd></dl></div>
             <div className="m-actions"><button type="button" className="btn btn-quiet" disabled={busy} onClick={() => setModal(false)}>Cancel</button><button type="button" className="btn btn-primary" disabled={busy} onClick={send}><Send size={15} /> {busy ? 'Sending…' : 'Send this request'}</button></div>
-          </div>
+          </motion.div>
         </div>
-      )}
+      )}</AnimatePresence>, document.body)}
+
       <p className="small muted" style={{ marginTop: 14 }}>Results show where they ran in the <a href="/journal">inference journal</a>. <SourceBadge source="CLOUD" /> appears only when the SDK reports it.</p>
     </Shell>
   );

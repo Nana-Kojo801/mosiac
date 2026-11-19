@@ -76,7 +76,7 @@ export async function seedSampleWorkspace(): Promise<Workspace> {
 export async function resetSampleWorkspace() { await workspaces.remove(SAMPLE_WORKSPACE.id); return seedSampleWorkspace(); }
 
 /** Deletes every Mosaic record in this browser (spec F22). */
-export async function deleteAllLocalData() { const d = db(); await d.delete(); await d.open(); }
+export async function deleteAllLocalData() { const d = db(); await d.delete(); await d.open(); (await import('../app/live')).clearLiveCache(); }
 
 /** Installs bundled packs (or newer versions of them). Keeps the user's on/off choice. */
 export async function ensureBundledPacks() {

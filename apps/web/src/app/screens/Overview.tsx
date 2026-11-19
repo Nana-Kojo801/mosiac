@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router';
 import { ClipboardCheck, Waypoints, AlertCircle, AlertTriangle, CircleDashed, ClipboardPaste, FileCheck, FilePen, FileUp, FlaskConical, Info, Lock, MonitorX, PenLine, RotateCw, ScanSearch, WifiOff } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { useApp } from '../store';
 import { Banner, MosaicGrid, RiskChip, fmtDate, fmtTime, isClosed } from '../../ui/components';
@@ -12,7 +12,7 @@ export function Overview() {
   const { id } = useParams();
   const data = useWorkspace(id);
   const app = useApp();
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const { ws, draft, releases, run, findings, stale } = data;
   const open = findings.filter((f) => !isClosed(f.status));

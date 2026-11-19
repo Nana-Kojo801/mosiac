@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { FindingInspector } from '../FindingInspector';
 import { RiskChip, SourceBadge, StatusChip, isClosed } from '../../ui/components';
@@ -27,7 +27,7 @@ export function Findings() {
   const data = useWorkspace(id);
   const [selected, setSelected] = useState<string | undefined>();
   const sheet = useDetailsSheet();
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const filter = sp.get('filter') ?? 'all';
   const fn = FILTERS.find((f) => f[0] === filter)?.[2] ?? (() => true);
@@ -35,7 +35,7 @@ export function Findings() {
   const finding = data.findings.find((f) => f.id === selected) ?? list[0];
   const docTitle = (vid: string) => data.docs.find((d) => d.version.id === vid)?.doc.title ?? 'Earlier version';
   return (
-    <Shell title="Findings" data={data} wide inspectorTitle="Finding" inspector={<FindingInspector f={finding} data={data} onJump={(versionId, paragraph, fid) => { const d = data.docs.find((x) => x.version.id === versionId); nav(`/w/${data.ws.id}/document?${d ? `doc=${d.doc.id}` : `version=${versionId}`}&para=${paragraph}&finding=${fid}`); }} />}>
+    <Shell title="Findings" data={data} wide inspectorTitle="Finding" inspectorKey={finding?.id} inspector={<FindingInspector f={finding} data={data} onJump={(versionId, paragraph, fid) => { const d = data.docs.find((x) => x.version.id === versionId); nav(`/w/${data.ws.id}/document?${d ? `doc=${d.doc.id}` : `version=${versionId}`}&para=${paragraph}&finding=${fid}`); }} />}>
       <div className="page-h"><div><h1>Findings</h1><p>{data.draft ? `${data.draft.doc.title} · draft ${data.draft.version.label}, checked against ${data.releases.length} published release${data.releases.length === 1 ? '' : 's'}.` : 'No draft yet.'}</p></div></div>
       {!data.run ? <div className="empty-d"><h3>Not reviewed yet</h3><p>Run a review to see findings for this draft.</p></div> : (
         <>

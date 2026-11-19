@@ -23,6 +23,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = []; page.on('pageerror', (e) => errors.push(e.message)); page.on('console', (m) => { if (m.type() === 'error' && !/favicon|recaptcha|Failed to load resource/i.test(m.text())) errors.push(m.text()); });
 const requests = []; page.on('request', (r) => { const u = new URL(r.url()); if (u.hostname !== '127.0.0.1') requests.push({ host: u.hostname, url: r.url(), body: r.postData() || '' }); });
+const settle = async (pg = page) => { await pg.waitForFunction(() => document.querySelectorAll('.page-slot').length === 1, null, { timeout: 5000 }).catch(() => {}); };
 const shot = async (n) => { if (shots) await page.screenshot({ path: `${shots}/${n}.png` }); };
 
 try {
@@ -34,6 +35,7 @@ try {
   await page.getByText('Review finished').waitFor({ timeout: 20000 });
   await page.waitForTimeout(300);
   await shot('overview');
+  await settle();
   const high = await page.locator('.count-d.high strong').innerText();
   check('sample review shows high-priority findings', Number(high) >= 2, `high=${high}`);
   check('sample results are labelled, not presented as model output', await page.getByText('authored sample results instead').count() > 0 || await page.getByText('No on-device model').count() > 0);
@@ -45,7 +47,9 @@ try {
   await shot('findings');
 
   await page.getByRole('link', { name: /^Documents/ }).first().click();
+  await settle();
   await page.locator('mark.ev').first().click();
+  await page.locator('.ev-card').first().waitFor({ timeout: 3000 }).catch(() => {});
   check('document marks open evidence in the inspector', await page.locator('.ev-card').count() > 0);
   await shot('document');
 
@@ -53,6 +57,7 @@ try {
   await page.getByRole('heading', { name: 'Rewrite studio' }).waitFor();
   const cards = page.locator('.edit-d');
   const n0 = await cards.count();
+  await settle();
   await page.locator('.edit-d', { hasText: 'Three details combine' }).getByRole('button', { name: 'Apply' }).click();
   await page.waitForTimeout(400);
   await page.locator('.edit-d', { hasText: 'exact date' }).getByRole('button', { name: 'Apply' }).click();
@@ -69,7 +74,9 @@ try {
   // Disclosure map
   await page.getByRole('link', { name: /^Disclosure map/ }).first().click();
   await page.getByRole('heading', { name: 'Disclosure map' }).waitFor();
+  await settle();
   await page.locator('.g-hit').first().focus(); await page.keyboard.press('Enter');
+  await page.locator('.ev-card').first().waitFor({ timeout: 3000 }).catch(() => {});
   check('map lines open their reason and passages (keyboard)', await page.locator('.ev-card').count() > 0);
   await page.getByRole('tab', { name: 'List' }).click();
   check('map has an accessible list view', await page.locator('table.tbl tbody tr').count() > 0);
@@ -94,6 +101,7 @@ try {
   await page.getByRole('heading', { name: 'Release review' }).waitFor();
   const approveBtn = page.getByRole('button', { name: /Approve release/ });
   check('approval is blocked until the checklist is done', await approveBtn.isDisabled());
+  await settle();
   for (const c of await page.locator('[role="checkbox"]').all()) await c.click();
   const enabled = await page.waitForFunction(() => { const b = [...document.querySelectorAll('button')].find((x) => /Approve release/.test(x.textContent || '')); return b && !b.disabled; }, null, { timeout: 5000 }).then(() => true, () => false);
   check('approval enabled after checklist on a current, fully assessed review', enabled);
@@ -120,6 +128,7 @@ try {
   const pdf = new jsPDF(); pdf.text('Fictional PDF line: I was the only night porter at the depot.', 10, 20); writeFileSync(join(dir, 'fictional.pdf'), Buffer.from(pdf.output('arraybuffer')));
   writeFileSync(join(dir, 'fictional.docx'), await Packer.toBuffer(new Document({ sections: [{ children: [new Paragraph('Fictional DOCX line: contact r.lind@example.net.')] }] })));
   await page.goto(page.url().replace('/export', '/import'));
+  await settle();
   await page.locator('input[type=file]').setInputFiles([join(dir, 'fictional.pdf'), join(dir, 'fictional.docx')]);
   await page.getByText(/words ·/).nth(1).waitFor({ timeout: 15000 });
   check('PDF and DOCX import extracts text locally', (await page.locator('table.tbl').innerText()).match(/words ·/g)?.length === 2);
@@ -144,7 +153,7 @@ try {
   await page.locator('#paste-box').fill(CANARY_DRAFT);
   await page.getByRole('button', { name: /Add 1 to workspace/ }).click();
   await page.waitForURL(/\/w\/[^/]+$/);
-  await page.getByRole('link', { name: 'Import' }).click();
+  await page.getByRole('link', { name: 'Import', exact: true }).click();
   await page.getByRole('button', { name: 'Already published' }).click();
   await page.locator('#paste-box').fill(CANARY_RELEASE);
   await page.getByRole('button', { name: /Add 1 to workspace/ }).click();
@@ -172,13 +181,14 @@ try {
   await phone.locator('.count-d.high strong').waitFor({ timeout: 20000 });
   const overflow = [];
   for (const path of ['/', '/workspaces', wsPath, `${wsPath}/document`, `${wsPath}/findings`, `${wsPath}/map`, `${wsPath}/rewrite`, `${wsPath}/release`, `${wsPath}/history`, `${wsPath}/export`, '/tests', '/journal', '/benchmark', '/settings', '/device']) {
-    await phone.goto(base + path); await phone.waitForTimeout(350);
+    await phone.goto(base + path); await settle(phone); await phone.waitForTimeout(150);
     const w = await phone.evaluate(() => document.documentElement.scrollWidth);
     if (w > 391) overflow.push(`${path}:${w}`);
   }
   check('no horizontal page scroll on any screen at phone width', overflow.length === 0, overflow.join(', '));
   await phone.goto(base + `${wsPath}/findings`);
   check('floating glass tab bar on phone', await phone.locator('.m-tabbar').waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await settle(phone);
   await phone.locator('table.tbl tbody tr').first().click();
   await phone.locator('.m-sheet-layer.open').waitFor({ timeout: 3000 });
   check('tapping a finding opens its details in a bottom sheet', await phone.locator('.m-sheet .insp-title').count() > 0);
@@ -188,7 +198,7 @@ try {
   if (shots) await phone.screenshot({ path: `${shots}/phone-overview.png` });
   await phone.close();
 } catch (e) {
-  check('flow completed', false, e.message.split('\n')[0]);
+  check('flow completed', false, e.message.split('\n').slice(0, 4).join(' | '));
   await shot('failure');
 } finally {
   check('no page errors', errors.length === 0, errors.slice(0, 3).join(' | '));

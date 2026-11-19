@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { ArrowRight, Check, CircleCheck, CircleDashed, ScanSearch, Stamp } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { useApp } from '../store';
 import { useLive } from '../live';
@@ -24,7 +24,7 @@ export function Release() {
   const firstRun = useLive(async () => (id ? (await db().runs.where('workspaceId').equals(id).sortBy('startedAt'))[0] : undefined), [id]);
   const firstFindings = useLive(async () => (firstRun ? db().findings.where('runId').equals(firstRun.id).toArray() : []), [firstRun?.id]);
   const firstDraftVersion = useLive(async () => (firstRun ? db().versions.get(firstRun.inputVersionIds[0]) : undefined), [firstRun?.id]);
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const { draft, run, findings, stale, ws } = data;
   if (!draft) {

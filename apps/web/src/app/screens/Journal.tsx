@@ -16,7 +16,7 @@ export function Journal() {
   const e = list[Math.min(sel, list.length - 1)];
   const n = (s: string) => list.filter((x) => x.actualSource === s).length;
   return (
-    <Shell title="Inference journal" wide inspectorTitle="Event" inspector={e ? (
+    <Shell title="Inference journal" wide inspectorTitle="Event" inspectorKey={e?.id} inspector={e ? (
       <>
         <div className="insp-card"><div className="hstack" style={{ justifyContent: 'space-between' }}><b style={{ fontSize: 15 }}>{TASK[e.task]}</b><SourceBadge source={e.actualSource} /></div>
           <dl className="kv" style={{ marginTop: 12 }}><dt>Requested policy</dt><dd><code>{e.requestedPolicy}</code></dd><dt>Actual source</dt><dd>{SOURCE_UI[e.actualSource].label}{e.actualSource === 'DEVICE' || e.actualSource === 'CLOUD' ? ' (SDK metadata)' : ''}</dd><dt>Outcome</dt><dd>{e.outcome}</dd><dt>Duration</dt><dd className="tnum">{fmtMs(e.durationMs)}</dd><dt>Time</dt><dd className="mono">{fmtTime(e.at)}</dd><dt>Operation</dt><dd className="mono">{e.id}</dd>{e.payloadDigest && <><dt>Payload digest</dt><dd className="mono">sha256:{e.payloadDigest.slice(0, 8)}…{e.payloadDigest.slice(-4)}</dd></>}</dl></div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { useApp } from '../store';
 import { useLive } from '../live';
@@ -18,7 +18,7 @@ export function History() {
   const records = useLive(async () => (id ? (await db().releases.where('workspaceId').equals(id).toArray()).sort((a, b) => b.approvedAt.localeCompare(a.approvedAt)) : []), [id]);
   const [sel, setSel] = useState<string | null>(null);
   const [compare, setCompare] = useState(false);
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   type Item = { key: string; title: string; when: string; kind: 'draft' | 'approved' | 'imported' | 'revoked'; docId: string; versionId: string; recordId?: string };
   const items: Item[] = [];

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router';
 import { FileCheck, FilePen, Lock } from 'lucide-react';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { FindingInspector } from '../FindingInspector';
 import { MarkedText } from '../../ui/MarkedText';
@@ -42,7 +42,7 @@ export function DocumentReview() {
     return () => window.removeEventListener('keydown', onKey);
   }, [visible, selected]);
 
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const finding = data.findings.find((f) => f.id === selected) ?? visible[0];
   const jump = (versionId: string, paragraph: number, findingId: string) => {
@@ -52,7 +52,7 @@ export function DocumentReview() {
   };
   const order = [...(data.draft ? [data.draft] : []), ...data.releases];
   return (
-    <Shell title="Documents" data={data} inspectorTitle="Finding" inspector={<FindingInspector f={finding} data={data} onJump={jump} />}>
+    <Shell title="Documents" data={data} inspectorTitle="Finding" inspectorKey={finding?.id} inspector={<FindingInspector f={finding} data={data} onJump={jump} />}>
       <div className="doc-tabs" role="tablist">{order.map((d) => <button key={d.doc.id} type="button" className="doc-tab" role="tab" aria-selected={d.doc.id === docId && !versionParam} onClick={() => setSp({ doc: d.doc.id })}>{d.doc.role === 'draft' ? <FilePen size={14} /> : <FileCheck size={14} />} {d.doc.title}</button>)}</div>
       {!shown ? <div className="empty-d"><h3>No documents yet</h3></div> : (
         <>

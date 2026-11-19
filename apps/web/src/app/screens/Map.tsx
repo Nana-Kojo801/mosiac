@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { FlaskConical } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
-import { Shell } from '../Shell';
+import { Shell, PageSkeleton } from '../Shell';
 import { useWorkspace } from '../useWorkspace';
 import { MosaicGrid, RiskChip, SourceBadge } from '../../ui/components';
 import { buildGraph, type GEdge, type GNode } from '../../features/map/graph';
@@ -20,7 +20,7 @@ export function MapScreen() {
   const [sel, setSel] = useState<{ kind: 'edge' | 'node'; id: string } | null>(null);
   const [stage, setStage] = useState<number | null>(null);
   const graph = useMemo(() => (data ? buildGraph(data.docs, data.findings) : { nodes: [], edges: [] }), [data]);
-  if (data === undefined) return null;
+  if (data === undefined) return <PageSkeleton />;
   if (data === null) return <NotFound />;
   const cols = [0, 1, 2].map((c) => graph.nodes.filter((n) => n.col === c));
   const height = TOP + Math.max(1, ...cols.map((c) => c.length)) * (NODE_H + GAP) + 10;
@@ -55,7 +55,7 @@ export function MapScreen() {
     </>
   );
   return (
-    <Shell title="Disclosure map" data={data} wide inspectorTitle="Details" inspector={inspector}>
+    <Shell title="Disclosure map" data={data} wide inspectorTitle="Details" inspectorKey={sel?.id} inspector={inspector}>
       <div className="page-h"><div><h1>Disclosure map</h1><p>How the draft connects to what’s already published. Click a line for its reason and the passages behind it.</p></div>
         <div className="seg" role="tablist"><button type="button" role="tab" aria-selected={mode === 'map'} onClick={() => setMode('map')}>Map</button><button type="button" role="tab" aria-selected={mode === 'list'} onClick={() => setMode('list')}>List</button></div></div>
       {!data.run ? <div className="empty-d"><h3>Not reviewed yet</h3><p>Run a review to see how the documents connect.</p></div> : !graph.edges.length ? <div className="empty-d"><h3>No open findings to map</h3><p>That doesn’t mean the draft is anonymous. Findings that are dismissed, resolved or not assessed are not shown.</p></div> : mode === 'map' ? (

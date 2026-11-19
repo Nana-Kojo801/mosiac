@@ -1,6 +1,6 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import { AppLayout } from './Layout';
 import { AppProvider } from './store';
-import { Backdrop } from '../ui/components';
 import { Landing } from './screens/Landing';
 import { Device } from './screens/Device';
 import { Workspaces } from './screens/Workspaces';
@@ -19,9 +19,8 @@ import { History } from './screens/History';
 import { Export } from './screens/Export';
 import { Benchmark } from './screens/Benchmark';
 
-function Root() { return <div className="app-root"><Backdrop /><Outlet /></div>; }
 
-const router = createBrowserRouter([{ element: <Root />, children: [
+const router = createBrowserRouter([{ element: <AppLayout />, children: [
   { path: '/', element: <Landing /> },
   { path: '/device', element: <Device /> },
   { path: '/workspaces', element: <Workspaces /> },

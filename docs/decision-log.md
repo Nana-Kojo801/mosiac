@@ -2,6 +2,40 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Navigation fixes and motion (owner feedback)
+
+**Owner reported:** no animations; a blink before content on every navigation; and the sidebar or bottom nav disappearing on some pages.
+
+**Causes**
+- Every screen rendered its own sidebar or tab bar and returned nothing while its local data loaded. So each navigation unmounted the chrome and painted an empty frame.
+- Global screens (Stress tests, Journal, Settings, Benchmark) had no workspace context, so the workspace items vanished there.
+- No transitions had been implemented.
+
+**Fixes**
+- A persistent `AppLayout` route owns the backdrop, the desktop sidebar and the phone tab bar. Pages render only their own top bar, content and inspector.
+- The current workspace is remembered (`lastWorkspace`), so workspace navigation stays on global pages.
+- Live queries keep their last value per key, so revisited screens paint immediately. First loads show a skeleton that appears only after 250 ms.
+- Theme preferences load synchronously from local storage, so there is no theme flash.
+- Motion (the `motion` library, already a declared dependency):
+  - phone pages use iOS push and pop slides (the incoming page over the outgoing one, which shifts 28% and dims);
+  - tab switches slide in the direction of the tab;
+  - the tab bar and sidebar have a spring "selection pill" (shared layout);
+  - the bottom sheet is spring-animated, drags from its handle and dismisses on distance or velocity;
+  - the approval dialog and toasts spring in and out;
+  - inspector content cross-fades when the selection changes;
+  - table rows enter with a short stagger, tiles lift on hover, and pressables scale on tap;
+  - desktop pages fade and rise;
+  - `prefers-reduced-motion` reduces everything to short fades.
+- The leaving page is hidden from assistive tech and made inert for the length of its exit animation.
+
+**Verified (2026-11-19)**
+- A new `e2e/motion-check.mjs` samples every animation frame during navigation, 8/8 passing:
+  - every phone and desktop navigation animates, including phone push and pop;
+  - **0 blank frames**;
+  - the tab bar and sidebar are the same DOM elements throughout (never re-created);
+  - workspace items stay present on global pages.
+- The main end-to-end suite passes 29/29 twice. 70 unit tests pass.
+
 ## 2026-11-19 · First live deploy
 
 - Owner added `FIREBASE_SERVICE_ACCOUNT`. The first manual deploy failed on our own bundle check, which matched the Firebase SDK's reference to `FIREBASE_APPCHECK_DEBUG_TOKEN`. That grep is replaced by `scripts/check-bundle.mjs`, which checks for canaries, a UUID assigned to the debug token, and the local token value. GitHub actions moved to v5.

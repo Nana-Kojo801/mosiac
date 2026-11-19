@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import type { DeviceReadiness } from '@mosaic/privacy-core';
 import { runReview, type ReviewResult } from '../features/review/engine';
 import { getGateway, ensureModelPort } from './services';
@@ -15,21 +16,24 @@ type Ctx = {
   online: boolean; readiness: DeviceReadiness | null; refreshReadiness: () => Promise<void>;
   review: Record<string, ReviewState>; startReview: (workspaceId: string) => Promise<void>; cancelReview: (workspaceId: string) => void;
   toast: (msg: string) => void;
+  lastWorkspace: string | null; setLastWorkspace: (id: string | null) => void;
 };
 const AppCtx = createContext<Ctx | null>(null);
 export const useApp = () => { const c = useContext(AppCtx); if (!c) throw new Error('AppProvider missing'); return c; };
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [prefs, setPrefsState] = useState<Prefs>({ appearance: 'light', reducedTransparency: false });
+  const [prefs, setPrefsState] = useState<Prefs>(() => { try { const v = localStorage.getItem('mosaic:prefs'); if (v) return JSON.parse(v) as Prefs; } catch { /* ignore */ } return { appearance: 'light', reducedTransparency: false }; });
   const [online, setOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
   const [readiness, setReadiness] = useState<DeviceReadiness | null>(null);
   const [review, setReview] = useState<Record<string, ReviewState>>({});
   const [toasts, setToasts] = useState<{ id: number; msg: string }[]>([]);
   const controllers = useRef(new Map<string, AbortController>());
+  const [lastWorkspace, setLastWorkspaceState] = useState<string | null>(() => { try { return localStorage.getItem('mosaic:last-ws'); } catch { return null; } });
+  const setLastWorkspace = useCallback((id: string | null) => { setLastWorkspaceState(id); try { if (id) localStorage.setItem('mosaic:last-ws', id); else localStorage.removeItem('mosaic:last-ws'); } catch { /* storage unavailable */ } }, []);
 
   useEffect(() => { void ensureBundledPacks(); }, []);
   useEffect(() => { void db().settings.get('prefs').then((s) => { if (s) setPrefsState(s.value as Prefs); }); }, []);
-  const setPrefs = useCallback((p: Partial<Prefs>) => setPrefsState((cur) => { const next = { ...cur, ...p }; void db().settings.put({ key: 'prefs', value: next }); return next; }), []);
+  const setPrefs = useCallback((p: Partial<Prefs>) => setPrefsState((cur) => { const next = { ...cur, ...p }; void db().settings.put({ key: 'prefs', value: next }); try { localStorage.setItem('mosaic:prefs', JSON.stringify(next)); } catch { /* ignore */ } return next; }), []);
   useEffect(() => {
     const el = document.documentElement;
     if (prefs.appearance === 'system') el.removeAttribute('data-theme'); else el.setAttribute('data-theme', prefs.appearance);
@@ -68,11 +72,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [toast, refreshReadiness]);
   const cancelReview = useCallback((id: string) => controllers.current.get(id)?.abort(), []);
 
-  const value = useMemo(() => ({ prefs, setPrefs, online, readiness, refreshReadiness, review, startReview, cancelReview, toast }), [prefs, setPrefs, online, readiness, refreshReadiness, review, startReview, cancelReview, toast]);
+  const value = useMemo(() => ({ prefs, setPrefs, online, readiness, refreshReadiness, review, startReview, cancelReview, toast, lastWorkspace, setLastWorkspace }), [prefs, setPrefs, online, readiness, refreshReadiness, review, startReview, cancelReview, toast, lastWorkspace, setLastWorkspace]);
   return (
     <AppCtx.Provider value={value}>
       {children}
-      <div id="toast-host" aria-live="polite">{toasts.map((t) => <div key={t.id} className="toast glass" role="status"><Check size={16} aria-hidden /><span>{t.msg}</span></div>)}</div>
+      <div id="toast-host" aria-live="polite"><AnimatePresence initial={false}>{toasts.map((t) => (
+        <motion.div key={t.id} layout className="toast glass" role="status" initial={{ opacity: 0, y: 16, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.96 }} transition={{ type: 'spring', stiffness: 520, damping: 34 }}><Check size={16} aria-hidden /><span>{t.msg}</span></motion.div>
+      ))}</AnimatePresence></div>
     </AppCtx.Provider>
   );
 }

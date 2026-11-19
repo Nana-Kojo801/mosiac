@@ -27,5 +27,5 @@ export function useWorkspace(id: string | undefined): WorkspaceData | null | und
     const order = { HIGH: 0, CRITICAL: 0, MODERATE: 1, LOW: 2 } as const;
     findings.sort((a, b) => (a.status === 'UNASSESSED' ? 1 : 0) - (b.status === 'UNASSESSED' ? 1 : 0) || order[a.band] - order[b.band] || b.score - a.score);
     return { ws, docs, draft, releases, run, findings, stale, rewrites };
-  }, [id]);
+  }, [id], id ? `ws:${id}` : undefined);
 }
