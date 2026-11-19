@@ -21,9 +21,9 @@ jobs:
       - name: Deploy credential not set yet
         if: env.HAS_KEY != 'true'
         run: echo "::notice::FIREBASE_SERVICE_ACCOUNT is not set, so nothing was deployed. See docs/deploy.md."
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: env.HAS_KEY == 'true'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: env.HAS_KEY == 'true'
         with:
           node-version: 22
@@ -37,7 +37,7 @@ jobs:
         run: npm run build
       - name: Refuse to deploy a bundle containing a debug token or canaries
         if: env.HAS_KEY == 'true'
-        run: '! grep -rE "CANARY-MOSAIC|APPCHECK_DEBUG_TOKEN" apps/web/dist'
+        run: node scripts/check-bundle.mjs
       - uses: FirebaseExtended/action-hosting-deploy@v0
         if: env.HAS_KEY == 'true'
         with:

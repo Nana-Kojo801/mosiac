@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -19,9 +19,8 @@ jobs:
       - run: npm run typecheck
       - name: Build (public config from .env.production)
         run: npm run build
-      - name: Check the bundle for secrets and canaries
-        run: |
-          ! grep -rE "CANARY-MOSAIC|APPCHECK_DEBUG_TOKEN" apps/web/dist
+      - name: Check the bundle for debug tokens and canaries
+        run: node scripts/check-bundle.mjs
       - name: Install Playwright Chromium (CI only)
         run: npm install -g playwright@1.63.0 && npx -y playwright@1.63.0 install --with-deps chromium
       - name: End-to-end checks
