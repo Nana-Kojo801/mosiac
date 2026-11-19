@@ -8,7 +8,8 @@ import { db } from '../storage/db';
 import { ensureBundledPacks } from '../storage/repositories';
 
 export type Appearance = 'light' | 'dark' | 'system';
-type Prefs = { appearance: Appearance; reducedTransparency: boolean };
+export type MotionPref = 'system' | 'full' | 'reduced';
+type Prefs = { appearance: Appearance; reducedTransparency: boolean; motion?: MotionPref };
 type ReviewState = { running: boolean; progress?: { done: number; total: number; label: string }; last?: ReviewResult; error?: string };
 
 type Ctx = {
@@ -38,6 +39,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const el = document.documentElement;
     if (prefs.appearance === 'system') el.removeAttribute('data-theme'); else el.setAttribute('data-theme', prefs.appearance);
     el.setAttribute('data-transparency', prefs.reducedTransparency ? 'reduced' : 'full');
+    el.setAttribute('data-motion', prefs.motion ?? 'system');
   }, [prefs]);
   useEffect(() => {
     const on = () => setOnline(true), off = () => setOnline(false);
@@ -77,8 +79,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <AppCtx.Provider value={value}>
       {children}
       <div id="toast-host" aria-live="polite"><AnimatePresence initial={false}>{toasts.map((t) => (
-        <motion.div key={t.id} layout className="toast glass" role="status" initial={{ opacity: 0, y: 16, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.96 }} transition={{ type: 'spring', stiffness: 520, damping: 34 }}><Check size={16} aria-hidden /><span>{t.msg}</span></motion.div>
+        <motion.div key={t.id} layout className="toast glass" role="status" initial={{ opacity: 0, y: 16, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.96 }} transition={{ type: 'spring', stiffness: 700, damping: 42, mass: 0.6 }}><Check size={16} aria-hidden /><span>{t.msg}</span></motion.div>
       ))}</AnimatePresence></div>
     </AppCtx.Provider>
   );
+}
+
+/** True when animations should be reduced: the user's Mosaic setting wins, otherwise the system preference. */
+export function useReduceMotion(): boolean {
+  const { prefs } = useApp();
+  const [sys, setSys] = useState(() => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  useEffect(() => { const mq = matchMedia('(prefers-reduced-motion: reduce)'); const on = () => setSys(mq.matches); mq.addEventListener('change', on); return () => mq.removeEventListener('change', on); }, []);
+  const m = prefs.motion ?? 'system';
+  return m === 'reduced' || (m === 'system' && sys);
 }

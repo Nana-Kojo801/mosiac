@@ -83,7 +83,8 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 .m-grab span { width: 38px; height: 5px; border-radius: 3px; background: var(--ink-3); opacity: .45; }
 .m-sheet-head { display: flex; justify-content: space-between; align-items: center; padding: 2px 12px 8px 20px; font-size: 17px; touch-action: none; }
 .m-sheet-body { overflow-y: auto; padding: 0 14px calc(env(safe-area-inset-bottom, 0px) + 20px); touch-action: pan-y; }
-@media (prefers-reduced-motion: reduce) { .tbl tbody tr, .skeleton i { animation: none; } .skeleton { animation-delay: 0s; } }
+@media (prefers-reduced-motion: reduce) { :root[data-motion="system"] .tbl tbody tr, :root[data-motion="system"] .skeleton i { animation: none; } }
+:root[data-motion="reduced"] .tbl tbody tr, :root[data-motion="reduced"] .skeleton i { animation: none; }
 @media (max-width: 760px) {
   .grid-2, .grid-3, .status-d, .compare-d, .diff-cols, .route-grid, .l-hero, .l-reveal, .setup-card { grid-template-columns: 1fr !important; }
   .compare-d .arrow { display: none; }
@@ -113,3 +114,30 @@ textarea.field { min-height: 160px; line-height: 1.5; resize: vertical; font-fam
 /* dialogs animated by motion: neutralize the preview CSS transitions */
 .modal.in { transform: none; opacity: 1; transition: none; left: 50%; top: 50%; }
 .modal-scrim.in { transition: none; }
+
+/* Hide every scrollbar; areas still scroll by wheel, touch and keyboard. */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+/* Keep transitions light: while a page is moving, its glass stops re-blurring every frame. */
+.page-slot[data-moving] .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--glass-opaque) !important; }
+.page-slot[data-moving] .glass::before { display: none; }
+
+/* Content cascade on page entry (light, short). */
+.main-inner > *, .m-content > * { animation: rise-in 0.34s cubic-bezier(0.32, 0.72, 0, 1) both; }
+.main-inner > :nth-child(2), .m-content > :nth-child(2) { animation-delay: 30ms; }
+.main-inner > :nth-child(3), .m-content > :nth-child(3) { animation-delay: 60ms; }
+.main-inner > :nth-child(4), .m-content > :nth-child(4) { animation-delay: 90ms; }
+.main-inner > :nth-child(n+5), .m-content > :nth-child(n+5) { animation-delay: 110ms; }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } }
+.inspector .insp-body > * > * { animation: rise-in 0.3s cubic-bezier(0.32, 0.72, 0, 1) both; }
+@media (prefers-reduced-motion: reduce) { :root[data-motion="system"] .main-inner > *, :root[data-motion="system"] .m-content > *, :root[data-motion="system"] .inspector .insp-body > * > * { animation: none; } }
+:root[data-motion="reduced"] .main-inner > *, :root[data-motion="reduced"] .m-content > *, :root[data-motion="reduced"] .inspector .insp-body > * > * { animation: none; }
+
+/* Segmented controls and tabs with a sliding indicator */
+.seg { position: relative; }
+.seg button { position: relative; isolation: isolate; }
+.seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: transparent; box-shadow: none; }
+.seg-thumb { position: absolute; inset: 0; border-radius: 8px; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 0.5px var(--hairline); z-index: -1; }
+.doc-tab { position: relative; border-bottom-color: transparent !important; }
+.doc-tab-line { position: absolute; left: 8px; right: 8px; bottom: -1px; height: 2px; border-radius: 2px; background: var(--accent); }

@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Seg } from '../../ui/Seg';
 import { useNavigate, useParams } from 'react-router';
 import { FlaskConical } from 'lucide-react';
 import { disclosureOfDraft, groupSteps } from '@mosaic/fixtures';
@@ -57,7 +59,9 @@ export function MapScreen() {
   return (
     <Shell title="Disclosure map" data={data} wide inspectorTitle="Details" inspectorKey={sel?.id} inspector={inspector}>
       <div className="page-h"><div><h1>Disclosure map</h1><p>How the draft connects to what’s already published. Click a line for its reason and the passages behind it.</p></div>
-        <div className="seg" role="tablist"><button type="button" role="tab" aria-selected={mode === 'map'} onClick={() => setMode('map')}>Map</button><button type="button" role="tab" aria-selected={mode === 'list'} onClick={() => setMode('list')}>List</button></div></div>
+        <Seg id="map-mode" role="tab" value={mode} onChange={setMode} options={[['map', 'Map'], ['list', 'List']]} /></div>
+      <AnimatePresence mode="wait" initial={false}>
+      <motion.div key={mode} initial={{ opacity: 0, x: mode === 'list' ? 24 : -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: mode === 'list' ? -16 : 16 }} transition={{ type: 'tween', ease: [0.32, 0.72, 0, 1], duration: 0.2 }}>
       {!data.run ? <div className="empty-d"><h3>Not reviewed yet</h3><p>Run a review to see how the documents connect.</p></div> : !graph.edges.length ? <div className="empty-d"><h3>No open findings to map</h3><p>That doesn’t mean the draft is anonymous. Findings that are dismissed, resolved or not assessed are not shown.</p></div> : mode === 'map' ? (
         <>
           <div className="graph-wrap">
@@ -81,6 +85,8 @@ export function MapScreen() {
           {graph.edges.map((e) => <tr key={e.id} className={`clickable ${sel?.id === e.id ? 'sel' : ''}`} tabIndex={0} onClick={() => setSel({ kind: 'edge', id: e.id })} onKeyDown={(ev) => { if (ev.key === 'Enter') setSel({ kind: 'edge', id: e.id }); }}><td className="t-title">{graph.nodes.find((n) => n.id === e.from)?.label}</td><td className="t-title">{graph.nodes.find((n) => n.id === e.to)?.label}</td><td className="small">{e.reason}</td><td className="small mono">{e.refs.map((r) => `${docTitle(r.versionId)} ¶${r.paragraph + 1}`).join(', ')}</td></tr>)}
         </tbody></table>
       )}
+      </motion.div>
+      </AnimatePresence>
     </Shell>
   );
 }

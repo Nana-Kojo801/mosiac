@@ -11,6 +11,7 @@ import { db } from '../../storage/db';
 import { ALL_CATEGORIES, CATEGORY_LABEL, approve, generate, prepareRequest } from '../../features/packs/packs';
 import { getGateway, ensureModelPort } from '../services';
 import { Banner, PolicyTag, SourceBadge, fmtDate } from '../../ui/components';
+import { Seg } from '../../ui/Seg';
 
 export function Tests() {
   const app = useApp();
@@ -73,7 +74,7 @@ export function Tests() {
       </div>
       <div className="h2">Generate a pack</div>
       <div className="panel line" style={{ display: 'grid', gap: 14 }}>
-        <div><span className="small muted">Domain</span><div className="seg" style={{ marginTop: 6, display: 'flex', width: 'max-content' }}><button type="button" aria-pressed={domain === 'QUALITATIVE_RESEARCH'} onClick={() => setDomain('QUALITATIVE_RESEARCH')}>Qualitative research</button><button type="button" aria-pressed={domain === 'EDITORIAL'} onClick={() => setDomain('EDITORIAL')}>Editorial</button></div></div>
+        <div><span className="small muted">Domain</span><Seg id="domain" style={{ marginTop: 6, display: 'flex', width: 'max-content' }} value={domain} onChange={setDomain} options={[['QUALITATIVE_RESEARCH', 'Qualitative research'], ['EDITORIAL', 'Editorial']]} /></div>
         <div><span className="small muted">Categories (fixed list)</span><div className="filters-d" style={{ margin: '6px 0 0' }}>{ALL_CATEGORIES.map((c) => <button key={c} type="button" className="fchip" aria-pressed={cats.includes(c)} onClick={() => setCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]))}>{CATEGORY_LABEL[c]}</button>)}</div></div>
         <p className="small muted">There is no free-text field. The request is built only from these choices, and each request needs your approval.</p>
       </div>

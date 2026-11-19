@@ -2,6 +2,32 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Motion pass 2 (owner feedback)
+
+**Owner reported:** tab switches don't slide; no animations on desktop; motion feels heavy; scrollbars visible; extra space above some page titles; grey text on the blue landing button.
+
+**Changes**
+- **Bottom-nav tabs** are a full-width pager slide in tab order. Push and pop stay as before.
+- **In-page tabs:** document tabs have a sliding underline and slide their content in the direction of travel. Map/List and every segmented picker (theme, animations, domain, export format, import role) use a shared `Seg` control with a sliding thumb. Map/List cross-slides its content.
+- **Desktop:** pages glide 28 px in the direction of travel with a fade. The sidebar and the first page animate in on load, which previously had no entrance. Page sections cascade in, and inspector sections rise in.
+- **Lighter feel:**
+  - only transform and opacity are animated (the brightness filter and shadow animation are removed);
+  - glass blur is paused on any page that is moving, which was the main cost;
+  - durations are 0.26–0.3 s with an iOS-style curve (0.32, 0.72, 0, 1), and pills, thumbs and toasts use snappier springs.
+- **New Settings → Animations: Follow system / On / Reduced.** Possible reason the owner saw no desktop motion: with the OS "reduce motion" setting on (common on Windows), the app was correctly turning motion off. The setting now lets the user choose. The default still respects the system (spec F21).
+- All scrollbars are hidden (content still scrolls).
+- **Spacing:** an audit of 15 pages at desktop and phone size found content starting directly under the top bar everywhere except Overview, where status banners sat above the title (+100 px). The title is now first. The desktop top inset is 80 px (was 84).
+- **Landing:** `.lnav a` coloured the "Open workspaces" button grey; it is now white on the accent.
+
+**Verified:** motion check 17/17, including:
+- the phone tab slide spans 390 px and completes in 19 frames (about 0.32 s);
+- desktop first-load entrance, a 27 px desktop glide, and the document-tab content slide;
+- "Reduced" leaves 0 px of movement;
+- `scrollbar-width: none`;
+- white-on-accent landing button.
+
+Main end-to-end suite 29/29 twice. 70 unit tests pass.
+
 ## 2026-11-19 · Navigation fixes and motion (owner feedback)
 
 **Owner reported:** no animations; a blink before content on every navigation; and the sidebar or bottom nav disappearing on some pages.

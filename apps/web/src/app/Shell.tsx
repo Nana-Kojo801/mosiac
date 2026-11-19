@@ -48,7 +48,7 @@ function DesktopPage({ title, data, inspector, inspectorTitle = 'Inspector', ins
           <div className="insp-head"><h2>{inspectorTitle}</h2></div>
           <div className="insp-body">
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div key={inspectorKey ?? 'static'} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}>{inspector}</motion.div>
+              <motion.div key={inspectorKey ?? 'static'} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.16, ease: [0.32, 0.72, 0, 1] }}>{inspector}</motion.div>
             </AnimatePresence>
           </div>
         </aside>

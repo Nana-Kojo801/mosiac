@@ -6,6 +6,7 @@ import { useWorkspace } from '../useWorkspace';
 import { useApp } from '../store';
 import { cleanParagraphs, cleanText, download, reportLines, reportMarkdown, safeFileName, toDocx, toPdf, type CleanFormat } from '../../features/export/export';
 import { NotFound } from './NotFound';
+import { Seg } from '../../ui/Seg';
 
 export function Export() {
   const { id } = useParams();
@@ -43,7 +44,7 @@ export function Export() {
           <button type="button" className="radio-d" role="radio" aria-checked={kind === 'report'} onClick={() => setKind('report')}><span className="dot" /><div><b>Review report</b><span>Findings, decisions and coverage, kept separate from the draft</span></div></button>
         </div>
         <div className="insp-label">Format</div>
-        <div className="seg" style={{ display: 'flex' }}>{fmts.map((x) => <button key={x} type="button" style={{ flex: 1 }} aria-pressed={x === f} onClick={() => setFmt(x)}>{x}</button>)}</div>
+        <Seg id="export-fmt" style={{ display: 'flex' }} value={f} onChange={(x) => setFmt(x)} options={fmts.map((x) => [x, x] as [CleanFormat, string])} />
         {kind === 'report' && <label className="set-row" style={{ padding: '12px 4px' }}><span className="sr-main">Include quoted evidence<span>Off by default: quotes repeat private text</span></span><span className="switch sm"><input type="checkbox" checked={quotes} onChange={(e) => setQuotes(e.target.checked)} /><span /></span></label>}
         <div className="insp-label">Left out</div>
         <div className="insp-card small" style={{ color: 'var(--ink-2)' }}>Original files and passages, comments, revision history, tracked changes and source-file metadata. Files are generated fresh from plain text.</div>

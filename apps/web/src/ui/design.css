@@ -161,9 +161,11 @@ ins.diff { background: var(--diff-add-bg); color: var(--diff-add-fg); }
 .toast.out { opacity: 0; transform: translateY(8px); transition: all var(--dur-2); }
 @keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
 
+/* Reduced motion: follows the system unless the user picked an explicit setting in Mosaic (html[data-motion]). */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+  :root[data-motion="system"] *, :root[data-motion="system"] *::before, :root[data-motion="system"] *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
 }
+:root[data-motion="reduced"] *, :root[data-motion="reduced"] *::before, :root[data-motion="reduced"] *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
 
 /* ===== shell ===== */
 .shell { position: absolute; inset: 0; display: grid; grid-template-columns: 264px minmax(0, 1fr) 352px; gap: 12px; padding: 12px; }
@@ -198,7 +200,7 @@ ins.diff { background: var(--diff-add-bg); color: var(--diff-add-fg); }
 .dev-chip span { color: var(--ink-3); }
 
 .main { position: relative; min-width: 0; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hairline-strong), 0 10px 30px -18px rgba(20, 30, 60, 0.25); }
-.main-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 84px 36px 48px; scrollbar-width: thin; }
+.main-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 80px 36px 48px; }
 .main-inner { max-width: 880px; margin: 0 auto; }
 .main-inner.wide { max-width: 1100px; }
 .topbar-d { position: absolute; z-index: 10; top: 10px; left: 10px; right: 10px; height: 56px; border-radius: 18px; display: flex; align-items: center; gap: 10px; padding: 0 10px 0 16px; }
@@ -389,7 +391,7 @@ ins.diff { background: var(--diff-add-bg); color: var(--diff-add-fg); }
 .lnav { position: sticky; top: 12px; z-index: 10; margin: 12px auto 0; width: min(1120px, calc(100% - 32px)); height: 58px; border-radius: 29px; display: flex; align-items: center; gap: 18px; padding: 0 10px 0 20px; }
 .lnav > * { position: relative; z-index: 2; }
 .lnav .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; }
-.lnav a, .lnav .lk { font-size: 13.5px; color: var(--ink-2); font-weight: 500; text-decoration: none; }
+.lnav .lk { font-size: 13.5px; color: var(--ink-2); font-weight: 500; text-decoration: none; }
 .lnav .spacer { flex: 1; }
 .l-hero { width: min(1120px, calc(100% - 32px)); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; padding: 56px 0 40px; }
 .l-hero h1 { font-size: 52px; line-height: 1.04; font-weight: 780; letter-spacing: -0.035em; }

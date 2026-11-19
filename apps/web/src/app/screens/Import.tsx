@@ -8,6 +8,7 @@ import { useWorkspace } from '../useWorkspace';
 import { documents } from '../../storage/repositories';
 import { useApp } from '../store';
 import { NotFound } from './NotFound';
+import { Seg } from '../../ui/Seg';
 
 type Pending = { name: string; text?: string; error?: string; note?: string; kind: 'txt' | 'markdown' | 'pdf' | 'docx' | 'paste'; status?: string };
 
@@ -53,7 +54,7 @@ export function Import() {
         <input ref={input} type="file" multiple accept=".txt,.md,.markdown,.pdf,.docx,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden onChange={(e) => e.target.files && void onFiles(e.target.files)} />
       </div>
       <div className="grid-2" style={{ marginTop: 16 }}>
-        <div className="panel"><span className="small muted">These documents are</span><div className="seg" style={{ marginTop: 8 }}><button type="button" aria-pressed={role === 'draft'} onClick={() => setRole('draft')}>The draft to review</button><button type="button" aria-pressed={role === 'release'} onClick={() => setRole('release')}>Already published</button></div><p className="small muted" style={{ marginTop: 8 }}>Published releases become the history each draft is checked against.</p></div>
+        <div className="panel"><span className="small muted">These documents are</span><Seg id="import-role" style={{ marginTop: 8 }} value={role} onChange={setRole} options={[['draft', 'The draft to review'], ['release', 'Already published']]} /><p className="small muted" style={{ marginTop: 8 }}>Published releases become the history each draft is checked against.</p></div>
         <div className="panel"><span className="small muted">Classification</span><div className="hstack" style={{ marginTop: 6, justifyContent: 'space-between' }}><b>Private</b><Lock size={17} /></div><p className="small muted" style={{ marginTop: 6 }}>Everything you add is private and is analysed only on this device. This can’t be changed for imported content.</p></div>
       </div>
       <div className="h2">Paste text</div>

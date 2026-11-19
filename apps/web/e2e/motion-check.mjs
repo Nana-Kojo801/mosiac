@@ -14,6 +14,7 @@ const browser = await chromium.launch();
 // Records, every animation frame, how many page slots exist, the incoming slot's transform, and whether any visible content is present.
 const startRecorder = (p) => p.evaluate(() => { window.__frames = []; const tick = () => { const slots = [...document.querySelectorAll('.page-slot')]; const txt = slots.map((s) => (s.innerText || '').trim().length); window.__frames.push({ n: slots.length, tf: slots.map((s) => getComputedStyle(s).transform), maxText: Math.max(0, ...txt), op: slots.map((s) => getComputedStyle(s).opacity) }); if (window.__rec) requestAnimationFrame(tick); }; window.__rec = true; requestAnimationFrame(tick); });
 const stopRecorder = async (p) => { await p.waitForTimeout(700); return p.evaluate(() => { window.__rec = false; return window.__frames; }); };
+const maxShift = (frames) => Math.max(0, ...frames.flatMap((f) => f.tf.map((t) => { const m = t.match(/matrix\(([^)]+)\)/); return m ? Math.abs(Number(m[1].split(',')[4])) : 0; })));
 const moved = (frames) => frames.some((f) => f.n === 2 && f.tf.some((t) => t !== 'none' && !/matrix\(1, 0, 0, 1, 0, 0\)/.test(t)));
 const blank = (frames) => frames.filter((f) => f.n === 0 || f.maxText < 20).length;
 
@@ -54,6 +55,45 @@ try {
     check(`${kind}: no blank frames during navigation`, blanks === 0, `${blanks} blank frames`);
     check(`${kind}: ${kind === 'phone' ? 'tab bar' : 'sidebar'} is never re-created`, chromeOk);
     check(`${kind}: workspace items stay on global pages`, wsItemsOk);
+    await p.close();
+  }
+
+  // Phone: bottom-nav tab switches slide a real distance (pager), and finish quickly.
+  {
+    const p = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    await p.goto(base + '/'); await p.getByRole('button', { name: 'Try the sample workspace' }).click(); await p.waitForURL(/\/w\//); await p.waitForTimeout(700);
+    await p.locator('.m-tabbar').getByRole('link', { name: /^Workspaces/ }).click(); await p.waitForTimeout(600);
+    await startRecorder(p); await p.locator('.m-tabbar').getByRole('link', { name: /^Journal/ }).click(); const f = await stopRecorder(p);
+    const overlapFrames = f.filter((x) => x.n === 2).length;
+    check('phone: tab switch slides across the screen', maxShift(f) > 150, `max shift ${Math.round(maxShift(f))}px`);
+    check('phone: transitions are quick (≤ ~0.4 s)', overlapFrames > 3 && overlapFrames <= 26, `${overlapFrames} frames`);
+    await p.close();
+  }
+  // Desktop: entrance on first load, visible glide on navigation, in-page tab slide, reduced-motion setting, no scrollbars, readable landing button.
+  {
+    const p = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await p.addInitScript(() => { window.__frames = []; const tick = () => { const s = [...document.querySelectorAll('.page-slot, .d-side')]; window.__frames.push({ n: document.querySelectorAll('.page-slot').length, tf: s.map((e) => getComputedStyle(e).transform), maxText: 99, op: s.map((e) => getComputedStyle(e).opacity) }); if (window.__frames.length < 120) requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+    await p.goto(base + '/workspaces'); await p.waitForTimeout(900);
+    const loadFrames = await p.evaluate(() => window.__frames);
+    check('desktop: page and sidebar animate in on first load', loadFrames.some((x) => x.op.some((o) => Number(o) < 0.95)) && loadFrames.some((x) => x.tf.some((t) => t !== 'none' && !/matrix\(1, 0, 0, 1, 0, 0\)/.test(t))));
+    await p.goto(base + '/'); await p.getByRole('button', { name: 'Try the sample workspace' }).click(); await p.waitForURL(/\/w\//); await p.waitForTimeout(600);
+    await startRecorder(p); await p.locator('.sidebar').getByRole('link', { name: /^Documents/ }).click(); const nf = await stopRecorder(p);
+    check('desktop: navigation glides visibly', maxShift(nf) >= 10, `max shift ${Math.round(maxShift(nf))}px`);
+    await p.evaluate(() => { window.__mv = []; const t = () => { const el = document.querySelector('.reader-d')?.parentElement; window.__mv.push(el ? getComputedStyle(el).transform : 'none'); if (window.__mv.length < 40) requestAnimationFrame(t); }; requestAnimationFrame(t); });
+    await p.getByRole('tab', { name: /Interim findings report/ }).click(); await p.waitForTimeout(700);
+    const mv = await p.evaluate(() => window.__mv);
+    check('desktop: document tabs slide their content', mv.some((t) => t !== 'none' && !/matrix\(1, 0, 0, 1, 0, 0\)/.test(t)));
+    check('desktop: tab underline is a sliding indicator', (await p.locator('.doc-tab-line').count()) === 1);
+    const sb = await p.evaluate(() => getComputedStyle(document.querySelector('.main-scroll')).scrollbarWidth);
+    check('scrollbars are hidden', sb === 'none', sb);
+    await p.locator('.sidebar').getByRole('link', { name: /^Settings/ }).click(); await p.waitForTimeout(500);
+    await p.getByRole('radio', { name: 'Reduced' }).click(); await p.waitForTimeout(200);
+    await startRecorder(p); await p.locator('.sidebar').getByRole('link', { name: /^Inference journal/ }).click(); const rf = await stopRecorder(p);
+    check('Animations: Reduced removes movement', maxShift(rf) === 0, `max shift ${Math.round(maxShift(rf))}px`);
+    await p.goto(base + '/settings'); await p.getByRole('radio', { name: 'Follow system' }).click();
+    await p.goto(base + '/'); await p.waitForTimeout(400);
+    const c = await p.evaluate(() => { const a = [...document.querySelectorAll('.lnav a')].find((x) => /Open workspaces/.test(x.textContent)); const cs = getComputedStyle(a); return [cs.color, cs.backgroundColor]; });
+    check('landing button text is white on the accent', c[0] === 'rgb(255, 255, 255)', c.join(' on '));
     await p.close();
   }
 } catch (e) { check('motion check completed', false, e.message.split('\n')[0]); }

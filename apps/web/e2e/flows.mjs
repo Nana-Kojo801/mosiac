@@ -79,6 +79,7 @@ try {
   await page.locator('.ev-card').first().waitFor({ timeout: 3000 }).catch(() => {});
   check('map lines open their reason and passages (keyboard)', await page.locator('.ev-card').count() > 0);
   await page.getByRole('tab', { name: 'List' }).click();
+  await page.locator('table.tbl tbody tr').first().waitFor({ timeout: 3000 }).catch(() => {});
   check('map has an accessible list view', await page.locator('table.tbl tbody tr').count() > 0);
   await shot('map');
 
@@ -115,11 +116,11 @@ try {
   // Export: clean text contains the reviewed text and nothing else
   await page.goto(page.url().replace('/history', '/export'));
   await page.getByRole('heading', { name: 'Reports & export' }).waitFor();
-  await page.getByRole('button', { name: 'TXT' }).click();
+  await page.getByRole('radio', { name: 'TXT' }).click();
   const [dl] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export TXT' }).click()]);
   const txt = readFileSync(await dl.path(), 'utf8');
   check('clean export contains the edited text and not the removed passages', txt.includes('moving from another site') && !txt.includes('coastal satellite clinic') && !txt.includes('14 January'));
-  await page.getByRole('button', { name: 'DOCX' }).click();
+  await page.getByRole('radio', { name: 'DOCX' }).click();
   const [dl2] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export DOCX' }).click()]);
   check('DOCX export is generated', (await dl2.suggestedFilename()).endsWith('.docx'));
 
@@ -154,7 +155,7 @@ try {
   await page.getByRole('button', { name: /Add 1 to workspace/ }).click();
   await page.waitForURL(/\/w\/[^/]+$/);
   await page.getByRole('link', { name: 'Import', exact: true }).click();
-  await page.getByRole('button', { name: 'Already published' }).click();
+  await page.getByRole('radio', { name: 'Already published' }).click();
   await page.locator('#paste-box').fill(CANARY_RELEASE);
   await page.getByRole('button', { name: /Add 1 to workspace/ }).click();
   await page.waitForURL(/\/w\/[^/]+$/);

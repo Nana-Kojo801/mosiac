@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useDragControls } from 'motion/react';
 import { ChevronLeft, PanelBottomOpen, ScanSearch, X } from 'lucide-react';
-import { useApp } from './store';
+import { useApp, useReduceMotion } from './store';
 import type { WorkspaceData } from './useWorkspace';
 
 /** Screens call this when the user selects an item; on phones it opens the details sheet, on desktop nothing happens. */
@@ -20,7 +20,7 @@ export function MobilePage({ title, data, inspector, inspectorTitle = 'Details',
   const app = useApp();
   const nav = useNavigate();
   const loc = useLocation();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const scroller = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [sheet, setSheet] = useState(false);
@@ -47,14 +47,14 @@ export function MobilePage({ title, data, inspector, inspectorTitle = 'Details',
         </main>
       </div>
       <AnimatePresence>{inspector && !sheet && (
-        <motion.button key="details" type="button" className="m-details glass" onClick={() => setSheet(true)} initial={{ opacity: 0, scale: 0.8, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.85, y: 10 }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 500, damping: 32 }}><PanelBottomOpen size={17} /> {inspectorTitle}</motion.button>
+        <motion.button key="details" type="button" className="m-details glass" onClick={() => setSheet(true)} initial={{ opacity: 0, scale: 0.8, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.85, y: 10 }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 700, damping: 40, mass: 0.6 }}><PanelBottomOpen size={17} /> {inspectorTitle}</motion.button>
       )}</AnimatePresence>
       {inspector && createPortal(
         <AnimatePresence>{sheet && (
           <div className="m-sheet-layer open" key="layer">
             <motion.div className="m-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(false)} />
             <motion.div className="m-sheet glass glass-strong" role="dialog" aria-modal="true" aria-label={inspectorTitle}
-              initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={reduce ? { duration: 0.15 } : { type: 'spring', stiffness: 420, damping: 40 }}
+              initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={reduce ? { duration: 0.12 } : { type: 'tween', ease: [0.32, 0.72, 0, 1], duration: 0.32 }}
               drag="y" dragControls={drag} dragListener={false} dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0.05, bottom: 0.9 }}
               onDragEnd={(_, info) => { if (info.offset.y > 120 || info.velocity.y > 700) setSheet(false); }}>
               <div className="m-grab" onPointerDown={(e) => drag.start(e)}><span /></div>

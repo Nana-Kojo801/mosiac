@@ -32,12 +32,12 @@ export function Overview() {
   }
   return (
     <Shell title="Overview" data={data}>
+      <div className="page-h"><div><h1>{ws.title}</h1><p>{ws.description ?? 'Private · in this browser'}</p></div></div>
       <div style={{ display: 'grid', gap: 10, marginBottom: 16 }}>
         {!app.online && <Banner tone="neutral" icon={<WifiOff size={18} />} title="Offline">Private review keeps working on this device. Cloud test packs resume when you reconnect.</Banner>}
         {r && !r.ok && <Banner tone="warn" icon={<MonitorX size={18} />} title="No on-device model in this browser">{readinessText(r.reason, r.detail)}. {ws.kind === 'sample' ? 'The sample shows authored sample results instead, labelled as such.' : 'Contextual checks are left not assessed; rules-based checks still run.'} Nothing is sent to the cloud instead. <Link to="/device" style={{ color: 'inherit', fontWeight: 600 }}>Details</Link></Banner>}
         {cov && cov.unassessedChunks.length > 0 && <Banner tone="un" icon={<CircleDashed size={18} />} title="Partial review">{cov.unassessedChunks.map((u) => `¶${u.paragraphs[0] + 1}–${u.paragraphs[1] + 1}: ${u.reason}`).join('; ')}.<br /><button type="button" className="btn btn-sm btn-tinted" onClick={() => app.startReview(ws.id)}><RotateCw size={14} /> Run again</button></Banner>}
       </div>
-      <div className="page-h"><div><h1>{ws.title}</h1><p>{ws.description ?? 'Private · in this browser'}</p></div></div>
       {draft ? (
         <div className="status-d">
           <div className="panel">

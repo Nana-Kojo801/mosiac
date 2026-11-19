@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { ChevronRight } from 'lucide-react';
 import { Shell } from '../Shell';
-import { useApp, type Appearance } from '../store';
+import { useApp, type Appearance, type MotionPref } from '../store';
+import { Seg } from '../../ui/Seg';
 import { deleteAllLocalData, resetSampleWorkspace } from '../../storage/repositories';
 
 export function Settings() {
@@ -16,7 +17,8 @@ export function Settings() {
         <div>
           <div className="h2" style={{ marginTop: 0 }}>Appearance</div>
           <div className="set-group">
-            <div className="set-row"><span className="sr-main">Theme</span><div className="seg">{(['light', 'dark', 'system'] as Appearance[]).map((a) => <button key={a} type="button" aria-pressed={app.prefs.appearance === a} onClick={() => app.setPrefs({ appearance: a })}>{a[0].toUpperCase() + a.slice(1)}</button>)}</div></div>
+            <div className="set-row"><span className="sr-main">Theme</span><Seg id="theme" value={app.prefs.appearance} onChange={(a) => app.setPrefs({ appearance: a as Appearance })} options={[['light', 'Light'], ['dark', 'Dark'], ['system', 'System']]} /></div>
+            <div className="set-row"><span className="sr-main">Animations<span>Follow system uses your device’s reduce-motion setting</span></span><Seg id="motion" value={app.prefs.motion ?? 'system'} onChange={(m) => app.setPrefs({ motion: m as MotionPref })} options={[['system', 'Follow system'], ['full', 'On'], ['reduced', 'Reduced']]} /></div>
             <label className="set-row"><span className="sr-main">Reduce transparency<span>Solid bars and panels, same layout</span></span><span className="switch sm"><input type="checkbox" checked={app.prefs.reducedTransparency} onChange={(e) => app.setPrefs({ reducedTransparency: e.target.checked })} /><span /></span></label>
           </div>
           <div className="h2">Model</div>

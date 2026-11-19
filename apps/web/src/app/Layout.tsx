@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation, useNavigationType, useOutlet } from 'react-router';
-import { AnimatePresence, motion, useIsPresent, useReducedMotion, type Variants } from 'motion/react';
+import { AnimatePresence, motion, useIsPresent, type Variants, type Transition } from 'motion/react';
 import { Activity, ChartColumn, ChevronsUpDown, ClipboardCheck, FileOutput, FileText, FlaskConical, History, Layers, LayoutDashboard, ListChecks, PenLine, Settings, Waypoints } from 'lucide-react';
-import { useApp } from './store';
+import { useApp, useReduceMotion } from './store';
 import { useWorkspace, type WorkspaceData } from './useWorkspace';
 import { Backdrop, Logo, isClosed } from '../ui/components';
 import { useIsMobile } from './MobileShell';
@@ -12,7 +12,9 @@ import { useIsMobile } from './MobileShell';
  * so they never re-mount or disappear during navigation. Pages animate in and
  * out inside the outlet.
  */
-const SPRING = { type: 'spring', stiffness: 420, damping: 42, mass: 0.9 } as const;
+// iOS-like curves: quick start, soft landing. Short durations keep motion light.
+const IOS: Transition = { type: 'tween', ease: [0.32, 0.72, 0, 1], duration: 0.3 };
+const SNAP: Transition = { type: 'spring', stiffness: 700, damping: 48, mass: 0.6 };
 
 export function AppLayout() {
   const loc = useLocation();
@@ -29,12 +31,12 @@ export function AppLayout() {
     <div className="app-root">
       <Backdrop />
       <div className={`${mobile ? 'm-frame' : 'd-frame'} ${landing ? 'is-landing' : ''}`}>
-        {!mobile && <AnimatePresence initial={false}>{!landing && (
-          <motion.div key="sidebar" className="d-side" initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={SPRING}><Sidebar data={ws} /></motion.div>
+        {!mobile && <AnimatePresence>{!landing && (
+          <motion.div key="sidebar" className="d-side" initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={IOS}><Sidebar data={ws} /></motion.div>
         )}</AnimatePresence>}
         <AnimatedOutlet mobile={mobile} />
-        {mobile && <AnimatePresence initial={false}>{!landing && (
-          <motion.div key="tabbar" initial={{ y: 110 }} animate={{ y: 0 }} exit={{ y: 110 }} transition={SPRING}><TabBar data={ws} /></motion.div>
+        {mobile && <AnimatePresence>{!landing && (
+          <motion.div key="tabbar" initial={{ y: 110 }} animate={{ y: 0 }} exit={{ y: 110 }} transition={IOS}><TabBar data={ws} /></motion.div>
         )}</AnimatePresence>}
       </div>
     </div>
@@ -58,15 +60,17 @@ function useDirection(): Dir {
   return dir.current;
 }
 
+// Phone: push/pop like a navigation stack, tabs like a pager. Only transform/opacity are animated (cheap).
 const mobileVariants: Variants = {
-  enter: (c: Dir) => c.kind === 'tab' ? { x: `${c.d * 28}%`, opacity: 0, zIndex: 2 } : c.kind === 'push' ? { x: '100%', zIndex: 3, boxShadow: '-20px 0 40px -20px rgba(0,0,0,0.25)' } : c.kind === 'pop' ? { x: '-28%', zIndex: 1, filter: 'brightness(0.94)' } : { opacity: 0, zIndex: 2 },
-  center: { x: 0, opacity: 1, filter: 'brightness(1)', boxShadow: '0 0 0 0 rgba(0,0,0,0)', transitionEnd: { zIndex: 2 } },
-  exit: (c: Dir) => c.kind === 'tab' ? { x: `${-c.d * 28}%`, opacity: 0, zIndex: 1 } : c.kind === 'push' ? { x: '-28%', zIndex: 1, filter: 'brightness(0.94)' } : c.kind === 'pop' ? { x: '100%', zIndex: 3, boxShadow: '-20px 0 40px -20px rgba(0,0,0,0.25)' } : { opacity: 0, zIndex: 1 },
+  enter: (c: Dir) => c.kind === 'tab' ? { x: `${c.d * 100}%`, zIndex: 2 } : c.kind === 'push' ? { x: '100%', zIndex: 3 } : c.kind === 'pop' ? { x: '-25%', opacity: 0.85, zIndex: 1 } : { opacity: 0, y: 12, zIndex: 2 },
+  center: { x: 0, y: 0, opacity: 1, transitionEnd: { zIndex: 2 } },
+  exit: (c: Dir) => c.kind === 'tab' ? { x: `${-c.d * 100}%`, zIndex: 1 } : c.kind === 'push' ? { x: '-25%', opacity: 0.85, zIndex: 1 } : c.kind === 'pop' ? { x: '100%', zIndex: 3 } : { opacity: 0, zIndex: 1 },
 };
+// Desktop: a short horizontal glide in the direction of travel, with a fade.
 const desktopVariants: Variants = {
-  enter: { opacity: 0, y: 10, scale: 0.995 },
-  center: { opacity: 1, y: 0, scale: 1 },
-  exit: { opacity: 0, y: -6, transition: { duration: 0.16 } },
+  enter: (c: Dir) => ({ opacity: 0, x: c.kind === 'pop' ? -28 : c.kind === 'tab' ? 28 * c.d : 28 }),
+  center: { opacity: 1, x: 0 },
+  exit: (c: Dir) => ({ opacity: 0, x: c.kind === 'pop' ? 20 : c.kind === 'tab' ? -20 * c.d : -20, transition: { duration: 0.16, ease: [0.4, 0, 1, 1] } }),
 };
 const fadeVariants: Variants = { enter: { opacity: 0 }, center: { opacity: 1 }, exit: { opacity: 0 } };
 
@@ -74,17 +78,27 @@ function AnimatedOutlet({ mobile }: { mobile: boolean }) {
   const loc = useLocation();
   const outlet = useOutlet();
   const dir = useDirection();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const variants = reduce ? fadeVariants : mobile ? mobileVariants : desktopVariants;
-  const transition = reduce ? { duration: 0.15 } : mobile ? (dir.kind === 'tab' ? { type: 'spring', stiffness: 520, damping: 46 } as const : SPRING) : { type: 'spring', stiffness: 380, damping: 36 } as const;
+  const transition: Transition = reduce ? { duration: 0.12 } : mobile ? (dir.kind === 'tab' ? { ...IOS, duration: 0.28 } : IOS) : { ...IOS, duration: 0.26 };
   return (
     <div className={mobile ? 'm-pages' : 'd-pages'}>
-      <AnimatePresence initial={false} custom={dir} mode="popLayout">
-        <motion.div key={loc.pathname} className="page-slot" custom={dir} variants={variants} initial="enter" animate="center" exit="exit" transition={transition}>
-          <PresenceGuard path={loc.pathname}>{outlet}</PresenceGuard>
-        </motion.div>
+      <AnimatePresence custom={dir} mode="popLayout">
+        <Slot key={loc.pathname} path={loc.pathname} dir={dir} variants={variants} transition={transition}>{outlet}</Slot>
       </AnimatePresence>
     </div>
+  );
+}
+
+/** One animated page. While it moves (entering or leaving), its glass stops re-blurring each frame. */
+function Slot({ path, dir, variants, transition, children }: { path: string; dir: Dir; variants: Variants; transition: Transition; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <motion.div ref={ref} className="page-slot" custom={dir} variants={variants} initial="enter" animate="center" exit="exit" transition={transition} data-moving=""
+      onAnimationStart={() => ref.current?.setAttribute('data-moving', '')}
+      onAnimationComplete={(def) => { if (def === 'center') ref.current?.removeAttribute('data-moving'); }}>
+      <PresenceGuard path={path}>{children}</PresenceGuard>
+    </motion.div>
   );
 }
 
@@ -100,7 +114,7 @@ function NavItem({ to, end, icon: Icon, label, n, hot }: { to: string; end?: boo
   return (
     <NavLink to={to} end={end} className="nav-i">
       {({ isActive }) => (<>
-        {isActive && <motion.span layoutId="nav-pill" className="nav-pill" transition={{ type: 'spring', stiffness: 520, damping: 40 }} />}
+        {isActive && <motion.span layoutId="nav-pill" className="nav-pill" transition={SNAP} />}
         <Icon size={16} /><span>{label}</span>{n ? <span className={`n${hot ? ' hot' : ''}`}>{n}</span> : null}
       </>)}
     </NavLink>
@@ -150,8 +164,8 @@ function Tab({ to, end, icon: Icon, label, badge }: { to: string; end?: boolean;
   return (
     <NavLink to={to} end={end} className="m-tab">
       {({ isActive }) => (<>
-        {isActive && <motion.span layoutId="tab-pill" className="m-tab-pill" transition={{ type: 'spring', stiffness: 520, damping: 38 }} />}
-        <motion.span className="m-tab-ic" animate={{ scale: isActive ? 1.06 : 1 }} transition={{ type: 'spring', stiffness: 600, damping: 30 }}><Icon size={22} /></motion.span>
+        {isActive && <motion.span layoutId="tab-pill" className="m-tab-pill" transition={SNAP} />}
+        <motion.span className="m-tab-ic" animate={{ scale: isActive ? 1.06 : 1 }} transition={SNAP}><Icon size={22} /></motion.span>
         <span className="m-tab-l">{label}</span>{badge ? <span className="m-badge">{badge}</span> : null}
       </>)}
     </NavLink>
