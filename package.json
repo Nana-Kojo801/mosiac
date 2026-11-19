@@ -17,6 +17,10 @@
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
-  }
+    "typecheck": "npm run typecheck -w @mosaic/web",
+    "build": "npm run build -w @mosaic/web",
+    "e2e": "npm run build -w @mosaic/web && cd apps/web && node --experimental-strip-types e2e/flows.mjs",
+    "dev": "npm run dev -w @mosaic/web"
+  },
+  "type": "module"
 }

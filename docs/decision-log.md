@@ -2,6 +2,47 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · Core app build, first increment
+
+**Built**
+- `packages/schemas`: closed enums, strict Zod contracts (extraction output, enum-only pack request, generated pack), local entity types, and the frozen routing table.
+- `packages/privacy-core`:
+  - text normalization with an offset map, and paragraph spans;
+  - transparent rules (email, phone, URL, handle, long ID number, day-level date);
+  - evidence validation (exact, re-anchored or rejected; anchors are never invented);
+  - rubric scoring and bands, chunking;
+  - the outbound policy gate (private tasks pinned to ONLY_ON_DEVICE, taint propagation, enum-only request builder, approval bound to a payload digest with a 5-minute expiry);
+  - generated-pack validation and the private-inference guard.
+- `packages/fixtures`: the fictional sample, authored sample results, the seeded population (100 → 24 → 8 → 1 computed; 7 and 21 after edits), and test canaries.
+- `apps/web` (React 19, Vite 8, TypeScript strict, Dexie):
+  - local storage with cascading deletes;
+  - an AI gateway that is the only path to Firebase, with `ai/models.ts` the only importer of `firebase/ai`;
+  - a metadata-only inference journal;
+  - the review engine: rules, guarded on-device extraction, deterministic cross-release linking, carry-forward of reviewer decisions, and a reassessment diff;
+  - versioned rewrites with undo, and manual edits.
+- Screens: landing, device setup, workspaces, overview, import, document review, findings, rewrite studio, inference journal, settings.
+
+**Verified (2026-11-19, this container)**
+- 64 unit and integration tests pass. TypeScript strict passes.
+- 13/13 end-to-end checks pass against the production build (`npm run e2e`): the sample workflow, plus a private workspace with canaries.
+- Private review without a usable model makes **0 external requests**: Firebase and App Check load only when private analysis can actually run.
+- The App Check debug token and the canaries are absent from the production bundle.
+
+**Decisions**
+- The app's component styles are ported directly from the approved design previews (`apps/web/src/ui/design.css`) on top of the generated token CSS, with Tailwind available for layout. This keeps the approved look exact.
+- The sample workspace shows authored sample results (source `FIXTURE`, labelled "Sample result") only when no on-device model is available. Private workspaces are never given fixture results; their contextual checks are left not assessed.
+- Each applied edit creates its own version (two edits give v4 then v5). The rewrite studio diffs the original against the current version, word by word.
+- Cross-release links are category-level hypotheses: the same family of detail (role or skill, timing, place, sensitive context) or related wording with light stemming. Each link carries its reason, and none is an identity match.
+
+**Not built yet (do not claim)**
+- Disclosure map, stress-test pack screen and cloud generation UI (the gateway path exists and is tested), release review and history, reports and export, benchmark lab, PDF/DOCX import, OCR.
+- The separate iOS-style mobile layout. There is only a responsive fallback so far.
+- Offline/PWA, Hosting deploy, CI.
+
+## 2026-11-19 · Owner decision: keep the reCAPTCHA v3 key
+
+The owner chose not to rotate or replace the v3 key whose secret appeared in the chat. App Check stays on reCAPTCHA v3 with site key `6Ld6eicuAAAAANoeFdKgOSzKw45cyM9xZeOrmwab`. The reCAPTCHA Enterprise recommendation is withdrawn. The risk was explained and the owner accepted it. The `localhost` domain warning still applies to this key.
+
 ## 2026-11-19 · First real SDK results (debug token registered by owner)
 
 - **Cloud path verified.** `ONLY_IN_CLOUD` through Firebase AI Logic with the Gemini Developer API (`gemini-3.5-flash-lite`) returned valid JSON with `inferenceSource: in_cloud`. App Check works with the debug provider.

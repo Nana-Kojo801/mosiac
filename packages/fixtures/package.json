@@ -1,0 +1,10 @@
+{
+  "name": "@mosaic/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Fictional sample workspace, seeded toy population and test canaries. No real people or records.",
+  "exports": { ".": "./src/index.ts", "./canaries": "./src/canaries.ts" },
+  "dependencies": { "@mosaic/schemas": "0.1.0" }
+}

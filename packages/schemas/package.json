@@ -1,0 +1,10 @@
+{
+  "name": "@mosaic/schemas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Canonical enums, data contracts and the routing table shared by every Mosaic component.",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "zod": "4.6.7" }
+}

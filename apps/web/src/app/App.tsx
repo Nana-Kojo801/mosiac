@@ -1,0 +1,32 @@
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
+import { AppProvider } from './store';
+import { Backdrop } from '../ui/components';
+import { Landing } from './screens/Landing';
+import { Device } from './screens/Device';
+import { Workspaces } from './screens/Workspaces';
+import { Overview } from './screens/Overview';
+import { Import } from './screens/Import';
+import { DocumentReview } from './screens/DocumentReview';
+import { Findings } from './screens/Findings';
+import { Rewrite } from './screens/Rewrite';
+import { Journal } from './screens/Journal';
+import { Settings } from './screens/Settings';
+import { NotFound } from './screens/NotFound';
+
+function Root() { return <div className="app-root"><Backdrop /><Outlet /></div>; }
+
+const router = createBrowserRouter([{ element: <Root />, children: [
+  { path: '/', element: <Landing /> },
+  { path: '/device', element: <Device /> },
+  { path: '/workspaces', element: <Workspaces /> },
+  { path: '/w/:id', element: <Overview /> },
+  { path: '/w/:id/import', element: <Import /> },
+  { path: '/w/:id/document', element: <DocumentReview /> },
+  { path: '/w/:id/findings', element: <Findings /> },
+  { path: '/w/:id/rewrite', element: <Rewrite /> },
+  { path: '/journal', element: <Journal /> },
+  { path: '/settings', element: <Settings /> },
+  { path: '*', element: <NotFound /> },
+] }]);
+
+export function App() { return <AppProvider><RouterProvider router={router} /></AppProvider>; }
