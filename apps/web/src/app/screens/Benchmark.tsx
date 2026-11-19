@@ -42,11 +42,11 @@ export function Benchmark() {
           <div className="steps" style={{ marginTop: 12 }}>{steps.map((s, k) => <button key={k} type="button" className="step" aria-pressed={k === stage} onClick={() => setStage(k)}><span className="st-l">{k === 0 ? 'Start' : s.label}</span><span className="st-n">{s.count}</span></button>)}</div>
           <p className="small muted" style={{ marginTop: 10 }}>Educational illustration computed from 100 seeded fictional records. Not a measure of real-world anonymity.</p></div>
         <div className="panel line">
-          <table className="bench-table"><thead><tr><th>Configuration</th><th>Precision</th><th>Recall</th><th>F1</th><th>Cross-release sets</th><th>False positives (clean)</th></tr></thead><tbody>
+          <div style={{ overflowX: 'auto' }}><table className="bench-table" style={{ minWidth: 560 }}><thead><tr><th>Configuration</th><th>Precision</th><th>Recall</th><th>F1</th><th>Cross-release sets</th><th>False positives (clean)</th></tr></thead><tbody>
             {row('Rules baseline', rules, 'Run in this browser just now')}
             {lp?.rulesPlusLocal?.metrics ? row('Rules + on-device single-document review', lp.rulesPlusLocal.metrics, `Run ${new Date(last!.generatedAt).toLocaleString()}`) : row('Rules + on-device single-document review', undefined, 'Not run: needs the on-device model')}
             {lp?.fullMosaic?.metrics ? row('Full Mosaic: cross-release review with packs', lp.fullMosaic.metrics, `Run ${new Date(last!.generatedAt).toLocaleString()}`) : row('Full Mosaic: cross-release review with packs', undefined, 'Not run: needs the on-device model')}
-          </tbody></table>
+          </tbody></table></div>
           <dl className="kv" style={{ marginTop: 14, maxWidth: 520 }}><dt>Dataset</dt><dd>{DATASET_VERSION} · seed {DATASET_SEED}</dd><dt>Held-out cases scored</dt><dd>{test.length} (plus {data.length - test.length} dev cases not scored)</dd><dt>Case types</dt><dd>{kinds.join(', ')}</dd><dt>Matching rule</dt><dd>Same document, same category, overlapping span; cross-release per document set</dd></dl>
           {!ready && <div style={{ marginTop: 14 }}><Banner tone="neutral" icon={<Hourglass size={18} />} title="Model configurations need the on-device model">Open this page in desktop Google Chrome with the built-in model available to run them. They are not estimated here.</Banner></div>}
           {prog && <p className="small muted" style={{ marginTop: 12 }}>{prog.config === 'fullMosaic' ? 'Full Mosaic' : 'Single-document review'}: case {prog.done + 1} of {prog.total}</p>}

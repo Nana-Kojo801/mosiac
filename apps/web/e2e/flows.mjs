@@ -160,6 +160,33 @@ try {
   const leaks = requests.filter((r) => CANARIES.some((c) => r.url.includes(c) || r.body.includes(c)));
   check('no request carries a private canary', leaks.length === 0, `${requests.length} external requests to ${[...new Set(requests.map((r) => r.host))].join(', ') || 'none'}`);
   check('no request to Gemini endpoints during private review', !requests.some((r) => /firebasevertexai|generativelanguage/.test(r.host)));
+
+  // Phone layout (approved iOS-style mobile design)
+  const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  phone.on('pageerror', (e) => errors.push(e.message));
+  await phone.goto(base + '/');
+  await phone.getByRole('button', { name: 'Try the sample workspace' }).click();
+  await phone.waitForURL(/\/w\//);
+  const wsPath = new URL(phone.url()).pathname.replace(/^(\/w\/[^/]+).*/, '$1');
+  await phone.getByRole('button', { name: 'Run review' }).click();
+  await phone.locator('.count-d.high strong').waitFor({ timeout: 20000 });
+  const overflow = [];
+  for (const path of ['/', '/workspaces', wsPath, `${wsPath}/document`, `${wsPath}/findings`, `${wsPath}/map`, `${wsPath}/rewrite`, `${wsPath}/release`, `${wsPath}/history`, `${wsPath}/export`, '/tests', '/journal', '/benchmark', '/settings', '/device']) {
+    await phone.goto(base + path); await phone.waitForTimeout(350);
+    const w = await phone.evaluate(() => document.documentElement.scrollWidth);
+    if (w > 391) overflow.push(`${path}:${w}`);
+  }
+  check('no horizontal page scroll on any screen at phone width', overflow.length === 0, overflow.join(', '));
+  await phone.goto(base + `${wsPath}/findings`);
+  check('floating glass tab bar on phone', await phone.locator('.m-tabbar').waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await phone.locator('table.tbl tbody tr').first().click();
+  await phone.locator('.m-sheet-layer.open').waitFor({ timeout: 3000 });
+  check('tapping a finding opens its details in a bottom sheet', await phone.locator('.m-sheet .insp-title').count() > 0);
+  if (shots) await phone.screenshot({ path: `${shots}/phone-sheet.png` });
+  await phone.getByRole('button', { name: 'Close' }).click();
+  await phone.goto(base + `${wsPath}`);
+  if (shots) await phone.screenshot({ path: `${shots}/phone-overview.png` });
+  await phone.close();
 } catch (e) {
   check('flow completed', false, e.message.split('\n')[0]);
   await shot('failure');

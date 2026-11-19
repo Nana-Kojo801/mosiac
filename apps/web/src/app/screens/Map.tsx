@@ -7,6 +7,7 @@ import { useWorkspace } from '../useWorkspace';
 import { MosaicGrid, RiskChip, SourceBadge } from '../../ui/components';
 import { buildGraph, type GEdge, type GNode } from '../../features/map/graph';
 import { NotFound } from './NotFound';
+import { useDetailsSheet } from '../MobileShell';
 
 const COL_X = [20, 310, 580], COL_W = [200, 170, 220], NODE_H = 54, GAP = 18, TOP = 34;
 
@@ -15,6 +16,7 @@ export function MapScreen() {
   const nav = useNavigate();
   const data = useWorkspace(id);
   const [mode, setMode] = useState<'map' | 'list'>('map');
+  const sheet = useDetailsSheet();
   const [sel, setSel] = useState<{ kind: 'edge' | 'node'; id: string } | null>(null);
   const [stage, setStage] = useState<number | null>(null);
   const graph = useMemo(() => (data ? buildGraph(data.docs, data.findings) : { nodes: [], edges: [] }), [data]);
@@ -31,7 +33,7 @@ export function MapScreen() {
   const selEdge = sel?.kind === 'edge' ? graph.edges.find((e) => e.id === sel.id) : undefined;
   const selNode = sel?.kind === 'node' ? graph.nodes.find((n) => n.id === sel.id) : undefined;
   const openRef = (r: { versionId: string; paragraph: number }) => { const d = data.docs.find((x) => x.version.id === r.versionId); nav(`/w/${data.ws.id}/document?${d ? `doc=${d.doc.id}` : `version=${r.versionId}`}&para=${r.paragraph}`); };
-  const nodeClick = (n: GNode) => setSel({ kind: 'node', id: n.id });
+  const nodeClick = (n: GNode) => { setSel({ kind: 'node', id: n.id }); sheet.open(); };
 
   const inspector = (
     <>
@@ -61,7 +63,7 @@ export function MapScreen() {
           <div className="graph-wrap">
             <svg viewBox={`0 0 820 ${height}`} role="group" aria-label="Disclosure map">
               <text className="g-col" x={COL_X[0]} y={18}>DOCUMENTS</text><text className="g-col" x={COL_X[1]} y={18}>CATEGORIES</text><text className="g-col" x={COL_X[2]} y={18}>FINDINGS</text>
-              {graph.edges.map((e) => <g key={e.id}><path className="g-hit" d={path(e)} tabIndex={0} role="button" aria-label={`Connection: ${e.reason}`} onClick={() => setSel({ kind: 'edge', id: e.id })} onKeyDown={(ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setSel({ kind: 'edge', id: e.id }); } }} /><path className={`g-edge${e.hot ? ' hot' : ''}${sel?.id === e.id ? ' sel' : ''}`} d={path(e)} /></g>)}
+              {graph.edges.map((e) => <g key={e.id}><path className="g-hit" d={path(e)} tabIndex={0} role="button" aria-label={`Connection: ${e.reason}`} onClick={() => { setSel({ kind: 'edge', id: e.id }); sheet.open(); }} onKeyDown={(ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setSel({ kind: 'edge', id: e.id }); sheet.open(); } }} /><path className={`g-edge${e.hot ? ' hot' : ''}${sel?.id === e.id ? ' sel' : ''}`} d={path(e)} /></g>)}
               {graph.nodes.map((n) => { const p = pos.get(n.id)!; const f = n.finding; const cls = n.kind === 'doc' ? (n.draft ? 'draft' : 'release') : n.kind === 'cat' ? 'cat' : `finding${f && f.band === 'MODERATE' ? ' mod' : ''}${f && f.band === 'LOW' ? ' mod' : ''}`; const label = n.label.length > 30 ? n.label.slice(0, 28) + '…' : n.label; return (
                 <g key={n.id} className={`g-node ${cls}${sel?.id === n.id ? ' sel' : ''}`} tabIndex={0} role="button" aria-label={n.label} onClick={() => nodeClick(n)} onKeyDown={(ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); nodeClick(n); } }}>
                   <rect x={p.x} y={p.y} width={p.w} height={NODE_H} rx={12} />

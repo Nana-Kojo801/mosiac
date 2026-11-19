@@ -7,6 +7,7 @@ import { FindingInspector } from '../FindingInspector';
 import { MarkedText } from '../../ui/MarkedText';
 import { isClosed } from '../../ui/components';
 import { NotFound } from './NotFound';
+import { useDetailsSheet } from '../MobileShell';
 import { db } from '../../storage/db';
 import { useLive } from '../live';
 
@@ -15,6 +16,7 @@ export function DocumentReview() {
   const [sp, setSp] = useSearchParams();
   const data = useWorkspace(id);
   const [selected, setSelected] = useState<string | undefined>(sp.get('finding') ?? undefined);
+  const sheet = useDetailsSheet();
   const docId = sp.get('doc') ?? data?.draft?.doc.id ?? data?.docs[0]?.doc.id;
   const versionParam = sp.get('version');
   const current = data?.docs.find((d) => d.doc.id === docId);
@@ -55,7 +57,7 @@ export function DocumentReview() {
       {!shown ? <div className="empty-d"><h3>No documents yet</h3></div> : (
         <>
           <div className="doc-meta"><b style={{ color: 'var(--ink)', fontSize: 15 }}>{data.docs.find((d) => d.doc.id === shown.documentId)?.doc.title ?? 'Earlier version'}</b><span>{shown.label}{versionParam && shown.id !== current?.version.id ? ' · earlier version' : ''}</span><span className="pack-src"><Lock size={11} /> Private</span><span style={{ flex: 1 }} /><span className="hstack small"><span className="kbd">J</span><span className="kbd">K</span> next / previous finding</span></div>
-          <MarkedText version={shown} findings={visible} active={finding?.id} onSelect={setSelected} />
+          <MarkedText version={shown} findings={visible} active={finding?.id} onSelect={(fid) => { setSelected(fid); sheet.open(); }} />
           <p className="small muted" style={{ marginTop: 8 }}>Text extracted in this browser. Original formatting, embedded objects and file metadata are not reviewed here.</p>
         </>
       )}

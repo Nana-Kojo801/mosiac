@@ -6,10 +6,16 @@ import { Logo } from '../ui/components';
 import { readinessText } from '../ai/gateway';
 import type { WorkspaceData } from './useWorkspace';
 import { isClosed } from '../ui/components';
+import { MobileShell, useIsMobile } from './MobileShell';
 
 type Props = { title: string; data?: WorkspaceData | null; inspector?: ReactNode; inspectorTitle?: string; wide?: boolean; children: ReactNode; actions?: ReactNode };
 
-export function Shell({ title, data, inspector, inspectorTitle = 'Inspector', wide, children, actions }: Props) {
+export function Shell(props: Props) {
+  const mobile = useIsMobile();
+  return mobile ? <MobileShell title={props.title} data={props.data} inspector={props.inspector} inspectorTitle={props.inspectorTitle}>{props.children}</MobileShell> : <DesktopShell {...props} />;
+}
+
+function DesktopShell({ title, data, inspector, inspectorTitle = 'Inspector', wide, children, actions }: Props) {
   const { id } = useParams();
   const app = useApp();
   const r = app.readiness;
@@ -66,13 +72,6 @@ export function Shell({ title, data, inspector, inspectorTitle = 'Inspector', wi
         </div></div>
       </section>
       {inspector && <aside className="inspector glass" aria-label={inspectorTitle}><div className="insp-head"><h2>{inspectorTitle}</h2></div><div className="insp-body">{inspector}</div></aside>}
-      <nav className="mobile-nav glass" aria-label="Main">
-        <NavLink to="/workspaces"><Layers size={20} /><span>Workspaces</span></NavLink>
-        {ws ? <NavLink to={`/w/${ws.id}/findings`}><ListChecks size={20} /><span>Findings</span></NavLink> : <span />}
-        {ws ? <NavLink to={`/w/${ws.id}/document`}><FileText size={20} /><span>Draft</span></NavLink> : <span />}
-        <NavLink to="/journal"><Activity size={20} /><span>Journal</span></NavLink>
-        <NavLink to="/settings"><Settings size={20} /><span>Settings</span></NavLink>
-      </nav>
     </div>
   );
 }

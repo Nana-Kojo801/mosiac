@@ -2,6 +2,17 @@
 
 Entries are newest first. Each one records what was decided, why, and who decided it.
 
+## 2026-11-19 · iOS-style mobile layout
+
+- At 760 px and below, every screen uses a separate mobile shell from the approved mobile design:
+  - a large title that collapses into a glass edge bar on scroll;
+  - round glass back and review buttons;
+  - a floating glass tab bar (Workspaces, Findings, Map, Journal, Settings) with a high-priority badge;
+  - the inspector as a draggable bottom sheet, which opens when you tap a finding, a highlight or a map line.
+- Tables reflow into stacked rows, and wide content (the benchmark table and graph) scrolls inside its own container.
+- **Verified:** end-to-end 29/29 on two consecutive runs. New phone checks: no horizontal page scroll on any of 15 screens at 390 px, the tab bar is present, and tapping a finding opens the sheet. 70 unit tests pass.
+- **Deviation from the design preview:** the details sheet is also reachable from a floating "Details" button, because every screen keeps an inspector. The preview showed sheets only on tap.
+
 ## 2026-11-19 · Core app build, second increment
 
 **Built**
@@ -34,7 +45,6 @@ Entries are newest first. Each one records what was decided, why, and who decide
 The rules were not changed in response to held-out results.
 
 **Still not built**
-- The separate iOS-style mobile layout (only a responsive fallback).
 - Native Android and iOS apps.
 - OCR for scanned files.
 - The demo video pipeline.
